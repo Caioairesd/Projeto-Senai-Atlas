@@ -2,3 +2,9 @@ body{
     color: black;
     background-color: dimgray;
 }
+
+table{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    
+}
