@@ -1,13 +1,6 @@
 <?php
-$host = 'localhost';
-$dbname = 'gamestore';
-$user = 'root';
-$pass = '';
+$conn = new mysqli("localhost", "root", "", "gamestore");
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro na conexão: " . $e->getMessage());
+if ($conn->connect_error) {
+    die("Erro na conexão: " . $conn->connect_error);
 }
-?>
