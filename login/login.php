@@ -1,9 +1,7 @@
 <?php
 session_start();
-require 'conexao.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usuario = $_POST['usuario'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
@@ -16,17 +14,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($usuario && password_verify($senha, $usuario['senha'])) {
         // Usuário encontrado e senha verificada
         $_SESSION['usuario'] = $usuario['nome'];
-        $_SESSION['id_usuario'] = $usuario['id_usuario'];
+        $_SESSION['perfil'] = $usuario['id_perfil'];
+        $_SESSION['id'] = $usuario['id'];
 
-    } else {
-        // Usuário não encontrado ou senha incorreta
-        echo "Usuário ou senha incorretos.";
-       
+        // Verifica de a senha é temporaria
+    }else{
+        echo "<script>alert('Email ou senha incorretos.');</script>";}
     }
-}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,10 +33,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <h2>Login</h2>
     <form action="login.php" method="post">
-
-        <label for="usuario">Usuário:</label>
-        <input type="text" id="usuario" name="usuario" required><br><br>
-
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br><br>
 
@@ -47,6 +40,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" id="senha" name="senha" required><br><br>
 
         <button type="submit">Entrar</button>
-    </form> 
+    </form>
 </body>
 </html>
