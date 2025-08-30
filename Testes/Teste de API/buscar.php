@@ -1,7 +1,7 @@
 <?php
 require 'config.php';
 
-$busca = $_GET['busca'] ?? 'gta';
+$busca = $_GET['busca'] ?? '';
 $url = "https://api.rawg.io/api/games?key=" . RAWG_API_KEY . "&search=" . urlencode($busca) . "&page_size=10";
 
 $response = @file_get_contents($url);
