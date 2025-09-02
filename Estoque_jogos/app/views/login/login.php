@@ -33,7 +33,7 @@
     <div class="card-container">
         <div class="container">
             <div class="visual-side">
-                <img src="logo-atlas.png" alt="Logo Atlas" class="logo" />
+                <img src="../../../public/assets/images/Logo."" alt="Logo Atlas" class="logo" />
                 <h1 class="slogan">Controle inteligente para estoques eficientes</h1>
             </div>
 
