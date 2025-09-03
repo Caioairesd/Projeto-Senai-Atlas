@@ -1,16 +1,13 @@
 <?php
-require_once 'app/core/database.php';
-require_once 'app/models/cliente.php';
+require_once '/../config/database.php';
+require_once '/../models/cliente.php';
 
+session_start();
+
+$pdo = database();
+$model = new cliente_model($pdo);
 class cliente_controller
 {
-    private $cliente_model;
-
-    public function __construct()
-    {
-        $this->cliente_model = new cliente_model();
-    }
-
     // Lista todos os clientes
     public function listar_cliente()
     {
@@ -73,3 +70,4 @@ class cliente_controller
         header('Location: /cliente');
     }
 }
+?>

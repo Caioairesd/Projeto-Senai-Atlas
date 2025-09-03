@@ -1,14 +1,15 @@
 <?php
-require_once 'app/models/fornecedor.php';
+require_once '/../config/database.php';
+require_once '/../models/cliente.php';
+
+session_start();
+
+$pdo = database();
+$model = new fornecedor_model($pdo);
 
 class Fornecedor_controller
 {
-private $fornecedor_model;
-public function __construct()
-{
-    $this->fornecedor_model = new Fornecedor_model();
 
-}
     public function listar_fornecedor()
     {
         $fornecedores = $this->fornecedor_model->listar_fornecedor();
@@ -56,4 +57,4 @@ public function __construct()
         header('Location: /fornecedor');
     }
 }
-/>
+?>
