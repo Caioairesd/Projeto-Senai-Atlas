@@ -54,8 +54,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($cliente['cnpj_cliente']) ?></td>
                             <td class="actions">
                                 <a class="btn-edit" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>">Ver</a>
-                                <a class="btn-edit" href="editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
-                                <a class="btn-delete" href="excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+                                <a class="btn-edit" href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
+                                <a class="btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
