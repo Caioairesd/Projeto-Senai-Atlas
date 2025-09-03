@@ -347,3 +347,102 @@ body.dark-mode .link {
     padding: 30px 20px;
   }
 }
+
+/* Estilo geral */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background-color: #f4f6fc;
+  color: #333;
+}
+
+/* Container central */
+.form-wrapper {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.form-wrapper h2 {
+  font-size: 24px;
+  color: #2879f3;
+  margin-bottom: 10px;
+}
+
+.form-wrapper p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+/* Labels e inputs */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #2879f3;
+  outline: none;
+}
+
+/* Botão */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #2879f3;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0653c7;
+}
+
+/* Mensagens */
+.sucesso,
+.erro {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.sucesso {
+  background-color: #e6f4ff;
+  color: #2879f3;
+  border: 1px solid #2879f3;
+}
+
+.erro {
+  background-color: #ffe6e6;
+  color: #d93025;
+  border: 1px solid #d93025;
+}
+

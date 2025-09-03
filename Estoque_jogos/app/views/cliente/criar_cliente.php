@@ -1,26 +1,56 @@
+<?php
+require_once"conexao.php";
+
+$msg = '';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nome = $_POST['nome_cliente'] ?? '';
+    $email = $_POST['email_cliente'] ?? '';
+    $telefone = $_POST['telefone_cliente'] ?? '';
+    $cnpj = $_POST['cnpj_cliente'] ?? '';
+
+    $sql = "INSERT INTO cliente (nome_cliente, email_cliente, telefone_cliente, cnpj_cliente)
+            VALUES (:nome, :email, :telefone, :cnpj)";
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':telefone', $telefone);
+    $stmt->bindParam(':cnpj', $cnpj);
+
+    if ($stmt->execute()) {
+        $msg = '<div class="sucesso">✅ Cliente cadastrado com sucesso!</div>';
+    } else {
+        $msg = '<div class="erro">❌ Erro ao cadastrar cliente!</div>';
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Cadastrar novo cliente</title>
 </head>
 
 <body>
 
     <form method="post" enctype="multipart/form-data">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <label for="nome_cliente">Nome:</label>
+        <input type="text" id="nome_cliente" name="nome_cliente" required>
 
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required>
+        <label for="email_cliente">Email_cliente:</label>
+        <input type="text" id="email_cliente" name="email_cliente" required>
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" name="telefone" required>
+        <label for="telefone_cliente">Telefone_cliente:</label>
+        <input type="text" id="telefone_cliente" name="telefone_cliente" required>
 
-        <label for="cnpj">Cnpj:</label>
-        <input type="text" id="cnpj" name="cnpj" required>
+        <label for="cnpj_cliente">Cnpj_cliente:</label>
+        <input type="text" id="cnpj_cliente" name="cnpj_cliente" required>
 
 
         <button type="submit">Cadastrar</button>
