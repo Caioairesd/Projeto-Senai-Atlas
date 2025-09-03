@@ -1,176 +1,4 @@
-/* Reset básico */
-body,
-html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-/* Container principal */
-.card-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 0 20px;
-}
-
-/* Divisão da tela */
-.container {
-  display: flex;
-  max-width: 900px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(5px);
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-}
-
-/* Lado visual */
-.visual-side {
-  flex: 1;
-  background-color: #2879f3;
-  color: white;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo {
-  max-width: 120px;
-  margin-bottom: 20px;
-}
-
-.slogan {
-  font-size: 18px;
-  font-weight: 500;
-  text-align: center;
-}
-
-/* Card do formulário */
-.log-card {
-  flex: 1;
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  animation: fadeInUp 0.5s ease forwards;
-  background-color: transparent;
-}
-
-/* Animação de entrada */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Títulos e textos */
-.heading {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.para {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 20px;
-}
-
-.text {
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-size: 14px;
-  font-weight: 600;
-  color: lightslategray;
-}
-
-/* Inputs */
-.input-group {
-  margin-bottom: 10px;
-}
-
-.input {
-  width: 100%;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-weight: 600;
-  color: #2879f3;
-  transition: all 0.3s ease;
-}
-
-.input::placeholder {
-  color: lightslategray;
-  font-weight: 500;
-}
-
-.input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #2879f3;
-}
-
-/* Checkbox e link */
-.password-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.checkbox-group {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-}
-
-.label {
-  margin-left: 5px;
-}
-
-.forget-password {
-  font-size: 14px;
-  font-weight: 500;
-  color: #2879f3;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.forget-password:hover {
-  text-decoration: underline;
-  color: #f37e10;
-}
-
-/* Botão de login */
-.btn {
-  margin-top: 20px;
-  padding: 10px 16px;
-  border: none;
-  background-color: #2879f3;
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn:hover {
-  background-color: #0653c7;
-}
-
+/* ===================== RESET E BASE ===================== */
 :root {
   --primary: #2879f3;
   --primary-dark: #0653c7;
@@ -184,20 +12,40 @@ html {
   --font: "Segoe UI", Roboto, sans-serif;
 }
 
-/* Reset e base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   font-family: var(--font);
   background-color: var(--bg-light);
   color: var(--text);
 }
 
-/* Botões universais */
+/* ===================== CONTAINERS GERAIS ===================== */
+.form-wrapper,
+.table-wrapper,
+.details-wrapper {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-wrapper h2,
+.table-wrapper h2,
+.details-wrapper h2 {
+  font-size: 24px;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+/* ===================== BOTÕES ===================== */
 .btn {
   display: inline-block;
   padding: 10px 16px;
@@ -207,9 +55,9 @@ body, html {
   cursor: pointer;
   background-color: var(--primary);
   color: white;
-  transition: background-color 0.3s ease;
   text-align: center;
   text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
@@ -232,27 +80,7 @@ body, html {
   background-color: var(--danger-dark);
 }
 
-/* Containers */
-.form-wrapper,
-.table-wrapper,
-.details-wrapper {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: var(--bg-white);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.form-wrapper h2,
-.table-wrapper h2,
-.details-wrapper h2 {
-  font-size: 24px;
-  color: var(--primary);
-  margin-bottom: 20px;
-}
-
-/* Formulários */
+/* ===================== FORMULÁRIOS ===================== */
 .input-group {
   margin-bottom: 20px;
 }
@@ -278,26 +106,37 @@ body, html {
   outline: none;
 }
 
-/* Tabelas */
-.table {
+/* ===================== TABELAS ===================== */
+.table,
+.table-produto,
+.table-funcionario {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .table th,
-.table td {
+.table td,
+.table-produto th,
+.table-produto td,
+.table-funcionario th,
+.table-funcionario td {
   padding: 12px 16px;
   text-align: left;
   border-bottom: 1px solid var(--border);
 }
 
-.table th {
+.table th,
+.table-produto th,
+.table-funcionario th {
   background-color: var(--primary);
   color: white;
   font-weight: 600;
 }
 
-.table tr:hover {
+.table tr:hover,
+.table-produto tr:hover,
+.table-funcionario tr:hover {
   background-color: var(--bg-light);
 }
 
@@ -306,10 +145,12 @@ body, html {
   gap: 10px;
 }
 
-/* Mensagens */
+/* ===================== MENSAGENS ===================== */
 .sucesso,
 .erro,
-.alert {
+.alert,
+.alert-produto,
+.alert-funcionario {
   padding: 12px;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -318,7 +159,8 @@ body, html {
 }
 
 .sucesso,
-.alert-success {
+.alert-success,
+.alert-funcionario {
   background-color: #e6f4ff;
   color: var(--primary);
   border: 1px solid var(--primary);
@@ -331,13 +173,14 @@ body, html {
   border: 1px solid var(--danger);
 }
 
-.alert-warning {
+.alert-warning,
+.alert-produto {
   background-color: #fff8e1;
   color: var(--accent);
   border: 1px solid var(--accent);
 }
 
-/* Modais */
+/* ===================== MODAIS ===================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -379,7 +222,72 @@ body, html {
   gap: 20px;
 }
 
-/* Responsividade */
+/* ===================== DETALHES DO PRODUTO ===================== */
+.details-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.details-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.details-list li strong {
+  color: #555;
+}
+
+.produto-imagem {
+  max-width: 300px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* ===================== GRUPO DE BOTÕES ===================== */
+.btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.btn-group a {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+/* ===================== AÇÕES EM TABELAS ===================== */
+.acoes a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.acoes a:hover {
+  text-decoration: underline;
+  color: var(--primary-dark);
+}
+
+/* ===================== ANIMAÇÕES ===================== */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== RESPONSIVIDADE ===================== */
 @media (max-width: 768px) {
   .form-wrapper,
   .table-wrapper,

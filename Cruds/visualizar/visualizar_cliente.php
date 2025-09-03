@@ -19,11 +19,13 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Clientes Cadastrados</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="table-wrapper">
         <h2>Lista de Clientes</h2>
@@ -53,10 +55,11 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($cliente['telefone_cliente']) ?></td>
                             <td><?= htmlspecialchars($cliente['cnpj_cliente']) ?></td>
                             <td class="actions">
-                                <a class="btn-edit" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>">Ver</a>
-                                <a class="btn-edit" href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
-                                <a class="btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+                                <a class="btn" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>"> Ver</a>
+                                <a class="btn btn-edit" href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>"> Editar</a>
+                                <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -66,4 +69,5 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </body>
+
 </html>

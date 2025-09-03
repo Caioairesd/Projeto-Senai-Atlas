@@ -41,11 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Editar Cliente</title>
-    <link rel="stylesheet" href="../assets/style.css"/>
+    <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
 
     <script>
@@ -71,25 +73,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?= $msg ?>
             <?php endif; ?>
 
-            <form method="post">
-                <label for="nome_cliente">Nome:</label>
-                <input type="text" id="nome_cliente" name="nome_cliente" value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
+            <form method="post" class="form">
+                <div class="form-group">
+                    <label for="nome_cliente">Nome:</label>
+                    <input type="text" id="nome_cliente" name="nome_cliente" class="input" value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
+                </div>
 
-                <label for="email_cliente">Email:</label>
-                <input type="email" id="email_cliente" name="email_cliente" value="<?= htmlspecialchars($cliente['email_cliente']) ?>" required>
+                <div class="form-group">
+                    <label for="email_cliente">Email:</label>
+                    <input type="email" id="email_cliente" name="email_cliente" class="input" value="<?= htmlspecialchars($cliente['email_cliente']) ?>" required>
+                </div>
 
-                <label for="telefone_cliente">Telefone:</label>
-                <input type="text" id="telefone_cliente" name="telefone_cliente" value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
+                <div class="form-group">
+                    <label for="telefone_cliente">Telefone:</label>
+                    <input type="text" id="telefone_cliente" name="telefone_cliente" class="input" value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
+                </div>
 
-                <label for="cnpj_cliente">CNPJ:</label>
-                <input type="text" id="cnpj_cliente" name="cnpj_cliente" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
+                <div class="form-group">
+                    <label for="cnpj_cliente">CNPJ:</label>
+                    <input type="text" id="cnpj_cliente" name="cnpj_cliente" class="input" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
+                </div>
 
-                <div class="butoes">
-                    <button type="submit">Atualizar</button>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-edit">✏️ Atualizar</button>
                 </div>
             </form>
-        </div>
-    </div>
-
-</body>
-</html>

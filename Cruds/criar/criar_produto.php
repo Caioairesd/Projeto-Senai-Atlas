@@ -9,11 +9,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $plataforma_produto = $_POST['plataforma_produto'] ?? '';
     $tipo_produto = $_POST['tipo_produto'] ?? '';
     $preco_produto = $_POST['preco_produto'] ?? '';
-    $imagem_url_produto = $_POST['imagem_url_produto'] ?? '';
-    $fornecedor_produto = $_POST['fornecedor_produto'] ?? '';
+    $fornecedor_id = $_POST['fornecedor_id'] ?? '';
 
-    $sql = "INSERT INTO produto (nome_produto, descricao_produto, plataforma_produto, tipo_produto, preco_produto,imagem_url_produto,fornecedor_id)
-            VALUES (:nome_produto, :descricao_produto, :plataforma_produto, :tipo_produto, :preco_produto,:imagem_url_produto,:fornecedor_id)";
+    $imagem_url_produto = '';
+    if (isset($_FILES['imagem_url_produto']) && $_FILES['imagem_url_produto']['error'] === UPLOAD_ERR_OK) {
+        $extensao = pathinfo($_FILES['imagem_url_produto']['name'], PATHINFO_EXTENSION);
+        $nome_arquivo = uniqid('produto_') . '.' . $extensao;
+        $caminho_destino = '../uploads/' . $nome_arquivo;
+
+        if (move_uploaded_file($_FILES['imagem_url_produto']['tmp_name'], $caminho_destino)) {
+            $imagem_url_produto = $caminho_destino;
+        } else {
+            $msg = '<div class="erro">❌ Erro ao salvar a imagem!</div>';
+        }
+    }
+
+    $sql = "INSERT INTO produto (nome_produto, descricao_produto, plataforma_produto, tipo_produto, preco_produto, imagem_url_produto, fornecedor_id)
+            VALUES (:nome_produto, :descricao_produto, :plataforma_produto, :tipo_produto, :preco_produto, :imagem_url_produto, :fornecedor_id)";
     $stmt = $pdo->prepare($sql);
 
     $stmt->bindParam(':nome_produto', $nome_produto);
@@ -25,13 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
 
     if ($stmt->execute()) {
-        $msg = '<div class="sucesso">✅ Cliente cadastrado com sucesso!</div>';
+        $msg = '<div class="sucesso">✅ Produto cadastrado com sucesso!</div>';
     } else {
-        $msg = '<div class="erro">❌ Erro ao cadastrar cliente!</div>';
+        $msg = '<div class="erro">❌ Erro ao cadastrar produto!</div>';
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -48,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h2>Cadastrar Produto</h2>
         <p>Preencha os dados abaixo para adicionar um novo produto ao sistema.</p>
 
+        <!-- Mensagem de sucesso ou erro (PHP pode inserir aqui) -->
         <?= $msg ?? '' ?>
 
         <form method="post" enctype="multipart/form-data">
@@ -81,13 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="file" id="imagem_url_produto" name="imagem_url_produto" accept="image/*" required />
             </div>
 
-            <div class="input-group">
-                <label for="fornecedor_id">ID do Fornecedor</label>
-                <input type="text" id="fornecedor_id" name="fornecedor_produto" required />
-            </div>
+            <select name="fornecedor_id" required>
+                <option value="">Selecione o fornecedor</option>
+                <?php
+                $fornecedores = $pdo->query("SELECT id_fornecedor, nome_fornecedor FROM fornecedor")->fetchAll();
+                foreach ($fornecedores as $f) {
+                    echo "<option value='{$f['id_fornecedor']}'>{$f['nome_fornecedor']}</option>";
+                }
+                ?>
+            </select>
+
 
             <button type="submit" class="btn">Cadastrar</button>
-            <button type="reset" class="btn" style="background-color: #ccc; color: #333;">Limpar</button>
+            <button type="reset" class="btn btn-edit">Limpar</button>
         </form>
     </div>
 

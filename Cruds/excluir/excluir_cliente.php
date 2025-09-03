@@ -29,5 +29,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     } else {
         echo "<script> alert('Erro ao excluir cliente!'); </script>";
     }
+    // Redireciona para a listagem após excluir
+    header('Location: ../visualizar/visualizar_cliente.php');
+    exit;
 }
+
 ?>
