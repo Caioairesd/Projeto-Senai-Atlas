@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/09/2025 às 02:38
+-- Tempo de geração: 04/09/2025 às 00:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `cliente` (
   `nome_cliente` varchar(50) NOT NULL,
   `email_cliente` varchar(50) NOT NULL,
   `telefone_cliente` varchar(20) DEFAULT NULL,
-  `cnpj_fornecedor` varchar(20) NOT NULL
+  `cnpj_cliente` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -51,6 +51,21 @@ CREATE TABLE `estoque` (
   `observacao_estoque` text DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Acionadores `estoque`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_entrada_estoque` AFTER INSERT ON `estoque` FOR EACH ROW BEGIN
+UPDATE produto
+SET
+    qtde_estoque_produto = qtde_estoque_produto + NEW.qtde_estoque
+WHERE
+    id_produto = NEW.produto_id;
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -77,7 +92,7 @@ CREATE TABLE `funcionario` (
   `nome_funcionario` varchar(50) NOT NULL,
   `email_funcionario` varchar(50) NOT NULL,
   `telefone_funcionario` varchar(20) DEFAULT NULL,
-  `cpf_funcionario` varchar(20) NOT NULL,
+  `cpf_funcionario` varchar(11) NOT NULL,
   `salario_funcionario` decimal(10,2) DEFAULT NULL,
   `endereco_funcionario` varchar(100) DEFAULT NULL,
   `data_nascimento` date DEFAULT NULL,
@@ -97,6 +112,40 @@ CREATE TABLE `item_pedido` (
   `qtde_item` int(11) NOT NULL,
   `preco_unitario` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Acionadores `item_pedido`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_saida_estoque` AFTER INSERT ON `item_pedido` FOR EACH ROW BEGIN
+UPDATE produto
+SET
+    qtde_estoque_produto = qtde_estoque_produto - NEW.qtde_item
+WHERE
+    id_produto = NEW.produto_id;
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_valida_estoque` BEFORE INSERT ON `item_pedido` FOR EACH ROW BEGIN DECLARE estoque_atual INT;
+
+SELECT
+    qtde_estoque_produto INTO estoque_atual
+FROM
+    produto
+WHERE
+    id_produto = NEW.produto_id;
+
+IF estoque_atual < NEW.qtde_item THEN SIGNAL SQLSTATE '45000'
+SET
+    MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+
+END IF;
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -123,6 +172,15 @@ CREATE TABLE `perfil` (
   `id_perfil` int(11) NOT NULL,
   `nome_perfil` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `nome_perfil`) VALUES
+(1, 'Administrador'),
+(3, 'Estoquista'),
+(2, 'Vendedor');
 
 -- --------------------------------------------------------
 
@@ -157,6 +215,51 @@ CREATE TABLE `usuario` (
   `funcionario_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura stand-in para view `vw_estoque_baixo`
+-- (Veja abaixo para a visão atual)
+--
+CREATE TABLE `vw_estoque_baixo` (
+`id_produto` int(11)
+,`nome_produto` varchar(50)
+,`qtde_estoque_produto` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura stand-in para view `vw_produto_item`
+-- (Veja abaixo para a visão atual)
+--
+CREATE TABLE `vw_produto_item` (
+`id_pedido` int(11)
+,`data_pedido` date
+,`nome_cliente` varchar(50)
+,`nome_produto` varchar(50)
+,`qtde_item` int(11)
+,`preco_unitario` decimal(10,2)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para view `vw_estoque_baixo`
+--
+DROP TABLE IF EXISTS `vw_estoque_baixo`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_estoque_baixo`  AS SELECT `produto`.`id_produto` AS `id_produto`, `produto`.`nome_produto` AS `nome_produto`, `produto`.`qtde_estoque_produto` AS `qtde_estoque_produto` FROM `produto` WHERE `produto`.`qtde_estoque_produto` < 5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para view `vw_produto_item`
+--
+DROP TABLE IF EXISTS `vw_produto_item`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_produto_item`  AS SELECT `p`.`id_pedido` AS `id_pedido`, `p`.`data_pedido` AS `data_pedido`, `c`.`nome_cliente` AS `nome_cliente`, `pr`.`nome_produto` AS `nome_produto`, `i`.`qtde_item` AS `qtde_item`, `i`.`preco_unitario` AS `preco_unitario` FROM (((`pedidos` `p` join `cliente` `c` on(`p`.`cliente_id` = `c`.`id_cliente`)) join `item_pedido` `i` on(`p`.`id_pedido` = `i`.`pedido_id`)) join `produto` `pr` on(`i`.`produto_id` = `pr`.`id_produto`)) ;
+
 --
 -- Índices para tabelas despejadas
 --
@@ -167,7 +270,7 @@ CREATE TABLE `usuario` (
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`),
   ADD UNIQUE KEY `email_cliente` (`email_cliente`),
-  ADD UNIQUE KEY `cnpj_cliente` (`cnpj_fornecedor`) USING BTREE;
+  ADD UNIQUE KEY `cnpj_cliente` (`cnpj_cliente`);
 
 --
 -- Índices de tabela `estoque`
@@ -190,7 +293,6 @@ ALTER TABLE `fornecedor`
 --
 ALTER TABLE `funcionario`
   ADD PRIMARY KEY (`id_funcionario`),
-  ADD UNIQUE KEY `email_funcionario` (`email_funcionario`),
   ADD UNIQUE KEY `cpf_funcionario` (`cpf_funcionario`);
 
 --
@@ -276,7 +378,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de tabela `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
