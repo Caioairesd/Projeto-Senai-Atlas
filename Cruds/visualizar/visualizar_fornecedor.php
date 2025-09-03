@@ -19,18 +19,21 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Fornecedores Cadastrados</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="table-wrapper">
         <h2>Lista de Fornecedores</h2>
 
         <!-- Campo de busca -->
         <form method="get" style="margin-bottom: 20px;">
-            <input type="text" name="busca" placeholder="Buscar fornecedor..." value="<?= htmlspecialchars($busca) ?>" class="input" style="max-width: 300px;">
+            <input type="text" name="busca" placeholder="Buscar fornecedor..." value="<?= htmlspecialchars($busca) ?>"
+                class="input" style="max-width: 300px;">
             <button type="submit" class="btn" style="margin-left: 10px;"> Buscar</button>
         </form>
 
@@ -53,10 +56,16 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($fornecedor['contato_fornecedor']) ?></td>
                             <td><?= htmlspecialchars($fornecedor['cnpj_fornecedor']) ?></td>
                             <td class="actions">
-                                <a class="btn-edit" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver</a>
-                                <a class="btn-edit" href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
-                                <a class="btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
+                                <div class="btn-group">
+                                    <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver</a>
+                                    <a class="btn btn-edit"
+                                        href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
+                                    <a class="btn btn-delete"
+                                        href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
+                                        onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
+                                </div>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -66,4 +75,5 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </body>
+
 </html>
