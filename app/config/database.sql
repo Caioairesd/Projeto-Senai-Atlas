@@ -28,6 +28,18 @@ CREATE TABLE perfil(
     nome_perfil VARCHAR(30) NOT NULL UNIQUE
 );
 
+CREATE TABLE `funcionario` (
+  `id_funcionario` int(11) NOT NULL,
+  `nome_funcionario` varchar(50) NOT NULL,
+  `email_funcionario` varchar(50) NOT NULL,
+  `telefone_funcionario` varchar(20) DEFAULT NULL,
+  `cpf_funcionario` varchar(20) NOT NULL,
+  `salario_funcionario` decimal(10,2) DEFAULT NULL,
+  `endereco_funcionario` varchar(100) DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
+  `data_admissao` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE usuario(
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome_usuario VARCHAR(30) NOT NULL,
@@ -42,7 +54,7 @@ CREATE TABLE cliente(
     nome_cliente VARCHAR(50) NOT NULL,
     email_cliente VARCHAR(50) NOT NULL UNIQUE,
     telefone_cliente VARCHAR(20),
-    cnpj_fornecedor VARCHAR(20) NOT NULL UNIQUE
+    cnpj_cliente VARCHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE estoque(
