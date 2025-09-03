@@ -604,3 +604,66 @@ body {
   color: #f37e10;
   border: 1px solid #f37e10;
 }
+
+.tabela-clientes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabela-clientes th,
+.tabela-clientes td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.acoes a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: bold;
+}
+
+.acoes a:hover {
+    text-decoration: underline;
+    color: #005999;
+}
+
+
+/*Detalhes do cliente*/
+
+.btn-group a {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+  background-color: #f37e10;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #d96c00;
+}
+
+.btn-delete {
+  background-color: #d93025;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #b71c1c;
+}
+
+.btn {
+  background-color: #2879f3;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #0653c7;
+}
