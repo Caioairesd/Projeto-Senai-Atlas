@@ -76,7 +76,7 @@
         <!-- Logout -->
         <div class="sidebar-footer">
             <div class="logout-item">
-                <form action="../Login/logout.php" method="post">
+                <form action="../../Login/logout.php" method="post">
                     <button type="submit" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="menu-text">Sair</span>
