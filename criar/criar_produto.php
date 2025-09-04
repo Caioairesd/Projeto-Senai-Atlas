@@ -12,21 +12,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $preco_produto = $_POST['preco_produto'] ?? '';
     $fornecedor_id = $_POST['fornecedor_id'] ?? '';
 
-    $imagem_url_produto = '';
-    if (isset($_FILES['imagem_url_produto']) && $_FILES['imagem_url_produto']['error'] === UPLOAD_ERR_OK) {
-        $extensao = pathinfo($_FILES['imagem_url_produto']['name'], PATHINFO_EXTENSION);
-        $nome_arquivo = uniqid('produto_') . '.' . $extensao;
-        $caminho_destino = '../uploads/' . $nome_arquivo;
+    $imagem_blob = null;
 
-        if (move_uploaded_file($_FILES['imagem_url_produto']['tmp_name'], $caminho_destino)) {
-            $imagem_url_produto = $caminho_destino;
-        } else {
-            $msg = '<div class="erro">❌ Erro ao salvar a imagem!</div>';
+    // Verifica se foi enviada uma imagem
+    if (!empty($_FILES['imagem_url_produto']['tmp_name']) && $_FILES['imagem_url_produto']['error'] === UPLOAD_ERR_OK) {
+        $tmpFile  = $_FILES['imagem_url_produto']['tmp_name'];
+        $fileSize = $_FILES['imagem_url_produto']['size'];
+
+        // Limite de tamanho (2MB)
+        $maxSize = 2 * 1024 * 1024;
+        if ($fileSize > $maxSize) {
+            die("Erro: A imagem excede o tamanho máximo de 2MB.");
         }
+
+        // Verifica tipo real da imagem
+        $tipo = @exif_imagetype($tmpFile);
+        $tiposPermitidos = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
+
+        if ($tipo === false || !in_array($tipo, $tiposPermitidos)) {
+            die("Erro: Apenas imagens JPEG, PNG ou GIF são permitidas.");
+        }
+
+        // Lê o conteúdo binário para salvar no banco
+        $imagem_blob = file_get_contents($tmpFile);
     }
 
-    $sql = "INSERT INTO produto (nome_produto, descricao_produto, plataforma_produto, tipo_produto, preco_produto, imagem_url_produto, fornecedor_id)
-            VALUES (:nome_produto, :descricao_produto, :plataforma_produto, :tipo_produto, :preco_produto, :imagem_url_produto, :fornecedor_id)";
+    // Inserir produto
+    $sql = "INSERT INTO produto 
+            (nome_produto, descricao_produto, plataforma_produto, tipo_produto, preco_produto, imagem_url_produto, fornecedor_id)
+            VALUES 
+            (:nome_produto, :descricao_produto, :plataforma_produto, :tipo_produto, :preco_produto, :imagem_blob, :fornecedor_id)";
     $stmt = $pdo->prepare($sql);
 
     $stmt->bindParam(':nome_produto', $nome_produto);
@@ -34,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':plataforma_produto', $plataforma_produto);
     $stmt->bindParam(':tipo_produto', $tipo_produto);
     $stmt->bindParam(':preco_produto', $preco_produto);
-    $stmt->bindParam(':imagem_url_produto', $imagem_url_produto);
+    $stmt->bindParam(':imagem_blob', $imagem_blob, PDO::PARAM_LOB);
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
 
     if ($stmt->execute()) {

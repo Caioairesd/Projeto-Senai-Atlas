@@ -14,18 +14,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $nascimento = $_POST['data_nascimento'] ?? '';
   $admissao = $_POST['data_admissao'] ?? '';
 
-  // Upload da imagem
-  $imagem = '';
-  if (!empty($_FILES['imagem_funcionario']['name'])) {
-    $nomeArquivo = uniqid() . '_' . $_FILES['imagem_funcionario']['name'];
-    $caminho = '../uploads/' . $nomeArquivo;
-    if (move_uploaded_file($_FILES['imagem_funcionario']['tmp_name'], $caminho)) {
-      $imagem = $caminho;
-    }
-  }
+  $imagem = null;
 
+  // Verifica se foi enviada uma imagem
+    if (!empty($_FILES['imagem_url_funcionario']['tmp_name'])) {
+        $tmpFile = $_FILES['imagem_url_funcionario']['tmp_name'];
+        $fileSize = $_FILES['imagem_url_funcionario']['size'];
+
+        // Limite de tamanho (2MB)
+        $maxSize = 2 * 1024 * 1024; // 2MB
+        if ($fileSize > $maxSize) {
+            die("Erro: A imagem excede o tamanho máximo de 2MB.");
+        }
+
+        // Verifica o tipo real da imagem
+        $tipo = @exif_imagetype($tmpFile);
+        $tiposPermitidos = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
+
+        if ($tipo === false || !in_array($tipo, $tiposPermitidos)) {
+            die("Erro: Apenas imagens JPEG, PNG ou GIF são permitidas.");
+        }
+
+        // Lê o conteúdo da imagem para salvar no banco
+        $imagem = file_get_contents($tmpFile);
+    }
   // Inserir funcionário
-  $sql = "INSERT INTO funcionario (nome_funcionario, email_funcionario, telefone_funcionario, cpf_funcionario, salario_funcionario, endereco_funcionario, data_nascimento, data_admissao, imagem_funcionario)
+  $sql = "INSERT INTO funcionario (nome_funcionario, email_funcionario, telefone_funcionario, cpf_funcionario, salario_funcionario, endereco_funcionario, data_nascimento, data_admissao, imagem_url_funcionario)
             VALUES (:nome, :email, :telefone, :cpf, :salario, :endereco, :nascimento, :admissao, :imagem)";
   $stmt = $pdo->prepare($sql);
   $stmt->bindParam(':nome', $nome);
@@ -36,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $stmt->bindParam(':endereco', $endereco);
   $stmt->bindParam(':nascimento', $nascimento);
   $stmt->bindParam(':admissao', $admissao);
-  $stmt->bindParam(':imagem', $imagem);
+  $stmt->bindParam(':imagem', $imagem, PDO::PARAM_LOB);
 
   if ($stmt->execute()) {
     $idFuncionario = $pdo->lastInsertId();
@@ -88,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div class="input-group"><label>Data de nascimento</label><input type="date" name="data_nascimento" required>
       </div>
       <div class="input-group"><label>Data de admissão</label><input type="date" name="data_admissao" required></div>
-      <div class="input-group"><label>Foto</label><input type="file" name="imagem_funcionario" accept="image/*"></div>
+      <div class="input-group"><label>Foto</label><input type="file" name="imagem_url_funcionario" accept="image/*"></div>
 
       <hr>
       <h3>Dados de acesso do usuário</h3>

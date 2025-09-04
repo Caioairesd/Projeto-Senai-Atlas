@@ -34,7 +34,7 @@
                         <input type="checkbox" id="remember" name="remember" />
                         <label for="remember" class="label">Lembrar de mim</label>
                     </div>
-                    #Esqueci a senha</a>
+                    <a href="../esqueci_senha/solicitar_recuperacao.php">Esqueci minha senha</a>
                 </div>
 
                 <button type="submit" class="btn">Login</button>

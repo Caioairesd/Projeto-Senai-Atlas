@@ -1,20 +1,22 @@
 <?php
 session_start();
-require_once '../cruds/conexao.php';
+require_once '../config/conexao.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM usuario WHERE nome_usuario = :username AND senha_usuario = :password";
+// Busca o usuário pelo nome
+$sql = "SELECT * FROM usuario WHERE nome_usuario = :username LIMIT 1";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':username', $username);
-$stmt->bindParam(':password', $password);
 $stmt->execute();
 
-if ($stmt->rowCount() === 1) {
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
+    // Login OK
     $_SESSION['usuario'] = $usuario['nome_usuario'];
-    $_SESSION['perfil'] = $usuario['perfil_id']; // <- ESSENCIAL
+    $_SESSION['perfil']  = $usuario['perfil_id'];
     header("Location: ../public/dashboard_principal.php");
     exit();
 } else {
