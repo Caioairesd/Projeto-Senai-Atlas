@@ -1,5 +1,7 @@
 <?php
 require_once('../conexao.php');
+include '../assets/sidebar.php';
+
 $sql = "SELECT id_funcionario, nome_funcionario, email_funcionario, imagem_funcionario FROM funcionario ORDER BY nome_funcionario ASC";
 $stmt = $pdo->query($sql);
 $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -1,5 +1,6 @@
 <?php
 require_once('../conexao.php');
+include '../assets/sidebar.php';
 $busca = $_GET['busca'] ?? '';
 
 // Consulta com filtro
