@@ -81,9 +81,9 @@ if (!$funcionario) {
         </div>
 
         <div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px;">
-            <a class="btn btn-edit" href="editar_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>">✏️ Editar</a>
+            <a class="btn btn-edit" href="../editar/editar_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>">✏️ Editar</a>
             <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">🗑️ Excluir</a>
-            <a class="btn" href="visualizar_funcionarios.php">🔙 Voltar</a>
+            <a class="btn" href="visualizar_funcionario.php">🔙 Voltar</a>
         </div>
     </div>
 </body>

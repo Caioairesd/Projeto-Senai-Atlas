@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Salvar</button>
-                <a href="../visualizar/visualizar_funcionarios.php" class="btn btn-delete">Cancelar</a>
+                <a href="../visualizar/visualizar_funcionario.php" class="btn btn-delete">Cancelar</a>
             </div>
         </form>
     </div>
