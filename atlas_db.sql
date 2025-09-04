@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03/09/2025 às 21:31
+-- Tempo de geração: 04/09/2025 às 03:11
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,9 +40,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nome_cliente`, `email_cliente`, `telefone_cliente`, `cnpj_cliente`) VALUES
-(2, 'Kaio VINICIUS AIRES DA SILVA', 'caiovns30@gmail.com', '47992394209', '111111111111111111'),
-(3, 'Teste', 'teste@GMAIL.COM', '1111111111111', '4444444444444444'),
-(4, 'FSZDKHHASDHASH', 'SHDHSHS@GMAIL.COM', '44444444', '77777777777');
+(1, 'kaio\'', 'kaio@gmail', '68686868', '000000000');
 
 -- --------------------------------------------------------
 
@@ -60,6 +58,21 @@ CREATE TABLE `estoque` (
   `observacao_estoque` text DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Acionadores `estoque`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_entrada_estoque` AFTER INSERT ON `estoque` FOR EACH ROW BEGIN
+UPDATE produto
+SET
+    qtde_estoque_produto = qtde_estoque_produto + NEW.qtde_estoque
+WHERE
+    id_produto = NEW.produto_id;
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -80,7 +93,7 @@ CREATE TABLE `fornecedor` (
 --
 
 INSERT INTO `fornecedor` (`id_fornecedor`, `nome_fornecedor`, `contato_fornecedor`, `email_fornecedor`, `cnpj_fornecedor`) VALUES
-(2, 'Logitech', '44444444444', 'logi@gmail.com', '999999999');
+(1, 'Gamesmani', '23332323', 'gameman@gmail.com', '88888888');
 
 -- --------------------------------------------------------
 
@@ -93,12 +106,21 @@ CREATE TABLE `funcionario` (
   `nome_funcionario` varchar(50) NOT NULL,
   `email_funcionario` varchar(50) NOT NULL,
   `telefone_funcionario` varchar(20) DEFAULT NULL,
-  `cpf_funcionario` varchar(20) NOT NULL,
+  `cpf_funcionario` varchar(11) NOT NULL,
   `salario_funcionario` decimal(10,2) DEFAULT NULL,
   `endereco_funcionario` varchar(100) DEFAULT NULL,
   `data_nascimento` date DEFAULT NULL,
-  `data_admissao` date DEFAULT NULL
+  `data_admissao` date DEFAULT NULL,
+  `imagem_funcionario` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `funcionario`
+--
+
+INSERT INTO `funcionario` (`id_funcionario`, `nome_funcionario`, `email_funcionario`, `telefone_funcionario`, `cpf_funcionario`, `salario_funcionario`, `endereco_funcionario`, `data_nascimento`, `data_admissao`, `imagem_funcionario`) VALUES
+(2, 'Kaio', 'kaio@atlas', '44444444', '444444444', 444444.00, 'rua suburbana ', '2008-08-02', '2025-09-02', '../uploads/68b8cf1a4da41_Captura de tela 2025-06-10 213505.png'),
+(5, 'Kaio', 'kaio@atsa', '44444444', '6666666666', 444444.00, 'rua suburbana ', '2008-08-02', '2025-09-02', '../uploads/68b8daab43d60_Captura de tela 2025-06-10 213641.png');
 
 -- --------------------------------------------------------
 
@@ -113,6 +135,40 @@ CREATE TABLE `item_pedido` (
   `qtde_item` int(11) NOT NULL,
   `preco_unitario` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Acionadores `item_pedido`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_saida_estoque` AFTER INSERT ON `item_pedido` FOR EACH ROW BEGIN
+UPDATE produto
+SET
+    qtde_estoque_produto = qtde_estoque_produto - NEW.qtde_item
+WHERE
+    id_produto = NEW.produto_id;
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_valida_estoque` BEFORE INSERT ON `item_pedido` FOR EACH ROW BEGIN DECLARE estoque_atual INT;
+
+SELECT
+    qtde_estoque_produto INTO estoque_atual
+FROM
+    produto
+WHERE
+    id_produto = NEW.produto_id;
+
+IF estoque_atual < NEW.qtde_item THEN SIGNAL SQLSTATE '45000'
+SET
+    MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+
+END IF;
+
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -140,6 +196,15 @@ CREATE TABLE `perfil` (
   `nome_perfil` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `nome_perfil`) VALUES
+(1, 'Administrador'),
+(3, 'Estoquista'),
+(2, 'Vendedor');
+
 -- --------------------------------------------------------
 
 --
@@ -163,8 +228,7 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`id_produto`, `nome_produto`, `descricao_produto`, `plataforma_produto`, `tipo_produto`, `preco_produto`, `qtde_estoque_produto`, `imagem_url_produto`, `fornecedor_id`) VALUES
-(1, 'god of war', 'raaaaaaaaaaaaaaaaaaa', 'ps4', 'ação', 0.00, 0, 'logo_subtitle_var1.png', NULL),
-(6, 'god of war', 'Jogo de guerra', 'PS5', 'ação', 0.00, 0, '../uploads/produto_68b88bc4960b2.jpg', 2);
+(2, 'the last of us', 'Jogo de aventura ', 'PS5', 'Ação', 10000.00, 0, '../uploads/produto_68b8c2dc10c8d.png', 1);
 
 -- --------------------------------------------------------
 
@@ -177,8 +241,17 @@ CREATE TABLE `usuario` (
   `nome_usuario` varchar(30) NOT NULL,
   `email_usuario` varchar(50) NOT NULL,
   `senha_usuario` varchar(50) NOT NULL,
-  `perfil_id` int(11) DEFAULT NULL
+  `perfil_id` int(11) DEFAULT NULL,
+  `funcionario_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nome_usuario`, `email_usuario`, `senha_usuario`, `perfil_id`, `funcionario_id`) VALUES
+(2, 'eberth.atlas', 'kaio@atlas', '$2y$10$QnM8q3fuIZRwUiVfKD3CWu1SXMn36ecyXMsOsTxVQwu', 1, 2),
+(4, 'akskdajdja.atlas', 'kaio@atsa', '$2y$10$0YMJahuRmBPWryQKf5Q7FuQ0IINxrXeW7NCY5rfSsew', 1, 5);
 
 --
 -- Índices para tabelas despejadas
@@ -207,6 +280,13 @@ ALTER TABLE `fornecedor`
   ADD PRIMARY KEY (`id_fornecedor`),
   ADD UNIQUE KEY `email_fornecedor` (`email_fornecedor`),
   ADD UNIQUE KEY `cnpj_fornecedor` (`cnpj_fornecedor`);
+
+--
+-- Índices de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  ADD PRIMARY KEY (`id_funcionario`),
+  ADD UNIQUE KEY `cpf_funcionario` (`cpf_funcionario`);
 
 --
 -- Índices de tabela `item_pedido`
@@ -244,7 +324,8 @@ ALTER TABLE `produto`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `email_usuario` (`email_usuario`),
-  ADD KEY `perfil_id` (`perfil_id`);
+  ADD KEY `perfil_id` (`perfil_id`),
+  ADD KEY `funcionario_id` (`funcionario_id`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -254,7 +335,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `estoque`
@@ -266,7 +347,13 @@ ALTER TABLE `estoque`
 -- AUTO_INCREMENT de tabela `fornecedor`
 --
 ALTER TABLE `fornecedor`
-  MODIFY `id_fornecedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_fornecedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  MODIFY `id_funcionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `item_pedido`
@@ -284,19 +371,19 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de tabela `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perfil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para tabelas despejadas
@@ -333,7 +420,8 @@ ALTER TABLE `produto`
 -- Restrições para tabelas `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`perfil_id`) REFERENCES `perfil` (`id_perfil`);
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`perfil_id`) REFERENCES `perfil` (`id_perfil`),
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id_funcionario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
