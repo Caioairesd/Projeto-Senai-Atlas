@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../cruds/conexao.php';
+require_once '../config/conexao.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];

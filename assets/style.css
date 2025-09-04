@@ -312,126 +312,156 @@ html {
 
 /* Sidebar base */
 .sidebar {
-    width: 60px;
-    height: 100vh;
-    background-color: #2c3e50;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    transition: width 0.3s ease;
-    z-index: 1000;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+  width: 60px;
+  height: 100vh;
+  background-color: #2c3e50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: visible; /* permite dropdown visível fora da largura colapsada */
+  transition: width 0.25s ease;
+  z-index: 1000;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
-/* Sidebar expandida */
+/* Expandida */
 .sidebar:hover {
-    width: 250px;
+  width: 250px;
 }
 
 /* Menu principal */
 .menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
 }
 
 .menu > li {
-    position: relative;
+  position: relative;
 }
 
+/* Link do menu */
 .menu > li > a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 20px;
-    color: #ecf0f1;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.3s ease;
-    border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  color: #ecf0f1;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 8px;
+  transition: background 0.2s ease, padding 0.2s ease;
 }
 
 /* Ícone */
 .menu-icon {
-    font-size: 18px;
-    min-width: 20px;
-    text-align: center;
+  width: 36px;
+  min-width: 36px;
+  text-align: center;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Texto do menu */
+/* Estado COLAPSADO — apenas ícone centrado */
+.sidebar:not(:hover) .menu > li > a {
+  justify-content: center;
+  padding: 12px 0;
+  gap: 0;
+}
+
+/* Texto do menu com transição suave usando max-width */
 .menu-text {
-    display: none;
-    transition: opacity 0.3s ease;
+  display: inline-block;
+  max-width: 0;                 /* começa escondido */
+  opacity: 0;
+  transform: translateX(-8px);
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  transition: max-width 0.25s ease, opacity 0.2s ease, transform 0.25s ease;
 }
 
-/* Mostrar texto ao expandir */
+/* Mostrar texto ao expandir (hover) */
 .sidebar:hover .menu-text {
-    display: inline;
-    opacity: 1;
+  max-width: 160px;             /* ajuste conforme seu layout */
+  opacity: 1;
+  transform: translateX(0);
+  margin-left: 6px;
 }
 
-/* Dropdown */
+/* Dropdown (inicial escondido) */
 .dropdown-menu {
-    display: none;
-    list-style: none;
-    margin: 0;
-    background-color: #34495e;
-    border-radius: 10px;
+  display: none;
+  list-style: none;
+  margin: 6px 0 0 0;
+  padding: 6px;
+  background-color: #34495e;
+  border-radius: 8px;
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block;
+/* Mostrar dropdown apenas quando a sidebar estiver expandida E o item for hover */
+.sidebar:hover .dropdown:hover .dropdown-menu {
+  display: block;
 }
 
+/* Itens do dropdown */
 .dropdown-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 12px 30px;
-    color: #ecf0f1;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background 0.3s ease;
-    border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 6px;
 }
 
 .dropdown-menu li a:hover {
-    background-color: #3d566e;
+  background-color: #3d566e;
 }
 
-/* Conteúdo principal */
+/* Conteúdo principal empurra junto */
 main {
-    margin-left: 60px;
-    transition: margin-left 0.3s ease;
+  margin-left: 60px;
+  transition: margin-left 0.25s ease;
 }
 
 .sidebar:hover ~ main {
-    margin-left: 250px;
+  margin-left: 250px;
 }
 
 /* Logout */
 .logout-item {
-    border-top: 1px solid #3d566e;
-    margin-top: 10px;
+  border-top: 1px solid #3d566e;
+  margin-top: 10px;
+  padding-top: 10px;
 }
 
 .logout-item button {
-    width: 100%;
-    padding: 15px 20px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    border: none;
-    text-align: left;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  color: #ecf0f1;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
 }
 
-.logout-item button:hover {
-    background-color: #34495e;
+/* Logout colapsado: apenas ícone */
+.sidebar:not(:hover) .logout-item button {
+  justify-content: center;
+  padding: 12px 0;
+  gap: 0;
+}
+
+/* Garante que o dropdown não apareça quando a sidebar estiver fechada */
+.sidebar:not(:hover) .dropdown-menu {
+  display: none !important;
 }

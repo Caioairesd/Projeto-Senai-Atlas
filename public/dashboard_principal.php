@@ -29,6 +29,7 @@ $permissoes = [
         "Excluir" => ["excluir_cliente.php", "excluir_fornecedor.php", "excluir_funcionario.php", "excluir_produto.php"],
         "Visualizar" => ["visualizar_cliente.php", "visualizar_fornecedor.php", "visualizar_funcionario.php", "visualizar_produto.php"],
         "Detalhes" => ["detalhes_cliente.php", "detalhes_fornecedor.php", "detalhes_produto.php"]
+        
     ],
     // ADICIONAR PERMISSÕES 2 E 3 CONFORME NECESSÁRIO
 ];
