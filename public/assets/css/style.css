@@ -1,0 +1,86 @@
+/* Sidebar recolhida */
+.sidebar {
+    width: 60px;
+    height: 100vh;
+    background-color: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    z-index: 1000;
+}
+
+/* Expande ao passar o mouse */
+.sidebar:hover {
+    width: 250px;
+}
+
+/* Menu principal */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu > li > a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: background 0.3s, opacity 0.3s;
+}
+
+/* Oculta o texto quando recolhido */
+.sidebar:not(:hover) .menu > li > a {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Dropdown oculto por padrão */
+.dropdown-menu {
+    display: none;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    background-color: #34495e;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 12px 30px;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s;
+}
+
+/* Oculta o texto do dropdown quando recolhido */
+.sidebar:not(:hover) .dropdown-menu li a {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mostrar dropdown ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Conteúdo principal */
+main {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar:hover ~ main {
+    margin-left: 250px;
+}
