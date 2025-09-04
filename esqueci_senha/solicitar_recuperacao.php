@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isHTML(true);
             $mail->Subject = 'Recuperação de senha';
             $mail->Body    = "Clique no link para redefinir sua senha: 
-                <a href='http://localhost/htdocs/php/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
-            $mail->AltBody = "Copie e cole no navegador: http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
+                <a href='http://localhost:8080/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
+            $mail->AltBody = "Copie e cole no navegador: http://localhost:8080/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
 
             $mail->send();
             echo "E-mail de recuperação enviado!";
