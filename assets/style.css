@@ -1,4 +1,4 @@
-/* ===================== RESET E BASE ===================== */
+/* ===================== VARIÁVEIS CSS ===================== */
 :root {
   --primary: #2879f3;
   --primary-dark: #0653c7;
@@ -12,6 +12,7 @@
   --font: "Segoe UI", Roboto, sans-serif;
 }
 
+/* ===================== RESET E BASE ===================== */
 * {
   margin: 0;
   padding: 0;
@@ -21,8 +22,40 @@
 body,
 html {
   font-family: var(--font);
-  background-color: var(--bg-light);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
   color: var(--text);
+}
+
+/* ===================== LAYOUT PRINCIPAL ===================== */
+.main-content {
+  margin-left: 70px;
+  transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+  padding: 40px;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--bg-white);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.content-wrapper h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.content-wrapper p {
+  font-size: 16px;
+  color: #64748b;
+  line-height: 1.6;
 }
 
 /* ===================== CONTAINERS GERAIS ===================== */
@@ -45,7 +78,7 @@ html {
   margin-bottom: 20px;
 }
 
-/* ===================== BOTÕES ===================== */
+/* ===================== SISTEMA DE BOTÕES ===================== */
 .btn {
   display: inline-block;
   padding: 10px 16px;
@@ -57,11 +90,13 @@ html {
   color: white;
   text-align: center;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .btn:hover {
   background-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .btn-edit {
@@ -78,6 +113,21 @@ html {
 
 .btn-delete:hover {
   background-color: var(--danger-dark);
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.btn-group a {
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 /* ===================== FORMULÁRIOS ===================== */
@@ -98,21 +148,26 @@ html {
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 14px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .input-group input:focus {
   border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(40, 121, 243, 0.1);
 }
 
-/* ===================== TABELAS ===================== */
+/* ===================== SISTEMA DE TABELAS ===================== */
 .table,
 .table-produto,
 .table-funcionario {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .table th,
@@ -140,22 +195,40 @@ html {
   background-color: var(--bg-light);
 }
 
-.table .actions {
+.table .actions,
+.acoes {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-/* ===================== MENSAGENS ===================== */
+.acoes a {
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.acoes a:hover {
+  text-decoration: underline;
+  color: var(--primary-dark);
+}
+
+/* ===================== SISTEMA DE MENSAGENS ===================== */
 .sucesso,
 .erro,
 .alert,
 .alert-produto,
-.alert-funcionario {
+.alert-funcionario,
+.alert-success,
+.alert-error,
+.alert-warning {
   padding: 12px;
   margin-bottom: 20px;
   border-radius: 8px;
   font-weight: 600;
   text-align: center;
+  border: 1px solid;
 }
 
 .sucesso,
@@ -163,24 +236,253 @@ html {
 .alert-funcionario {
   background-color: #e6f4ff;
   color: var(--primary);
-  border: 1px solid var(--primary);
+  border-color: var(--primary);
 }
 
 .erro,
 .alert-error {
   background-color: #ffe6e6;
   color: var(--danger);
-  border: 1px solid var(--danger);
+  border-color: var(--danger);
 }
 
 .alert-warning,
 .alert-produto {
   background-color: #fff8e1;
   color: var(--accent);
-  border: 1px solid var(--accent);
+  border-color: var(--accent);
 }
 
-/* ===================== MODAIS ===================== */
+/* ===================== SIDEBAR NAVEGAÇÃO ===================== */
+.sidebar {
+  width: 70px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  box-shadow: 4px 0 20px rgba(30, 58, 138, 0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar:hover {
+  width: 280px;
+  box-shadow: 4px 0 30px rgba(30, 58, 138, 0.25);
+}
+
+.sidebar:hover ~ .main-content {
+  margin-left: 280px;
+}
+
+/* Header da sidebar */
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.logo i {
+  font-size: 24px;
+  color: #60a5fa;
+  min-width: 24px;
+}
+
+.logo-text {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+  white-space: nowrap;
+}
+
+.sidebar:hover .logo-text {
+  opacity: 1;
+}
+
+/* Menu da sidebar */
+.menu {
+  list-style: none;
+  padding: 0 15px;
+  margin: 0;
+}
+
+.menu > li {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 15px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.menu-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.menu-item:hover::before {
+  width: 100%;
+}
+
+.menu-item:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.menu-icon {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+  color: #93c5fd;
+}
+
+.menu-text {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sidebar:hover .menu-text {
+  opacity: 1;
+}
+
+.dropdown-arrow {
+  margin-left: auto;
+  font-size: 12px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #93c5fd;
+}
+
+.sidebar:hover .dropdown-arrow {
+  opacity: 1;
+}
+
+.dropdown:hover .dropdown-arrow {
+  transform: rotate(90deg);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  display: none;
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 8px;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+.dropdown-menu li {
+  margin-bottom: 4px;
+}
+
+.dropdown-menu li:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.dropdown-menu a:hover {
+  background: rgba(59, 130, 246, 0.3);
+  color: white;
+  transform: translateX(4px);
+}
+
+.dropdown-menu i {
+  font-size: 14px;
+  color: #93c5fd;
+  min-width: 16px;
+}
+
+/* Footer da sidebar */
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 16px 15px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: inherit;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  transform: translateX(5px);
+}
+
+.logout-btn i {
+  font-size: 16px;
+  min-width: 16px;
+}
+
+/* ===================== SISTEMA DE MODAIS ===================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -194,13 +496,15 @@ html {
   z-index: 999;
 }
 
-.modal {
+.modal,
+.modal-content {
   background-color: var(--bg-white);
   padding: 30px;
   border-radius: 12px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -220,6 +524,22 @@ html {
   display: flex;
   justify-content: center;
   gap: 20px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: var(--danger);
 }
 
 /* ===================== DETALHES DO PRODUTO ===================== */
@@ -244,35 +564,7 @@ html {
   border-radius: 8px;
   display: block;
   margin: 0 auto 20px;
-}
-
-/* ===================== GRUPO DE BOTÕES ===================== */
-.btn-group {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.btn-group a {
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-/* ===================== AÇÕES EM TABELAS ===================== */
-.acoes a {
-  margin-right: 10px;
-  text-decoration: none;
-  color: var(--primary);
-  font-weight: bold;
-}
-
-.acoes a:hover {
-  text-decoration: underline;
-  color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* ===================== ANIMAÇÕES ===================== */
@@ -287,16 +579,69 @@ html {
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== SCROLLBAR PERSONALIZADA ===================== */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
 /* ===================== RESPONSIVIDADE ===================== */
 @media (max-width: 768px) {
+  .sidebar {
+    width: 0;
+    transform: translateX(-100%);
+  }
+
+  .sidebar:hover {
+    width: 280px;
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .sidebar:hover ~ .main-content {
+    margin-left: 0;
+  }
+
   .form-wrapper,
   .table-wrapper,
   .details-wrapper {
     padding: 20px;
+    margin: 20px auto;
   }
 
   .table th,
-  .table td {
+  .table td,
+  .table-produto th,
+  .table-produto td,
+  .table-funcionario th,
+  .table-funcionario td {
     padding: 10px;
   }
 
@@ -305,133 +650,15 @@ html {
     margin-bottom: 10px;
   }
 
-  .table .actions {
+  .table .actions,
+  .acoes {
     flex-direction: column;
+    gap: 5px;
   }
-}
 
-/* Sidebar base */
-.sidebar {
-    width: 60px;
-    height: 100vh;
-    background-color: #2c3e50;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    transition: width 0.3s ease;
-    z-index: 1000;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-
-/* Sidebar expandida */
-.sidebar:hover {
-    width: 250px;
-}
-
-/* Menu principal */
-.menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.menu > li {
-    position: relative;
-}
-
-.menu > li > a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 20px;
-    color: #ecf0f1;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.3s ease;
-    border-radius: 10px;
-}
-
-/* Ícone */
-.menu-icon {
-    font-size: 18px;
-    min-width: 20px;
-    text-align: center;
-}
-
-/* Texto do menu */
-.menu-text {
-    display: none;
-    transition: opacity 0.3s ease;
-}
-
-/* Mostrar texto ao expandir */
-.sidebar:hover .menu-text {
-    display: inline;
-    opacity: 1;
-}
-
-/* Dropdown */
-.dropdown-menu {
-    display: none;
-    list-style: none;
-    margin: 0;
-    background-color: #34495e;
-    border-radius: 10px;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu li a {
-    display: flex;
-    align-items: center;
-    padding: 12px 30px;
-    color: #ecf0f1;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background 0.3s ease;
-    border-radius: 8px;
-}
-
-.dropdown-menu li a:hover {
-    background-color: #3d566e;
-}
-
-/* Conteúdo principal */
-main {
-    margin-left: 60px;
-    transition: margin-left 0.3s ease;
-}
-
-.sidebar:hover ~ main {
-    margin-left: 250px;
-}
-
-/* Logout */
-.logout-item {
-    border-top: 1px solid #3d566e;
-    margin-top: 10px;
-}
-
-.logout-item button {
-    width: 100%;
-    padding: 15px 20px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    border: none;
-    text-align: left;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logout-item button:hover {
-    background-color: #34495e;
+  .modal,
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
 }

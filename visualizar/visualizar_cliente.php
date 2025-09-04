@@ -1,3 +1,4 @@
+
 <?php
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
@@ -17,6 +18,29 @@ $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<script>
+    function abrirModal(url) {
+        const overlay = document.getElementById('modal-overlay');
+        const body = document.getElementById('modal-body');
+
+        overlay.style.display = 'flex';
+        body.innerHTML = 'Carregando...';
+
+        fetch(url)
+            .then(res => res.text())
+            .then(html => {
+                body.innerHTML = html;
+            })
+            .catch(() => {
+                body.innerHTML = '<p>Erro ao carregar conteúdo.</p>';
+            });
+    }
+
+    function fecharModal() {
+        document.getElementById('modal-overlay').style.display = 'none';
+        document.getElementById('modal-body').innerHTML = '';
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,9 +80,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($cliente['telefone_cliente']) ?></td>
                             <td><?= htmlspecialchars($cliente['cnpj_cliente']) ?></td>
                             <td class="actions">
-                                <a class="btn" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>"> Ver</a>
-                                <a class="btn btn-edit" href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>"> Editar</a>
-                                <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+                                <a class="btn" href="#" onclick="abrirModal('detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>'); return false;">Ver Detalhes</a>
+
                             </td>
 
                         </tr>
@@ -69,6 +92,13 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="alert alert-warning">Nenhum cliente encontrado com esse termo.</div>
         <?php endif; ?>
     </div>
+    <div id="modal-overlay" style="display: none;" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModal()">✖</button>
+            <div id="modal-body">Carregando...</div>
+        </div>
+    </div>
+
 </body>
 
 </html>

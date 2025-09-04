@@ -17,7 +17,7 @@ if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
     // Login OK
     $_SESSION['usuario'] = $usuario['nome_usuario'];
     $_SESSION['perfil']  = $usuario['perfil_id'];
-    header("Location: ../public/dashboard_principal.php");
+    header("Location: ../dashboard/dashboard.php");
     exit();
 } else {
     echo "<script>alert('Usuário ou senha inválidos'); window.location.href='login.php';</script>";

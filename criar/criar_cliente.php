@@ -2,6 +2,7 @@
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
+
 $msg = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
 
       <button type="submit" class="btn">Cadastrar</button>
-      <button type="reset" class="btn" style="background-color: #ccc; color: #333;">Limpar</button>
+      <button type="reset" class="btn btn-edit" >Limpar</button>
     </form>
   </div>
 

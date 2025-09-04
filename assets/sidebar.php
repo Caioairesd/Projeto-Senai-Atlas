@@ -1,68 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"/>
+    <title>Sistema Atlas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 
+<body>
     <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span class="logo-text">Atlas</span>
+            </div>
+        </div>
+
         <ul class="menu">
             <!-- Cadastrar -->
             <li class="dropdown">
-                <a href="#">Cadastrar</a>
+                <a href="#" class="menu-item">
+                    <i class="menu-icon fas fa-plus-circle"></i>
+                    <span class="menu-text">Cadastrar</span>
+                    <i class="dropdown-arrow fas fa-chevron-right"></i>
+                </a>
                 <ul class="dropdown-menu">
-                    <li><a href="../criar/criar_cliente.php">Criar Cliente</a></li>
-                    <li><a href="../criar/criar_fornecedor.php">Criar Fornecedor</a></li>
-                    <li><a href="../criar/criar_funcionario.php">Criar Funcionário</a></li>
-                    <li><a href="../criar/criar_produto.php">Criar Produto</a></li>
-                </ul>
-            </li>
-
-            <!-- Editar -->
-            <li class="dropdown">
-                <a href="#">Editar</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../editar/editar_cliente.php">Editar Cliente</a></li>
-                    <li><a href="../editar/editar_fornecedor.php">Editar Fornecedor</a></li>
-                    <li><a href="../editar/editar_funcionario.php">Editar Funcionário</a></li>
-                    <li><a href="../editar/editar_produto.php">Editar Produto</a></li>
-                </ul>
-            </li>
-
-            <!-- Excluir -->
-            <li class="dropdown">
-                <a href="#">Excluir</a>
-                <ul class="dropdown-menu">
-                    <li><a href="../excluir/excluir_cliente.php">Excluir Cliente</a></li>
-                    <li><a href="../excluir/excluir_fornecedor.php">Excluir Fornecedor</a></li>
-                    <li><a href="../excluir/excluir_funcionario.php">Excluir Funcionário</a></li>
-                    <li><a href="../excluir/excluir_produto.php">Excluir Produto</a></li>
+                    <li><a href="../criar/criar_cliente.php">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Cadastrar Cliente</span>
+                        </a></li>
+                    <li><a href="../criar/criar_fornecedor.php">
+                            <i class="fas fa-truck"></i>
+                            <span>Cadastrar Fornecedor</span>
+                        </a></li>
+                    <li><a href="../criar/criar_funcionario.php">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Cadastrar Funcionário</span>
+                        </a></li>
+                    <li><a href="../criar/criar_produto.php">
+                            <i class="fas fa-box"></i>
+                            <span>Cadastrar Produto</span>
+                        </a></li>
                 </ul>
             </li>
 
             <!-- Visualizar -->
             <li class="dropdown">
-                <a href="#">Visualizar</a>
+                <a href="#" class="menu-item">
+                    <i class="menu-icon fas fa-eye"></i>
+                    <span class="menu-text">Visualizar</span>
+                    <i class="dropdown-arrow fas fa-chevron-right"></i>
+                </a>
                 <ul class="dropdown-menu">
-                    <li><a href="../visualizar/visualizar_cliente.php">Visualizar Cliente</a></li>
-                    <li><a href="../visualizar/visualizar_fornecedor.php">Visualizar Fornecedor</a></li>
-                    <li><a href="../visualizar/visualizar_funcionario.php">Visualizar Funcionário</a></li>
-                    <li><a href="../visualizar/visualizar_produto.php">Visualizar Produto</a></li>
-                    <li><a href="../visualizar/detalhes_cliente.php">Detalhes Cliente</a></li>
-                    <li><a href="../visualizar/detalhes_fornecedor.php">Detalhes Fornecedor</a></li>
-                    <li><a href="../visualizar/detalhes_produto.php">Detalhes Produto</a></li>
+                    <li><a href="../visualizar/visualizar_cliente.php">
+                            <i class="fas fa-users"></i>
+                            <span>Visualizar Cliente</span>
+                        </a></li>
+                    <li><a href="../visualizar/visualizar_fornecedor.php">
+                            <i class="fas fa-industry"></i>
+                            <span>Visualizar Fornecedor</span>
+                        </a></li>
+                    <li><a href="../visualizar/visualizar_funcionario.php">
+                            <i class="fas fa-id-badge"></i>
+                            <span>Visualizar Funcionário</span>
+                        </a></li>
+                    <li><a href="../visualizar/visualizar_produto.php">
+                            <i class="fas fa-box"></i>
+                            <span>Visualizar Produto</span>
+                        </a></li>
                 </ul>
             </li>
-
-            <!-- Logout -->
-            <li class="logout-item">
-                <form action="../Login/logout.php" method="post">
-                    <button type="submit">Logout</button>
-                </form>
+            <!--
+            <li class="dropdown">
+                <a href="#" class="menu-item">
+                    <i class="menu-icon fas fa-eye"></i>
+                    <span class="menu-text">Dashboard</span>
+                    <i class="dropdown-arrow fas fa-chevron-right"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="../../dashboard/dashboard.php">
+                            <i class="fas fa-users"></i>
+                            <span>Dashboard</span>
+                </ul>
             </li>
         </ul>
+        </ul>
+-->
+            <!-- Logout -->
+            <div class="sidebar-footer">
+                <div class="logout-item">
+                    <form action="../../Login/logout.php" method="post">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="menu-text">Sair</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
     </nav>
-    </body>
+
+
+</body>
 
 </html>
