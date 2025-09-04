@@ -20,13 +20,8 @@ if (!$cliente) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <title>Detalhes do Cliente</title>
-    <link rel="stylesheet" href="../assets/style.css" />
-</head>
+<link rel="stylesheet" href="../assets/style.css" />
+
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Cliente</h2>
@@ -53,10 +48,11 @@ if (!$cliente) {
         </div>
 
         <div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px;">
-            <a class="btn btn-edit" href="editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">✏️ Editar</a>
+            <a class="btn btn-edit" href="#" onclick="abrirModal('../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>'); return false;">Editar</a>
+
             <a class="btn btn-delete" href="/..excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
-            <a class="btn" href="visualizar_clientes.php">🔙 Voltar</a>
+            <a class="btn" href="../visualizar/visualizar_cliente.php">Voltar</a>
         </div>
     </div>
-</body>
-</html>
+
+    </html>
