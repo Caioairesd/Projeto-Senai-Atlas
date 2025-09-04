@@ -30,6 +30,20 @@ $permissoes = [
         "Visualizar" => ["visualizar_cliente.php", "visualizar_fornecedor.php", "visualizar_funcionario.php", "visualizar_produto.php"],
         "Detalhes" => ["detalhes_cliente.php", "detalhes_fornecedor.php", "detalhes_produto.php"]
     ],
+    2 => [
+        "Cadastrar" => [],
+        "Editar" => [],
+        "Excluir" => [],
+        "Visualizar" => ["visualizar_cliente.php", "visualizar_fornecedor.php", "visualizar_produto.php"],
+        "Detalhes" => ["detalhes_cliente.php", "detalhes_fornecedor.php", "detalhes_produto.php"]
+    ],
+    3 => [
+        "Cadastrar" => ["criar_fornecedor.php", "criar_produto.php"],
+        "Editar" => ["editar_fornecedor.php", "editar_produto.php"],
+        "Excluir" => ["excluir_produto.php"],
+        "Visualizar" => ["visualizar_fornecedor.php","visualizar_produto.php"],
+        "Detalhes" => ["detalhes_fornecedor.php", "detalhes_produto.php"]
+    ],
     // ADICIONAR PERMISSÕES 2 E 3 CONFORME NECESSÁRIO
 ];
 
