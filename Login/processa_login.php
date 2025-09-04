@@ -15,7 +15,7 @@ if ($stmt->rowCount() === 1) {
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     $_SESSION['usuario'] = $usuario['nome_usuario'];
     $_SESSION['perfil'] = $usuario['perfil_id']; // <- ESSENCIAL
-    header("Location: ../dashboard/dashboard.php");
+    header("Location: ../public/dashboard_principal.php");
     exit();
 } else {
     echo "<script>alert('Usuário ou senha inválidos'); window.location.href='login.php';</script>";

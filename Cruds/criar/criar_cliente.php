@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <title>Cadastrar Cliente</title>
 </head>
 <body>
-
+  
   <div class="form-wrapper">
     <h2>Cadastrar Cliente</h2>
     <p>Preencha os dados abaixo para registrar um novo cliente.</p>
@@ -70,6 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <button type="reset" class="btn" style="background-color: #ccc; color: #333;">Limpar</button>
     </form>
   </div>
-
+  <?php include '../../dashboard/sidebar.php'; ?>
 </body>
 </html>

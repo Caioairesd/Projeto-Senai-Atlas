@@ -1,4 +1,4 @@
-<!--SIDEBAR-->
+/* Sidebar base */
 .sidebar {
     width: 60px;
     height: 100vh;
@@ -6,12 +6,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     transition: width 0.3s ease;
     z-index: 1000;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
-/* Expande ao passar o mouse */
+/* Sidebar expandida */
 .sidebar:hover {
     width: 250px;
 }
@@ -30,49 +32,60 @@
 .menu > li > a {
     display: flex;
     align-items: center;
+    gap: 10px;
     padding: 15px 20px;
     color: #ecf0f1;
     text-decoration: none;
     white-space: nowrap;
-    overflow: hidden;
-    transition: background 0.3s, opacity 0.3s;
+    transition: background 0.3s ease;
+    border-radius: 10px;
 }
 
-/* Oculta o texto quando recolhido */
-.sidebar:not(:hover) .menu > li > a {
-    opacity: 0;
-    pointer-events: none;
+/* Ícone */
+.menu-icon {
+    font-size: 18px;
+    min-width: 20px;
+    text-align: center;
 }
 
-/* Dropdown oculto por padrão */
+/* Texto do menu */
+.menu-text {
+    display: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Mostrar texto ao expandir */
+.sidebar:hover .menu-text {
+    display: inline;
+    opacity: 1;
+}
+
+/* Dropdown */
 .dropdown-menu {
     display: none;
     list-style: none;
-    padding-left: 0;
     margin: 0;
     background-color: #34495e;
+    border-radius: 10px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 .dropdown-menu li a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 12px 30px;
     color: #ecf0f1;
     text-decoration: none;
     font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    transition: opacity 0.3s;
+    transition: background 0.3s ease;
+    border-radius: 8px;
 }
 
-/* Oculta o texto do dropdown quando recolhido */
-.sidebar:not(:hover) .dropdown-menu li a {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Mostrar dropdown ao passar o mouse */
-.dropdown:hover .dropdown-menu {
-    display: block;
+.dropdown-menu li a:hover {
+    background-color: #3d566e;
 }
 
 /* Conteúdo principal */
@@ -85,16 +98,10 @@ main {
     margin-left: 250px;
 }
 
-
-/* Estilo para o item de logout */
+/* Logout */
 .logout-item {
-    padding: 0;
-    margin: 0;
     border-top: 1px solid #3d566e;
-}
-
-.logout-item form {
-    margin: 0;
+    margin-top: 10px;
 }
 
 .logout-item button {
@@ -106,7 +113,11 @@ main {
     text-align: left;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .logout-item button:hover {
