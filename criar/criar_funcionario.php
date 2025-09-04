@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <select name="perfil_id">
           <option value="1">Administrador</option>
           <option value="2" selected>Vendedor</option>
-          <option value="3" selected>Vendedor</option>
+          <option value="3" selected>Estoquista</option>
         </select>
       </div>
 

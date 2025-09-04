@@ -14,7 +14,7 @@
     <div class="card-container">
         <div class="container">
             <div class="visual-side">
-                <img src="../../../publicages/Logo.png">
+                <img src="../assets/images/atlas.jpg">
                 <h1 class="slogan">Controle inteligente para estoques eficientes</h1>
             </div>
 

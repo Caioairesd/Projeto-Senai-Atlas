@@ -273,7 +273,7 @@ html {
   box-shadow: 4px 0 30px rgba(30, 58, 138, 0.25);
 }
 
-.sidebar:hover~.main-content {
+.sidebar:hover ~ .main-content {
   margin-left: 280px;
 }
 
@@ -316,7 +316,7 @@ html {
   margin: 0;
 }
 
-.menu>li {
+.menu > li {
   position: relative;
   margin-bottom: 8px;
 }
@@ -573,7 +573,6 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
-
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -585,7 +584,6 @@ html {
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -627,7 +625,7 @@ html {
     padding: 20px;
   }
 
-  .sidebar:hover~.main-content {
+  .sidebar:hover ~ .main-content {
     margin-left: 0;
   }
 
@@ -664,7 +662,6 @@ html {
     padding: 20px;
   }
 }
-
 /* ===================== LOGIN ===================== */
 .card-container {
   display: flex;

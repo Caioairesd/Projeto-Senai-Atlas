@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isHTML(true);
             $mail->Subject = 'Recuperação de senha';
             $mail->Body    = "Clique no link para redefinir sua senha: 
-                <a href='http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
+                <a href='http://localhost/htdocs/php/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
             $mail->AltBody = "Copie e cole no navegador: http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
 
             $mail->send();
@@ -58,7 +58,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<form method="POST">
-    <input type="email" name="email" placeholder="Digite seu e-mail" required>
-    <button type="submit">Recuperar senha</button>
-</form>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha - Sistema Atlas</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <div class="card-container">
+    <div class="container">
+      <div class="visual-side">
+        <img src="../assets/images/atlas.jpg" alt="Logo Atlas" />
+        <h1 class="slogan">Recupere o acesso à sua conta</h1>
+      </div>
+
+      <form method="POST" class="log-card" aria-label="formulário de recuperação">
+        <p class="para">Digite seu e-mail cadastrado para receber o link de redefinição de senha.</p>
+
+        <div class="input-group">
+          <label for="email" class="text">E-mail</label>
+          <input id="email" name="email" class="input" type="email" placeholder="exemplo@empresa.com" required />
+        </div>
+
+        <button type="submit" class="btn">Recuperar senha</button>
+
+        <p class="no-account">
+          Lembrou sua senha? <a href="../login/login.php">Voltar ao login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Atlas Sistemas. Todos os direitos reservados.</p>
+    <p>Versão 1.0.0</p>
+  </footer>
+</body>
+</html>
