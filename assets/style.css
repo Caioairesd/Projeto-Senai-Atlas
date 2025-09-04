@@ -273,7 +273,7 @@ html {
   box-shadow: 4px 0 30px rgba(30, 58, 138, 0.25);
 }
 
-.sidebar:hover ~ .main-content {
+.sidebar:hover~.main-content {
   margin-left: 280px;
 }
 
@@ -316,7 +316,7 @@ html {
   margin: 0;
 }
 
-.menu > li {
+.menu>li {
   position: relative;
   margin-bottom: 8px;
 }
@@ -573,6 +573,7 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -584,6 +585,7 @@ html {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -625,7 +627,7 @@ html {
     padding: 20px;
   }
 
-  .sidebar:hover ~ .main-content {
+  .sidebar:hover~.main-content {
     margin-left: 0;
   }
 
@@ -661,4 +663,127 @@ html {
     width: 95%;
     padding: 20px;
   }
+}
+
+/* ===================== LOGIN ===================== */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.container {
+  display: flex;
+  background-color: var(--bg-white);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 900px;
+  width: 100%;
+}
+
+.visual-side {
+  flex: 1;
+  background: linear-gradient(180deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.visual-side img {
+  max-width: 160px;
+  margin-bottom: 20px;
+}
+
+.slogan {
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.log-card {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.log-card .para {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #64748b;
+}
+
+.input-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(40, 121, 243, 0.1);
+  outline: none;
+}
+
+.password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  color: #444;
+}
+
+.log-card a {
+  font-size: 14px;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.log-card a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.no-account {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #777;
 }
