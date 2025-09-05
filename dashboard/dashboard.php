@@ -7,7 +7,7 @@
     <title>Dashboard - Estoque de Jogos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../cruds/assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 
 <body class="bg-gray-100">
@@ -32,19 +32,19 @@
                                 <i class="dropdown-arrow fas fa-chevron-right"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="../cruds/criar/criar_cliente.php">
+                                <li><a href="../criar/criar_cliente.php">
                                         <i class="fas fa-user-plus"></i>
                                         <span>Cadastrar Cliente</span>
                                     </a></li>
-                                <li><a href="../cruds/criar/criar_fornecedor.php">
+                                <li><a href="../criar/criar_fornecedor.php">
                                         <i class="fas fa-truck"></i>
                                         <span>Cadastrar Fornecedor</span>
                                     </a></li>
-                                <li><a href="../cruds/criar/criar_funcionario.php">
+                                <li><a href="../criar/criar_funcionario.php">
                                         <i class="fas fa-user-tie"></i>
                                         <span>Cadastrar Funcionário</span>
                                     </a></li>
-                                <li><a href="../cruds/criar/criar_produto.php">
+                                <li><a href="../criar/criar_produto.php">
                                         <i class="fas fa-box"></i>
                                         <span>Cadastrar Produto</span>
                                     </a></li>

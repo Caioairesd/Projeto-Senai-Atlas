@@ -1,5 +1,4 @@
 CREATE DATABASE atlas_db;
-
 USE atlas_db;
 
 CREATE TABLE fornecedor(
@@ -18,9 +17,22 @@ CREATE TABLE produto(
     tipo_produto VARCHAR(30) NOT NULL,
     preco_produto DECIMAL(10, 2) NOT NULL,
     qtde_estoque_produto INT NOT NULL,
-    imagem_url_produto VARCHAR(255),
+    imagem_url_produto LONGBLOB, -- Alterado para armazenar imagem no banco
     fornecedor_id INT,
-    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id_fornecedor)
+    FOREIGN KEY(fornecedor_id) REFERENCES fornecedor(id_fornecedor) ON DELETE CASCADE
+);
+
+CREATE TABLE funcionario(
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    nome_funcionario VARCHAR(50) NOT NULL,
+    email_funcionario VARCHAR(50) NOT NULL,
+    telefone_funcionario VARCHAR(20),
+    cpf_funcionario VARCHAR(11) NOT NULL UNIQUE,
+    salario_funcionario DECIMAL(10, 2),
+    endereco_funcionario VARCHAR(100),
+    data_nascimento DATE,
+    data_admissao DATE,
+    imagem_url_funcionario LONGBLOB -- Campo para armazenar foto do funcionário
 );
 
 CREATE TABLE perfil(
@@ -28,25 +40,17 @@ CREATE TABLE perfil(
     nome_perfil VARCHAR(30) NOT NULL UNIQUE
 );
 
-CREATE TABLE `funcionario` (
-  `id_funcionario` int(11) NOT NULL,
-  `nome_funcionario` varchar(50) NOT NULL,
-  `email_funcionario` varchar(50) NOT NULL,
-  `telefone_funcionario` varchar(20) DEFAULT NULL,
-  `cpf_funcionario` varchar(20) NOT NULL,
-  `salario_funcionario` decimal(10,2) DEFAULT NULL,
-  `endereco_funcionario` varchar(100) DEFAULT NULL,
-  `data_nascimento` date DEFAULT NULL,
-  `data_admissao` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE usuario(
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nome_usuario VARCHAR(30) NOT NULL,
     email_usuario VARCHAR(50) NOT NULL UNIQUE,
-    senha_usuario VARCHAR(50) NOT NULL,
+    senha_usuario VARCHAR(255) NOT NULL, -- Aumentado para suportar password_hash()
+    token_recuperacao VARCHAR(255) DEFAULT NULL, -- Para recuperação de senha
+    token_expira DATETIME DEFAULT NULL,          -- Validade do token
     perfil_id INT,
-    FOREIGN KEY (perfil_id) REFERENCES perfil(id_perfil)
+    funcionario_id INT,
+    FOREIGN KEY(perfil_id) REFERENCES perfil(id_perfil),
+    FOREIGN KEY(funcionario_id) REFERENCES funcionario(id_funcionario)
 );
 
 CREATE TABLE cliente(
@@ -60,14 +64,14 @@ CREATE TABLE cliente(
 CREATE TABLE estoque(
     id_estoque INT AUTO_INCREMENT PRIMARY KEY,
     produto_id INT,
-    tipo_estoque ENUM('Entrada','Saída') NOT NULL,
+    tipo_estoque ENUM('Entrada', 'Saída') NOT NULL,
     qtde_estoque INT NOT NULL,
     data_entrada DATE,
     data_saida DATE,
     observacao_estoque TEXT,
     usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (produto_id) REFERENCES produto(id_produto)
+    FOREIGN KEY(usuario_id) REFERENCES usuario(id_usuario),
+    FOREIGN KEY(produto_id) REFERENCES produto(id_produto)
 );
 
 CREATE TABLE pedidos(
@@ -77,8 +81,8 @@ CREATE TABLE pedidos(
     status_pedido ENUM('Pendente','Processando','Enviado','Entregue','Cancelado') NOT NULL,
     valor_total DECIMAL(10, 2) NOT NULL,
     usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (cliente_id) REFERENCES cliente(id_cliente)
+    FOREIGN KEY(usuario_id) REFERENCES usuario(id_usuario),
+    FOREIGN KEY(cliente_id) REFERENCES cliente(id_cliente)
 );
 
 CREATE TABLE item_pedido(
@@ -87,6 +91,50 @@ CREATE TABLE item_pedido(
     produto_id INT,
     qtde_item INT NOT NULL,
     preco_unitario DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id_pedido),
-    FOREIGN KEY (produto_id) REFERENCES produto(id_produto)
+    FOREIGN KEY(pedido_id) REFERENCES pedidos(id_pedido),
+    FOREIGN KEY(produto_id) REFERENCES produto(id_produto)
 );
+
+INSERT INTO perfil(nome_perfil)
+VALUES ('Administrador'), ('Vendedor'), ('Estoquista');
+
+DELIMITER //
+CREATE TRIGGER trg_entrada_estoque AFTER INSERT ON estoque
+FOR EACH ROW
+BEGIN
+    UPDATE produto
+    SET qtde_estoque_produto = qtde_estoque_produto + NEW.qtde_estoque
+    WHERE id_produto = NEW.produto_id;
+END//
+CREATE TRIGGER trg_saida_estoque AFTER INSERT ON item_pedido
+FOR EACH ROW
+BEGIN
+    UPDATE produto
+    SET qtde_estoque_produto = qtde_estoque_produto - NEW.qtde_item
+    WHERE id_produto = NEW.produto_id;
+END//
+CREATE TRIGGER trg_valida_estoque BEFORE INSERT ON item_pedido
+FOR EACH ROW
+BEGIN
+    DECLARE estoque_atual INT;
+    SELECT qtde_estoque_produto INTO estoque_atual
+    FROM produto
+    WHERE id_produto = NEW.produto_id;
+    IF estoque_atual < NEW.qtde_item THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+    END IF;
+END//
+DELIMITER ;
+
+CREATE VIEW vw_estoque_baixo AS
+SELECT id_produto, nome_produto, qtde_estoque_produto
+FROM produto
+WHERE qtde_estoque_produto < 5;
+
+CREATE VIEW vw_produto_item AS
+SELECT p.id_pedido, p.data_pedido, c.nome_cliente, pr.nome_produto, i.qtde_item, i.preco_unitario
+FROM pedidos p
+JOIN cliente c ON p.cliente_id = c.id_cliente
+JOIN item_pedido i ON p.id_pedido = i.pedido_id
+JOIN produto pr ON i.produto_id = pr.id_produto;
