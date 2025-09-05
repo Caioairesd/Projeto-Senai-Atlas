@@ -58,11 +58,7 @@ if (!$funcionario) {
             <input type="text" value="<?= htmlspecialchars($funcionario['cpf_funcionario']) ?>" disabled>
         </div>
 
-        <div class="input-group">
-            <label>Cargo:</label>
-            <input type="text" value="<?= htmlspecialchars($funcionario['cargo_funcionario']) ?>" disabled>
-        </div>
-
+        
         <div class="btn-group">
             <a class="btn btn-edit"
                 href="../editar/editar_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>">Editar</a>
