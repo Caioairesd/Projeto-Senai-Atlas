@@ -15,8 +15,10 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
     // Login OK
-    $_SESSION['usuario'] = $usuario['nome_usuario'];
-    $_SESSION['perfil']  = $usuario['perfil_id'];
+    $_SESSION['usuario']     = $usuario['nome_usuario'];
+    $_SESSION['usuario_id']  = $usuario['id_usuario'];  // <- ESSA LINHA É ESSENCIAL
+    $_SESSION['perfil']      = $usuario['perfil_id'];
+
     header("Location: ../dashboard/dashboard.php");
     exit();
 } else {

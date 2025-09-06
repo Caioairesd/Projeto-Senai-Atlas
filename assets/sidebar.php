@@ -86,9 +86,9 @@
                             <i class="fas fa-users"></i>
                             <span>Entrada de estoque</span>
                         </a></li>
-                    <li><a href="../visualizar/visualizar_fornecedor.php">
+                    <li><a href="../estoque/estoque_historico.php"">
                             <i class="fas fa-industry"></i>
-                            <span>Visualizar Fornecedor</span>
+                            <span>Histórico</span>
                         </a></li>
                     <li><a href="../visualizar/visualizar_funcionario.php">
                             <i class="fas fa-id-badge"></i>
