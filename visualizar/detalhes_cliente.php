@@ -1,10 +1,9 @@
 <?php
 require_once('../config/conexao.php');
-include '../assets/sidebar.php';
 
 $id = $_GET['id'] ?? null;
 
-if (!$id) {
+if (!$id || !is_numeric($id)) {
     echo '<div class="alert alert-error">ID inválido.</div>';
     exit;
 }
@@ -20,9 +19,13 @@ if (!$cliente) {
     exit;
 }
 ?>
-
-<link rel="stylesheet" href="../assets/style.css" />
-
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Cliente</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+</head>
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Cliente</h2>
@@ -49,11 +52,10 @@ if (!$cliente) {
         </div>
 
         <div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px;">
-
             <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>"
-                onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+               onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
             <a class="btn" href="../visualizar/visualizar_cliente.php">Voltar</a>
         </div>
     </div>
-
-    </html>
+</body>
+</html>

@@ -73,6 +73,29 @@
                         </a></li>
                 </ul>
             </li>
+
+            <!--Estoque-->
+            <li class="dropdown">
+                <a href="#" class="menu-item">
+                    <i class="menu-icon fas fa-eye"></i>
+                    <span class="menu-text">Estoque</span>
+                    <i class="dropdown-arrow fas fa-chevron-right"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="../estoque/estoque_entrada.php">
+                            <i class="fas fa-users"></i>
+                            <span>Entrada de estoque</span>
+                        </a></li>
+                    <li><a href="../visualizar/visualizar_fornecedor.php">
+                            <i class="fas fa-industry"></i>
+                            <span>Visualizar Fornecedor</span>
+                        </a></li>
+                    <li><a href="../visualizar/visualizar_funcionario.php">
+                            <i class="fas fa-id-badge"></i>
+                            <span>Visualizar Funcionário</span>
+                        </a></li>
+                </ul>
+            </li>
             <!--
             <li class="dropdown">
                 <a href="#" class="menu-item">

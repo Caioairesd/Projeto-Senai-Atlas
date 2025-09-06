@@ -23,11 +23,13 @@ if (!$funcionario) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Detalhes do Funcionário</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Funcionário</h2>
@@ -36,7 +38,7 @@ if (!$funcionario) {
         <?php if (!empty($funcionario['imagem_funcionario'])): ?>
             <div style="margin-bottom: 20px;">
                 <img src="<?= htmlspecialchars($funcionario['imagem_funcionario']) ?>" alt="Foto do Funcionário"
-                     style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px;">
+                    style="width: 120px; height: 120px; object-fit: cover; border-radius: 8px;">
             </div>
         <?php endif; ?>
 
@@ -81,10 +83,11 @@ if (!$funcionario) {
         </div>
 
         <div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px;">
-            <a class="btn btn-edit" href="../editar/editar_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>">✏️ Editar</a>
-            <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">🗑️ Excluir</a>
-            <a class="btn" href="visualizar_funcionario.php">🔙 Voltar</a>
+            <a class="btn btn-edit" href="../editar/editar_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>">Editar</a>
+            <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
+            <a class="btn" href="visualizar_funcionario.php">Voltar</a>
         </div>
     </div>
 </body>
+
 </html>

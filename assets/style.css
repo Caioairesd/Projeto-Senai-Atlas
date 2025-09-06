@@ -343,7 +343,11 @@ html {
   left: 0;
   width: 0;
   height: 100%;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
   transition: width 0.3s ease;
   z-index: -1;
 }
@@ -456,9 +460,9 @@ html {
 .logout-btn {
   width: 100%;
   padding: 16px 15px;
-  background: rgba(239, 68, 68, 0.1);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(221, 13, 13, 0.2); 
+  color: #ef4444; 
+  border: 1px solid rgba(239, 68, 68, 0.4); 
   text-align: left;
   font-size: 14px;
   font-weight: 500;
@@ -472,74 +476,14 @@ html {
 }
 
 .logout-btn:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background: #dc2626; 
+  color: #ffffff; 
   transform: translateX(5px);
 }
 
 .logout-btn i {
   font-size: 16px;
   min-width: 16px;
-}
-
-/* ===================== SISTEMA DE MODAIS ===================== */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal,
-.modal-content {
-  background-color: var(--bg-white);
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-}
-
-.modal h3 {
-  font-size: 20px;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
-.modal p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #666;
-  transition: color 0.3s ease;
-}
-
-.modal-close:hover {
-  color: var(--danger);
 }
 
 /* ===================== DETALHES DO PRODUTO ===================== */
@@ -784,5 +728,3 @@ html {
   font-size: 0.9rem;
   color: #777;
 }
-
-
