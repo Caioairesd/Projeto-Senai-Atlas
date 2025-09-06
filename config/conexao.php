@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'atlas_db';
 $user = 'root';
-$password = '';
+$password = 'root';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $password);
