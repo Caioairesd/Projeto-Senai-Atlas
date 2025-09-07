@@ -74,7 +74,7 @@ CREATE TABLE estoque(
     FOREIGN KEY(produto_id) REFERENCES produto(id_produto)
 );
 
-CREATE TABLE pedidos(
+CREATE TABLE pedidos(   
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT,
     data_pedido DATE NOT NULL,

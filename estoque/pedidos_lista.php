@@ -12,7 +12,7 @@ include '../assets/sidebar.php';
 <body>
 <div class="form-wrapper">
     <div class="historico-header">
-        <h2>📋 Lista de Pedidos</h2>
+        <h2>Lista de Pedidos</h2>
         <p>Resumo de todos os pedidos cadastrados</p>
     </div>
 
