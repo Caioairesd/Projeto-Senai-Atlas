@@ -33,10 +33,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
         <!-- Campo de busca -->
-        <form method="get" style="margin-bottom: 20px;">
-            <input type="text" name="busca" placeholder="Buscar produto..." value="<?= htmlspecialchars($busca) ?>"
-                class="input" style="max-width: 300px;">
-            <button type="submit" class="btn" style="margin-left: 10px;">Buscar</button>
+        <form method="get" class="search-form">
+            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($busca) ?>" class="input">
+            <button type="submit" class="btn">Buscar</button>
         </form>
 
         <?php if (count($produtos) > 0): ?>

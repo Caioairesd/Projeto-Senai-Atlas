@@ -32,11 +32,11 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h2>Lista de Fornecedores</h2>
 
         <!-- Campo de busca -->
-        <form method="get" style="margin-bottom: 20px;">
-            <input type="text" name="busca" placeholder="Buscar fornecedor..." value="<?= htmlspecialchars($busca) ?>"
-                class="input" style="max-width: 300px;">
-            <button type="submit" class="btn" style="margin-left: 10px;"> Buscar</button>
+        <form method="get" class="search-form">
+            <input type="text" name="busca" placeholder="Buscar Fornecedor..." value="<?= htmlspecialchars($busca) ?>" class="input">
+            <button type="submit" class="btn">Buscar</button>
         </form>
+
 
         <?php if (count($fornecedores) > 0): ?>
             <table class="table">
