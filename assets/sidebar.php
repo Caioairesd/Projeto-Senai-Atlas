@@ -86,13 +86,25 @@
                             <i class="fas fa-users"></i>
                             <span>Entrada de estoque</span>
                         </a></li>
-                    <li><a href="../estoque/estoque_historico.php"">
+                    <li><a href="../estoque/estoque_historico.php">
                             <i class="fas fa-industry"></i>
                             <span>Histórico</span>
                         </a></li>
-                    <li><a href="../visualizar/visualizar_funcionario.php">
+
+                    <li><a href="../estoque/estoque_saida.php">
                             <i class="fas fa-id-badge"></i>
-                            <span>Visualizar Funcionário</span>
+                            <span>Sáida de estoque</span>
+                        </a></li>
+
+                    <li><a href="../estoque/estoque_geral.php">
+                            <i class="fas fa-id-badge"></i>
+                            <span>Estoque geral</span>
+                        </a></li>
+
+
+                    <li><a href="../estoque/pedidos_lista.php">
+                            <i class="fas fa-id-badge"></i>
+                            <span>Lista de pedidos</span>
                         </a></li>
                 </ul>
             </li>

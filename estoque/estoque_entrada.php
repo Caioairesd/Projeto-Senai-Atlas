@@ -22,6 +22,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Associe a entrada a um produto e adicione detalhes.</p>
 
         <form action="processar_entrada.php" method="post">
+            <!-- Produto -->
             <div class="input-group">
                 <label for="produto_id">Produto:</label>
                 <select id="produto_id" name="produto_id" required>
@@ -34,16 +35,37 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </select>
             </div>
 
+            <!-- Quantidade -->
             <div class="input-group">
                 <label for="qtde_estoque">Quantidade:</label>
                 <input type="number" id="qtde_estoque" name="qtde_estoque" min="1" required>
             </div>
 
+            <!-- Observação -->
             <div class="input-group">
                 <label for="observacao_estoque">Observação:</label>
                 <textarea id="observacao_estoque" name="observacao_estoque" rows="3"></textarea>
             </div>
 
+            <!-- (Opcional) Fornecedor -->
+            <div class="input-group">
+                <label for="fornecedor_id">Fornecedor (opcional):</label>
+                <select id="fornecedor_id" name="fornecedor_id">
+                    <option value="">Selecione...</option>
+                    <?php
+                    $sqlFornecedor = 'SELECT id_fornecedor, nome_fornecedor FROM fornecedor ORDER BY nome_fornecedor ASC';
+                    $stmtF = $pdo->prepare($sqlFornecedor);
+                    $stmtF->execute();
+                    $fornecedores = $stmtF->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($fornecedores as $f): ?>
+                        <option value="<?= $f['id_fornecedor'] ?>">
+                            <?= htmlspecialchars($f['nome_fornecedor']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Botões -->
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Registrar Entrada</button>
                 <a href="../index.php" class="btn">Cancelar</a>
