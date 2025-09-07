@@ -57,3 +57,21 @@ function aplicarMascaras() {
     });
   });
 }
+
+document.querySelectorAll('.combo-filtravel').forEach(select => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'text');
+  input.setAttribute('placeholder', 'Filtrar...');
+  input.classList.add('filtro-combo');
+
+  select.parentNode.insertBefore(input, select);
+
+  input.addEventListener('input', () => {
+    const filtro = input.value.toLowerCase();
+    Array.from(select.options).forEach(option => {
+      const texto = option.text.toLowerCase();
+      option.style.display = texto.includes(filtro) || option.value === "" ? 'block' : 'none';
+    });
+  });
+});
+

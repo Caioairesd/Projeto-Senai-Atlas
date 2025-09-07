@@ -17,27 +17,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $imagem = null;
 
   // Verifica se foi enviada uma imagem
-    if (!empty($_FILES['imagem_url_funcionario']['tmp_name'])) {
-        $tmpFile = $_FILES['imagem_url_funcionario']['tmp_name'];
-        $fileSize = $_FILES['imagem_url_funcionario']['size'];
+  if (!empty($_FILES['imagem_url_funcionario']['tmp_name'])) {
+    $tmpFile = $_FILES['imagem_url_funcionario']['tmp_name'];
+    $fileSize = $_FILES['imagem_url_funcionario']['size'];
 
-        // Limite de tamanho (2MB)
-        $maxSize = 2 * 1024 * 1024; // 2MB
-        if ($fileSize > $maxSize) {
-            die("Erro: A imagem excede o tamanho máximo de 2MB.");
-        }
-
-        // Verifica o tipo real da imagem
-        $tipo = @exif_imagetype($tmpFile);
-        $tiposPermitidos = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
-
-        if ($tipo === false || !in_array($tipo, $tiposPermitidos)) {
-            die("Erro: Apenas imagens JPEG, PNG ou GIF são permitidas.");
-        }
-
-        // Lê o conteúdo da imagem para salvar no banco
-        $imagem = file_get_contents($tmpFile);
+    // Limite de tamanho (2MB)
+    $maxSize = 2 * 1024 * 1024; // 2MB
+    if ($fileSize > $maxSize) {
+      die("Erro: A imagem excede o tamanho máximo de 2MB.");
     }
+
+    // Verifica o tipo real da imagem
+    $tipo = @exif_imagetype($tmpFile);
+    $tiposPermitidos = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
+
+    if ($tipo === false || !in_array($tipo, $tiposPermitidos)) {
+      die("Erro: Apenas imagens JPEG, PNG ou GIF são permitidas.");
+    }
+
+    // Lê o conteúdo da imagem para salvar no banco
+    $imagem = file_get_contents($tmpFile);
+  }
   // Inserir funcionário
   $sql = "INSERT INTO funcionario (nome_funcionario, email_funcionario, telefone_funcionario, cpf_funcionario, salario_funcionario, endereco_funcionario, data_nascimento, data_admissao, imagem_url_funcionario)
             VALUES (:nome, :email, :telefone, :cpf, :salario, :endereco, :nascimento, :admissao, :imagem)";
@@ -78,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -86,35 +85,86 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <meta charset="UTF-8" />
   <title>Cadastrar Funcionário</title>
   <link rel="stylesheet" href="../assets/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
   <div class="form-wrapper">
     <h2>Cadastrar Funcionário + Usuário</h2>
     <?= $msg ?>
-    <form method="post" enctype="multipart/form-data">
-      <div class="input-group"><label>Nome</label><input type="text" name="nome_funcionario" required></div>
-      <div class="input-group"><label>Email</label><input type="email" name="email_funcionario" required></div>
-      <div class="input-group"><label>Telefone</label><input type="text" name="telefone_funcionario" required></div>
-      <div class="input-group"><label>CPF</label><input type="text" name="cpf_funcionario" required></div>
-      <div class="input-group"><label>Salário</label><input type="text" name="salario_funcionario" required></div>
-      <div class="input-group"><label>Endereço</label><input type="text" name="endereco_funcionario" required></div>
-      <div class="input-group"><label>Data de nascimento</label><input type="date" name="data_nascimento" required>
-      </div>
-      <div class="input-group"><label>Data de admissão</label><input type="date" name="data_admissao" required></div>
-      <div class="input-group"><label>Foto</label><input type="file" name="imagem_url_funcionario" accept="image/*"></div>
 
-      <hr>
-      <h3>Dados de acesso do usuário</h3>
-      <div class="input-group"><label>Nome de usuário</label><input type="text" name="nome_usuario" required></div>
-      <div class="input-group"><label>Senha</label><input type="password" name="senha_usuario" required></div>
-      <div class="input-group">
-        <label>Perfil</label>
-        <select name="perfil_id">
-          <option value="1">Administrador</option>
-          <option value="2" selected>Vendedor</option>
-          <option value="3" selected>Estoquista</option>
-        </select>
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-section">
+        <h3>Dados do Funcionário</h3>
+
+        <div class="input-group">
+          <label for="nome_funcionario">Nome</label>
+          <input type="text" name="nome_funcionario" id="nome_funcionario" placeholder="Nome completo" required>
+        </div>
+
+        <div class="input-group">
+          <label for="email_funcionario">Email</label>
+          <input type="email" name="email_funcionario" id="email_funcionario" placeholder="email@exemplo.com" required>
+        </div>
+
+        <div class="input-group">
+          <label for="telefone_funcionario">Telefone</label>
+          <input type="text" name="telefone_funcionario" id="telefone_funcionario" placeholder="(XX) XXXXX-XXXX" required>
+        </div>
+
+        <div class="input-group">
+          <label for="cpf_funcionario">CPF</label>
+          <input type="text" name="cpf_funcionario" id="cpf_funcionario" placeholder="000.000.000-00" required>
+        </div>
+
+        <div class="input-group">
+          <label for="salario_funcionario">Salário</label>
+          <input type="text" name="salario_funcionario" id="salario_funcionario" placeholder="R$ 0,00" required>
+        </div>
+
+        <div class="input-group">
+          <label for="endereco_funcionario">Endereço</label>
+          <input type="text" name="endereco_funcionario" id="endereco_funcionario" placeholder="Rua, número, bairro" required>
+        </div>
+
+        <div class="input-group">
+          <label for="data_nascimento">Data de nascimento</label>
+          <input type="date" name="data_nascimento" id="data_nascimento" required>
+        </div>
+
+        <div class="input-group">
+          <label for="data_admissao">Data de admissão</label>
+          <input type="date" name="data_admissao" id="data_admissao" required>
+        </div>
+
+        <div class="input-group">
+          <label for="imagem_url_funcionario">Foto</label>
+          <input type="file" name="imagem_url_funcionario" id="imagem_url_funcionario" accept="image/*">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Dados de Acesso do Usuário</h3>
+
+        <div class="input-group">
+          <label for="nome_usuario">Nome de usuário</label>
+          <input type="text" name="nome_usuario" id="nome_usuario" placeholder="Nome de login" required>
+        </div>
+
+        <div class="input-group">
+          <label for="senha_usuario">Senha</label>
+          <input type="password" name="senha_usuario" id="senha_usuario" placeholder="••••••••" required>
+        </div>
+
+        <div class="input-group">
+          <label for="perfil_id">Perfil</label>
+          <select name="perfil_id" id="perfil_id" class="select2" required>
+            <option value="">Selecione o perfil</option>
+            <option value="1">Administrador</option>
+            <option value="2">Vendedor</option>
+            <option value="3">Estoquista</option>
+          </select>
+        </div>
       </div>
 
       <div class="btn-group">
@@ -123,6 +173,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </form>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#perfil_id').select2({
+        placeholder: "Selecione o perfil",
+        width: '100%'
+      });
+    });
+  </script>
   <script src="../assets/validacoes.js"></script>
 </body>
 

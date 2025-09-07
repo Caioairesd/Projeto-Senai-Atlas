@@ -47,28 +47,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?= $msg ?? '' ?>
 
     <form id="formCadastrarCliente" method="post" enctype="multipart/form-data">
-      
+
       <!-- Contêiner para mensagens de erro -->
       <div class="erros-validacao"></div>
 
       <div class="input-group">
         <label for="nome_cliente">Nome</label>
-        <input type="text" id="nome_cliente" name="nome_cliente" required />
+        <input type="text" id="nome_cliente" name="nome_cliente" placeholder="Ex: Empresa XYZ Ltda." required />
       </div>
 
       <div class="input-group">
         <label for="email_cliente">Email</label>
-        <input type="email" id="email_cliente" name="email_cliente" required />
+        <input type="email" id="email_cliente" name="email_cliente" placeholder="contato@empresa.com.br" required />
       </div>
 
       <div class="input-group">
         <label for="telefone_cliente">Telefone</label>
-        <input type="text" id="telefone_cliente" name="telefone_cliente" required />
+        <input type="text" id="telefone_cliente" name="telefone_cliente" placeholder="(XX) XXXXX-XXXX" required />
       </div>
 
       <div class="input-group">
         <label for="cnpj_cliente">CNPJ</label>
-        <input type="text" id="cnpj_cliente" name="cnpj_cliente" required />
+        <input type="text" id="cnpj_cliente" name="cnpj_cliente" placeholder="00.000.000/0000-00" required />
       </div>
 
       <button type="submit" class="btn">Cadastrar</button>

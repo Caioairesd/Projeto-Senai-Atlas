@@ -801,3 +801,11 @@ html {
   border-radius: 8px;
   margin-top: 20px;
 }
+/*Combo box produto*/
+.filtro-combo {
+  margin-bottom: 5px;
+  padding: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
