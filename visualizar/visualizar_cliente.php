@@ -20,11 +20,13 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Clientes Cadastrados</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="table-wrapper">
         <h2>Lista de Clientes</h2>
@@ -41,9 +43,6 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>CNPJ</th>
                         <th>ID</th>
                         <th>Ações</th>
                     </tr>
@@ -52,9 +51,6 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($clientes as $cliente): ?>
                         <tr>
                             <td><?= htmlspecialchars($cliente['nome_cliente']) ?></td>
-                            <td><?= htmlspecialchars($cliente['email_cliente']) ?></td>
-                            <td><?= htmlspecialchars($cliente['telefone_cliente']) ?></td>
-                            <td><?= htmlspecialchars($cliente['cnpj_cliente']) ?></td>
                             <td><?= htmlspecialchars($cliente['id_cliente']) ?></td>
                             <td class="actions">
                                 <a class="btn" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>">Ver Detalhes</a>
@@ -69,4 +65,5 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </body>
+
 </html>

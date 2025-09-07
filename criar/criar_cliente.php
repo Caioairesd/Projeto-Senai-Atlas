@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $stmt->bindParam(':cnpj', $cnpj);
 
   if ($stmt->execute()) {
-    $msg = '<div class="sucesso">✅ Cliente cadastrado com sucesso!</div>';
+    $msg = '<div class="sucesso">Cliente cadastrado com sucesso!</div>';
   } else {
-    $msg = '<div class="erro">❌ Erro ao cadastrar cliente!</div>';
+    $msg = '<div class="erro">Erro ao cadastrar cliente!</div>';
   }
 }
 ?>

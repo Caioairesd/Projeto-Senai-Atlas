@@ -53,9 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
 
     if ($stmt->execute()) {
-        $msg = '<div class="sucesso">✅ Produto cadastrado com sucesso!</div>';
+        $msg = '<div class="sucesso">Produto cadastrado com sucesso!</div>';
     } else {
-        $msg = '<div class="erro">❌ Erro ao cadastrar produto!</div>';
+        $msg = '<div class="erro">Erro ao cadastrar produto!</div>';
     }
 }
 ?>
@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="reset" class="btn btn-edit">Limpar</button>
         </form>
     </div>
-
+    <script src="../assets/validacoes.js"></script>
 </body>
 
 </html>

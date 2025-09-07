@@ -43,9 +43,7 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Email</th>
-                        <th>Telefone</th>
-                        <th>CNPJ</th>
+                        <th>ID</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -53,9 +51,7 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($fornecedores as $fornecedor): ?>
                         <tr>
                             <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
-                            <td><?= htmlspecialchars($fornecedor['email_fornecedor']) ?></td>
-                            <td><?= htmlspecialchars($fornecedor['contato_fornecedor']) ?></td>
-                            <td><?= htmlspecialchars($fornecedor['cnpj_fornecedor']) ?></td>
+                            <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
                             <td class="actions">
                                 <div class="btn-group">
                                     <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver</a>

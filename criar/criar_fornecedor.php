@@ -68,6 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <button type="reset" class="btn" style="background-color: #ccc; color: #333;">Limpar</button>
     </form>
   </div>
-
+<script src="../assets/validacoes.js"></script>
 </body>
 </html>

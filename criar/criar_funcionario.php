@@ -72,9 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmtUsuario->bindParam(':funcionario', $idFuncionario);
     $stmtUsuario->execute();
 
-    $msg = '<div class="sucesso">✅ Funcionário e usuário cadastrados com sucesso!</div>';
+    $msg = '<div class="sucesso">Funcionário e usuário cadastrados com sucesso!</div>';
   } else {
-    $msg = '<div class="erro">❌ Erro ao cadastrar funcionário!</div>';
+    $msg = '<div class="erro">Erro ao cadastrar funcionário!</div>';
   }
 }
 ?>
@@ -123,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     </form>
   </div>
+  <script src="../assets/validacoes.js"></script>
 </body>
 
 </html>
