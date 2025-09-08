@@ -61,17 +61,20 @@ CREATE TABLE cliente(
     cnpj_cliente VARCHAR(20) NOT NULL UNIQUE
 );
 
-CREATE TABLE estoque(
-    id_estoque INT AUTO_INCREMENT PRIMARY KEY,
-    produto_id INT,
-    tipo_estoque ENUM('Entrada', 'Saída') NOT NULL,
-    qtde_estoque INT NOT NULL,
-    data_entrada DATE,
-    data_saida DATE,
-    observacao_estoque TEXT,
-    usuario_id INT,
-    FOREIGN KEY(usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY(produto_id) REFERENCES produto(id_produto)
+CREATE TABLE movimentacao (
+    id_movimentacao INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_movimentacao ENUM('Entrada', 'Saída') NOT NULL,
+    quantidade INT NOT NULL,
+    data_movimentacao DATE NOT NULL,
+    produto_id INT NOT NULL,
+    fornecedor_id INT,
+    funcionario_id INT,
+    pedido_id INT,
+    observacao TEXT,
+    FOREIGN KEY (produto_id) REFERENCES produto(id_produto),
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id_fornecedor),
+    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id_funcionario),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id_pedido)
 );
 
 CREATE TABLE pedidos(
@@ -99,30 +102,45 @@ INSERT INTO perfil(nome_perfil)
 VALUES ('Administrador'), ('Vendedor'), ('Estoquista');
 
 DELIMITER //
-CREATE TRIGGER trg_entrada_estoque AFTER INSERT ON estoque
+
+CREATE TRIGGER trg_entrada_movimentacao
+AFTER INSERT ON movimentacao
 FOR EACH ROW
 BEGIN
-    UPDATE produto
-    SET qtde_estoque_produto = qtde_estoque_produto + NEW.qtde_estoque
-    WHERE id_produto = NEW.produto_id;
+    IF NEW.tipo_movimentacao = 'Entrada' THEN
+        UPDATE produto
+        SET qtde_estoque_produto = qtde_estoque_produto + NEW.quantidade
+        WHERE id_produto = NEW.produto_id;
+    END IF;
 END//
-CREATE TRIGGER trg_saida_estoque AFTER INSERT ON item_pedido
+ 
+CREATE TRIGGER trg_saida_movimentacao
+AFTER INSERT ON movimentacao
 FOR EACH ROW
 BEGIN
-    UPDATE produto
-    SET qtde_estoque_produto = qtde_estoque_produto - NEW.qtde_item
-    WHERE id_produto = NEW.produto_id;
+    IF NEW.tipo_movimentacao = 'Saída' THEN
+        UPDATE produto
+        SET qtde_estoque_produto = qtde_estoque_produto - NEW.quantidade
+        WHERE id_produto = NEW.produto_id;
+    END IF;
 END//
-CREATE TRIGGER trg_valida_estoque BEFORE INSERT ON item_pedido
+
+CREATE TRIGGER trg_valida_movimentacao
+BEFORE INSERT ON movimentacao
 FOR EACH ROW
 BEGIN
     DECLARE estoque_atual INT;
-    SELECT qtde_estoque_produto INTO estoque_atual
-    FROM produto
-    WHERE id_produto = NEW.produto_id;
-    IF estoque_atual < NEW.qtde_item THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+
+    IF NEW.tipo_movimentacao = 'Saída' THEN
+        SELECT qtde_estoque_produto
+        INTO estoque_atual
+        FROM produto
+        WHERE id_produto = NEW.produto_id;
+
+        IF estoque_atual < NEW.quantidade THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+        END IF;
     END IF;
 END//
 DELIMITER ;
@@ -138,3 +156,71 @@ FROM pedidos p
 JOIN cliente c ON p.cliente_id = c.id_cliente
 JOIN item_pedido i ON p.id_pedido = i.pedido_id
 JOIN produto pr ON i.produto_id = pr.id_produto;
+
+USE atlas_db;
+
+DROP TRIGGER trg_entrada_estoque;
+DROP TRIGGER trg_saida_estoque;
+DROP TRIGGER trg_valida_estoque;
+
+DROP TABLE estoque;
+
+CREATE TABLE movimentacao (
+    id_movimentacao INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_movimentacao ENUM('Entrada', 'Saída') NOT NULL,
+    quantidade INT NOT NULL,
+    data_movimentacao DATE NOT NULL,
+    produto_id INT NOT NULL,
+    fornecedor_id INT,
+    funcionario_id INT,
+    pedido_id INT,
+    observacao TEXT,
+    FOREIGN KEY (produto_id) REFERENCES produto(id_produto),
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedor(id_fornecedor),
+    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id_funcionario),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id_pedido)
+) ENGINE=InnoDB;
+
+DELIMITER //
+
+CREATE TRIGGER trg_entrada_movimentacao
+AFTER INSERT ON movimentacao
+FOR EACH ROW
+BEGIN
+    IF NEW.tipo_movimentacao = 'Entrada' THEN
+        UPDATE produto
+        SET qtde_estoque_produto = qtde_estoque_produto + NEW.quantidade
+        WHERE id_produto = NEW.produto_id;
+    END IF;
+END//
+ 
+CREATE TRIGGER trg_saida_movimentacao
+AFTER INSERT ON movimentacao
+FOR EACH ROW
+BEGIN
+    IF NEW.tipo_movimentacao = 'Saída' THEN
+        UPDATE produto
+        SET qtde_estoque_produto = qtde_estoque_produto - NEW.quantidade
+        WHERE id_produto = NEW.produto_id;
+    END IF;
+END//
+
+CREATE TRIGGER trg_valida_movimentacao
+BEFORE INSERT ON movimentacao
+FOR EACH ROW
+BEGIN
+    DECLARE estoque_atual INT;
+
+    IF NEW.tipo_movimentacao = 'Saída' THEN
+        SELECT qtde_estoque_produto
+        INTO estoque_atual
+        FROM produto
+        WHERE id_produto = NEW.produto_id;
+
+        IF estoque_atual < NEW.quantidade THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Estoque insuficiente para o produto solicitado.';
+        END IF;
+    END IF;
+END//
+DELIMITER ;
