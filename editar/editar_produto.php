@@ -2,7 +2,6 @@
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
-$msg = '';
 $id = $_GET['id'] ?? null;
 
 if (!$id || !is_numeric($id)) {
@@ -10,7 +9,6 @@ if (!$id || !is_numeric($id)) {
     exit;
 }
 
-// Buscar dados do produto
 $sql = "SELECT * FROM produto WHERE id_produto = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -22,7 +20,6 @@ if (!$produto) {
     exit;
 }
 
-// Atualizar produto
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome_produto = $_POST['nome_produto'] ?? '';
     $descricao_produto = $_POST['descricao_produto'] ?? '';
@@ -74,12 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($stmt->execute()) {
         echo "<script>
-            alert('✅ Produto atualizado com sucesso!');
+            alert('Produto atualizado com sucesso!');
             window.parent.fecharModal();
         </script>";
         exit;
     } else {
-        echo "<script>alert('❌ Erro ao atualizar produto.');</script>";
+        echo "<script>alert('Erro ao atualizar produto.');</script>";
     }
 }
 ?>
@@ -90,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style.css" />
     <title>Editar Produto</title>
 </head>
@@ -112,12 +110,60 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="input-group">
                 <label for="plataforma_produto">Plataforma</label>
-                <input type="text" id="plataforma_produto" name="plataforma_produto" value="<?= htmlspecialchars($produto['plataforma_produto']) ?>" required />
+                <select id="plataforma_produto" name="plataforma_produto" class="select2" required>
+                    <option value="">Selecione a plataforma</option>
+                    <?php
+                    $plataformas = ["PC", "PlayStation 5", "PlayStation 4", "Xbox Series X/S", "Nintendo Switch", "Mobile"];
+                    foreach ($plataformas as $p) {
+                        $selected = $p === $produto['plataforma_produto'] ? 'selected' : '';
+                        echo "<option value=\"$p\" $selected>$p</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <div class="input-group">
                 <label for="tipo_produto">Categoria</label>
-                <input type="text" id="tipo_produto" name="tipo_produto" value="<?= htmlspecialchars($produto['tipo_produto']) ?>" required />
+                <select id="tipo_produto" name="tipo_produto" class="select2" required>
+                    <option value="">Selecione a categoria</option>
+                    <?php
+                    $categorias = [
+                        "Ação",
+                        "Aventura",
+                        "RPG",
+                        "FPS",
+                        "TPS",
+                        "Estratégia",
+                        "Simulação",
+                        "Corrida",
+                        "Esporte",
+                        "Luta",
+                        "Terror",
+                        "Plataforma",
+                        "Puzzle",
+                        "Casual",
+                        "Battle Royale",
+                        "MOBA",
+                        "MMORPG",
+                        "Sandbox",
+                        "Stealth",
+                        "Musical",
+                        "Narrativo",
+                        "Visual Novel",
+                        "Survival",
+                        "Tower Defense",
+                        "Roguelike",
+                        "Metroidvania",
+                        "Hack and Slash",
+                        "Idle",
+                        "Tycoon"
+                    ];
+                    foreach ($categorias as $c) {
+                        $selected = $c === $produto['tipo_produto'] ? 'selected' : '';
+                        echo "<option value=\"$c\" $selected>$c</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <div class="input-group">
@@ -132,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="input-group">
                 <label for="fornecedor_id">Fornecedor</label>
-                <select name="fornecedor_id" required>
+                <select name="fornecedor_id" class="select2" required>
                     <option value="">Selecione o fornecedor</option>
                     <?php
                     $fornecedores = $pdo->query("SELECT id_fornecedor, nome_fornecedor FROM fornecedor")->fetchAll();
@@ -142,15 +188,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                     ?>
                 </select>
-            </div>
 
-            <div class="btn-group">
-                <button type="submit" class="btn btn-edit">Salvar</button>
-                <a href="../visualizar/visualizar_produto.php" class="btn">Cancelar</a>
-
-            </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-edit">Salvar alterações</button>
+                    <a href="../visualizar/visualizar_produto.php" class="btn">Cancelar</a>
+                </div>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Selecione",
+                width: '100%'
+            });
+        });
+    </script>
+    <script src="../assets/validacoes.js"></script>
 </body>
 
 </html>

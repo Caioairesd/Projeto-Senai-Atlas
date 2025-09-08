@@ -15,6 +15,17 @@ $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$fornecedor_nome = '';
+if (!empty($produto['fornecedor_id'])) {
+    $stmtFornecedor = $pdo->prepare("SELECT nome_fornecedor FROM fornecedor WHERE id_fornecedor = :id");
+    $stmtFornecedor->bindParam(':id', $produto['fornecedor_id'], PDO::PARAM_INT);
+    $stmtFornecedor->execute();
+    $fornecedor = $stmtFornecedor->fetch(PDO::FETCH_ASSOC);
+    if ($fornecedor) {
+        $fornecedor_nome = $fornecedor['nome_fornecedor'];
+    }
+}
+
 if (!$produto) {
     echo '<div class="alert alert-error">Produto não encontrado.</div>';
     exit;
@@ -64,9 +75,10 @@ if (!$produto) {
         </div>
 
         <div class="input-group">
-            <label>Fornecedor ID:</label>
-            <input type="text" value="<?= htmlspecialchars($produto['fornecedor_id']) ?>" disabled>
+            <label>Fornecedor:</label>
+            <input type="text" value="<?= htmlspecialchars($fornecedor_nome) ?>" disabled>
         </div>
+
 
         <div class="btn-group">
             <a class="btn btn-delete" href="../excluir/excluir_produto.php?id=<?= $produto['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
