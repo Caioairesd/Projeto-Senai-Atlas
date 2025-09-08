@@ -45,19 +45,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $id_cliente);
 
     if ($stmt->execute()) {
-        echo "<div class='sucesso'>✅ Cliente atualizado com sucesso!</div>";
+        echo "<div class='sucesso'>Cliente atualizado com sucesso!</div>";
     } else {
-        echo "<div class='erro'>❌ Erro ao atualizar cliente.</div>";
+        echo "<div class='erro'>Erro ao atualizar cliente.</div>";
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Cliente</title>
     <link rel="stylesheet" href="../assets/style.css">
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Editar Cliente</h2>
@@ -66,9 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST">
             <input type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
 
+
             <div class="input-group">
                 <label>Nome:</label>
-                <input type="text" name="nome_cliente" value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
+                <input type="text" id="nome_cliente" name="nome_cliente" value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
             </div>
 
             <div class="input-group">
@@ -78,12 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-group">
                 <label>Telefone:</label>
-                <input type="text" name="telefone_cliente" value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
+                <input type="text" id="telefone_cliente" name="telefone_cliente" value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
             </div>
 
             <div class="input-group">
                 <label>CNPJ:</label>
-                <input type="text" name="cnpj_cliente" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
+                <input type="text" id="cnpj_cliente" name="cnpj_cliente" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
             </div>
 
             <div class="btn-group">
@@ -92,5 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
+    <script src="../assets/validacoes.js"></script>
 </body>
+
 </html>

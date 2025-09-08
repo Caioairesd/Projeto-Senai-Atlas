@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $funcionario_id = $_SESSION['funcionario_id'] ?? null;
 
     if (!is_numeric($produto_id) || !is_numeric($quantidade) || $quantidade <= 0) {
-        echo "<script>alert('Dados inválidos.'); window.location.href = 'estoque_entrada.php';</script>";
+        header("Location: estoque_entrada.php?msg=Dados inválidos.&type=error");
         exit;
     }
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fornecedor_id = $stmtFornecedor->fetchColumn();
 
     if (!$fornecedor_id) {
-        echo "<script>alert('Fornecedor não encontrado para este produto.'); window.location.href = 'estoque_entrada.php';</script>";
+        header("Location: estoque_entrada.php?msg=Fornecedor não encontrado para este produto.&type=error");
         exit;
     }
 
@@ -41,8 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Entrada registrada com sucesso!'); window.location.href = '../index.php';</script>";
+        header("Location: estoque_entrada.php?msg=Entrada registrada com sucesso.&type=success");
     } else {
-        echo "<script>alert('Erro ao registrar entrada.'); window.location.href = 'estoque_entrada.php';</script>";
+        header("Location: estoque_entrada.php?msg=Erro ao registrar entrada.&type=error");
     }
+    exit;
 }

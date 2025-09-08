@@ -4,12 +4,15 @@ include '../assets/sidebar.php';
 $busca = $_GET['busca'] ?? '';
 
 // Consulta com filtro
-$sql = 'SELECT * FROM fornecedor WHERE 
-        nome_fornecedor LIKE :busca OR 
-        email_fornecedor LIKE :busca OR 
-        contato_fornecedor LIKE :busca OR 
-        cnpj_fornecedor LIKE :busca 
+$sql = 'SELECT * FROM fornecedor 
+        WHERE ativo = 1 AND (
+            nome_fornecedor LIKE :busca OR 
+            email_fornecedor LIKE :busca OR 
+            contato_fornecedor LIKE :busca OR 
+            cnpj_fornecedor LIKE :busca
+        )
         ORDER BY nome_fornecedor ASC';
+
 
 $stmt = $pdo->prepare($sql);
 $termoBusca = '%' . $busca . '%';

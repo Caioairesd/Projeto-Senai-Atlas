@@ -49,6 +49,18 @@ try {
         throw new Exception('Produto não encontrado.');
     }
 
+    // 3.1) Verifica estoque atual
+    $stmt = $pdo->prepare("SELECT SUM(CASE WHEN tipo_movimentacao = 'Entrada' THEN quantidade ELSE -quantidade END) AS saldo_estoque
+                       FROM movimentacao
+                       WHERE produto_id = ?");
+    $stmt->execute([$produto_id]);
+    $saldo_estoque = (int)$stmt->fetchColumn();
+
+    if ($saldo_estoque < (int)$qtde_item) {
+        throw new Exception('Estoque insuficiente para realizar a saída.');
+    }
+
+
     // 4) Cria pedido
     $stmt = $pdo->prepare("INSERT INTO pedidos (cliente_id, data_pedido, status_pedido) VALUES (?, ?, 'Pendente')");
     $stmt->execute([$cliente_id, $data_movimentacao]);
@@ -68,7 +80,6 @@ try {
 
     echo "<script>alert('Saída e pedido gerados com sucesso!'); window.location.href = 'pedido_detalhe.php?id={$pedido_id}';</script>";
     exit;
-
 } catch (PDOException $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
@@ -77,14 +88,13 @@ try {
     if (str_contains($e->getMessage(), 'Estoque insuficiente')) {
         echo "<script>alert('Erro: Estoque insuficiente para o produto selecionado.'); window.location.href = 'estoque_saida.php';</script>";
     } else {
-        echo "<script>alert('Erro ao registrar saída: ".htmlspecialchars($e->getMessage())."'); window.location.href = 'estoque_saida.php';</script>";
+        echo "<script>alert('Erro ao registrar saída: " . htmlspecialchars($e->getMessage()) . "'); window.location.href = 'estoque_saida.php';</script>";
     }
     exit;
-
 } catch (Exception $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
-    echo "<script>alert('Erro: ".htmlspecialchars($e->getMessage())."'); window.location.href = 'estoque_saida.php';</script>";
+    echo "<script>alert('Erro: " . htmlspecialchars($e->getMessage()) . "'); window.location.href = 'estoque_saida.php';</script>";
     exit;
 }

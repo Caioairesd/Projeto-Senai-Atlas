@@ -19,7 +19,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id_cliente = $_GET['id'];
 
-    $query = "DELETE FROM cliente WHERE id_cliente = :id";
+    $query = "UPDATE cliente SET ativo = FALSE WHERE id_cliente = :id;
+";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id_cliente, PDO::PARAM_INT);
 
@@ -32,5 +33,3 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     header('Location: ../visualizar/visualizar_cliente.php');
     exit;
 }
-
-?>

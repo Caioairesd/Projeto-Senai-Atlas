@@ -17,12 +17,39 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Entrada de Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style.css">
+    <style>
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
 </head>
 
 <body>
     <div class="form-wrapper">
-            <h2>Registrar Entrada de Estoque</h2>
-            <p>Selecione o produto e informe os detalhes da entrada.</p>
+        <h2>Registrar Entrada de Estoque</h2>
+        <p>Selecione o produto e informe os detalhes da entrada.</p>
+
+        <!-- Mensagem de retorno -->
+        <?php if (isset($_GET['msg'])): ?>
+            <div class="alert <?= $_GET['type'] === 'success' ? 'alert-success' : 'alert-error' ?>" id="alert-msg">
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
+
         <form action="processar_entrada.php" method="post">
             <!-- Produto -->
             <div class="input-group">
@@ -65,6 +92,11 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 placeholder: "Selecione...",
                 width: '100%'
             });
+
+            // Esconde a mensagem após 5 segundos
+            setTimeout(function() {
+                $('#alert-msg').fadeOut('slow');
+            }, 5000);
         });
     </script>
 </body>

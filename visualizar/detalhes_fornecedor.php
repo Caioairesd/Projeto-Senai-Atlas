@@ -4,14 +4,14 @@ require_once '../config/conexao.php';
 
 // VERIFICA SE O ID FOI PASSADO
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<script>alert('ID inválido.'); window.location.href='../visualizar/visualizar_fornecedor.php';</script>";
+    header("Location: ../visualizar/visualizar_fornecedor.php?msg=ID inválido.&type=error");
     exit();
 }
 
 $id_fornecedor = $_GET['id'];
 
-// BUSCA OS DADOS DO FORNECEDOR
-$sql = "SELECT * FROM fornecedor WHERE id_fornecedor = :id";
+// BUSCA OS DADOS DO FORNECEDOR ATIVO
+$sql = "SELECT * FROM fornecedor WHERE id_fornecedor = :id AND ativo = 1";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id', $id_fornecedor, PDO::PARAM_INT);
 $stmt->execute();
@@ -19,7 +19,7 @@ $fornecedor = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // VERIFICA SE O FORNECEDOR EXISTE
 if (!$fornecedor) {
-    echo "<script>alert('Fornecedor não encontrado.'); window.location.href='../visualizar/visualizar_fornecedor.php';</script>";
+    header("Location: ../visualizar/visualizar_fornecedor.php?msg=Fornecedor não encontrado ou inativo.&type=error");
     exit();
 }
 ?>
@@ -59,7 +59,7 @@ if (!$fornecedor) {
 
         <div class="btn-group">
             <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
-                onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
+                onclick="return confirm('Tem certeza que deseja desativar este fornecedor?')">Excluir</a>
             <a class="btn" href="../visualizar/visualizar_fornecedor.php">Voltar</a>
         </div>
     </div>

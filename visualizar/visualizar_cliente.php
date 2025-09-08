@@ -4,12 +4,14 @@ include '../assets/sidebar.php';
 
 $busca = $_GET['busca'] ?? '';
 
-// Consulta com filtro
-$sql = 'SELECT * FROM cliente WHERE 
-        nome_cliente LIKE :busca OR 
-        email_cliente LIKE :busca OR 
-        telefone_cliente LIKE :busca OR 
-        cnpj_cliente LIKE :busca 
+// Consulta com filtro de busca e clientes ativos
+$sql = 'SELECT * FROM cliente 
+        WHERE ativo = 1 AND (
+            nome_cliente LIKE :busca OR 
+            email_cliente LIKE :busca OR 
+            telefone_cliente LIKE :busca OR 
+            cnpj_cliente LIKE :busca
+        )
         ORDER BY nome_cliente ASC';
 
 $stmt = $pdo->prepare($sql);
@@ -29,9 +31,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <div class="table-wrapper">
-        <h2>Lista de Clientes</h2>
+        <h2>Lista de Clientes Ativos</h2>
 
-        
         <!-- Campo de busca -->
         <form method="get" class="search-form">
             <input type="text" name="busca" placeholder="Buscar Cliente..." value="<?= htmlspecialchars($busca) ?>" class="input">
@@ -61,7 +62,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tbody>
             </table>
         <?php else: ?>
-            <div class="alert alert-warning">Nenhum cliente encontrado com esse termo.</div>
+            <div class="alert alert-warning">Nenhum cliente ativo encontrado com esse termo.</div>
         <?php endif; ?>
     </div>
 </body>
