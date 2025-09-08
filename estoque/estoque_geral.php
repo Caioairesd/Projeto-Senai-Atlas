@@ -18,22 +18,25 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Estoque Geral</title>
     <link rel="stylesheet" href="../assets/style.css">
 </head>
+
 <body>
     <div class="form-wrapper">
         <div class="historico-header">
-            <h2>📦 Estoque Geral</h2>
+            <h2>Estoque Geral</h2>
             <p>Visão consolidada de todos os produtos e seus níveis de estoque</p>
         </div>
-
-        <form method="GET" action="" class="form-inline mb-3">
-            <input type="text" name="busca" placeholder="Buscar produto..." value="<?= htmlspecialchars($filtro) ?>">
-            <button type="submit">Buscar</button>
+        <!-- Campo de busca -->
+        <form method="get" class="search-form">
+            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($filtro) ?>" class="input">
+            <button type="submit" class="btn">Buscar</button>
         </form>
+
 
         <?php if (empty($estoque)): ?>
             <div class="no-records">
@@ -69,4 +72,5 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </body>
+
 </html>

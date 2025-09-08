@@ -11,21 +11,24 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Entrada de Estoque</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style.css">
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Registrar Entrada de Estoque</h2>
-        <p>Associe a entrada a um produto e adicione detalhes.</p>
+        <p>Selecione o produto e informe os detalhes da entrada.</p>
 
         <form action="processar_entrada.php" method="post">
             <!-- Produto -->
             <div class="input-group">
                 <label for="produto_id">Produto:</label>
-                <select id="produto_id" name="produto_id" required>
+                <select id="produto_id" name="produto_id" class="select2" required>
                     <option value="">Selecione...</option>
                     <?php foreach ($produtos as $p): ?>
                         <option value="<?= $p['id_produto'] ?>">
@@ -47,24 +50,6 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <textarea id="observacao_estoque" name="observacao_estoque" rows="3"></textarea>
             </div>
 
-            <!-- (Opcional) Fornecedor -->
-            <div class="input-group">
-                <label for="fornecedor_id">Fornecedor (opcional):</label>
-                <select id="fornecedor_id" name="fornecedor_id">
-                    <option value="">Selecione...</option>
-                    <?php
-                    $sqlFornecedor = 'SELECT id_fornecedor, nome_fornecedor FROM fornecedor ORDER BY nome_fornecedor ASC';
-                    $stmtF = $pdo->prepare($sqlFornecedor);
-                    $stmtF->execute();
-                    $fornecedores = $stmtF->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($fornecedores as $f): ?>
-                        <option value="<?= $f['id_fornecedor'] ?>">
-                            <?= htmlspecialchars($f['nome_fornecedor']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
             <!-- Botões -->
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Registrar Entrada</button>
@@ -72,5 +57,17 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Selecione...",
+                width: '100%'
+            });
+        });
+    </script>
 </body>
+
 </html>
