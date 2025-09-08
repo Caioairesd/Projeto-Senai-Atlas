@@ -25,7 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $descricao_produto = $_POST['descricao_produto'] ?? '';
     $plataforma_produto = $_POST['plataforma_produto'] ?? '';
     $tipo_produto = $_POST['tipo_produto'] ?? '';
+
     $preco_produto = $_POST['preco_produto'] ?? '';
+    // Converte "R$ 59,90" para "59.90" retirando as máscaras para salvar no banco
+    $preco_produto = str_replace(['R$', '.', ','], ['', '', '.'], $preco_produto);
+    $preco_produto = trim($preco_produto);
+    $preco_produto = (float) $preco_produto;
+
     $fornecedor_id = $_POST['fornecedor_id'] ?? '';
 
     $imagem_blob = $produto['imagem_url_produto'];

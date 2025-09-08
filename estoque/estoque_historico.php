@@ -4,11 +4,13 @@ include '../assets/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Histórico de Estoque</title>
     <link rel="stylesheet" href="../assets/style.css">
 </head>
+
 <body>
     <div class="form-wrapper">
         <div class="historico-header">
@@ -24,12 +26,13 @@ include '../assets/sidebar.php';
             <table class="historico-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Código</th>
                         <th>Produto</th>
                         <th>Tipo</th>
                         <th>Quantidade</th>
                         <th>Data</th>
                         <th>Funcionário</th>
+                        <th>Fornecedor</th>
                         <th>Observação</th>
                         <th>Pedido</th>
                     </tr>
@@ -45,13 +48,16 @@ include '../assets/sidebar.php';
                             <td><?= htmlspecialchars($item['quantidade']) ?></td>
                             <td><?= htmlspecialchars($item['data_movimentacao']) ?></td>
                             <td><?= htmlspecialchars($item['nome_funcionario']) ?></td>
+                            <td><?= htmlspecialchars($item['nome_fornecedor'] ?? '-') ?></td>
                             <td><?= htmlspecialchars($item['observacao']) ?></td>
                             <td><?= htmlspecialchars($item['pedido_id'] ?? '-') ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
+
             </table>
         <?php endif; ?>
     </div>
 </body>
+
 </html>

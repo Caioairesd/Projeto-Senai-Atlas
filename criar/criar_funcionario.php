@@ -9,7 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $email = $_POST['email_funcionario'] ?? '';
   $telefone = $_POST['telefone_funcionario'] ?? '';
   $cpf = $_POST['cpf_funcionario'] ?? '';
+  
   $salario = $_POST['salario_funcionario'] ?? '';
+  // Converte "R$ 2.500,00" para "2500.00" retira as máscaras para poder salvar no banco
+  $salario = str_replace(['R$', '.', ','], ['', '', '.'], $salario);
+  $salario = trim($salario);
+  $salario = (float) $salario;
+
   $endereco = $_POST['endereco_funcionario'] ?? '';
   $nascimento = $_POST['data_nascimento'] ?? '';
   $admissao = $_POST['data_admissao'] ?? '';
@@ -177,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('#perfil_id').select2({
         placeholder: "Selecione o perfil",
         width: '100%'

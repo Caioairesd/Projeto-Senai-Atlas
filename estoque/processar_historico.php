@@ -13,21 +13,23 @@ $filtroDataFim  = isset($_GET['data_fim']) ? trim($_GET['data_fim']) : '';
 
 // Monta SQL base
 $sql = "
-    SELECT
-        m.id_movimentacao,
-        p.nome_produto,
-        m.tipo_movimentacao,
-        m.quantidade,
-        DATE_FORMAT(m.data_movimentacao, '%d/%m/%Y') AS data_movimentacao,
-        f.nome_funcionario,
-        u.nome_usuario,
-        m.observacao,
-        m.pedido_id
-    FROM movimentacao m
-    JOIN produto p     ON m.produto_id     = p.id_produto
-    LEFT JOIN funcionario f ON m.funcionario_id = f.id_funcionario
-    LEFT JOIN usuario u     ON f.id_funcionario = u.funcionario_id
-    WHERE 1=1
+ SELECT
+    m.id_movimentacao,
+    p.nome_produto,
+    m.tipo_movimentacao,
+    m.quantidade,
+    DATE_FORMAT(m.data_movimentacao, '%d/%m/%Y') AS data_movimentacao,
+    f.nome_funcionario,
+    u.nome_usuario,
+    fo.nome_fornecedor,
+    m.observacao,
+    m.pedido_id
+FROM movimentacao m
+JOIN produto p ON m.produto_id = p.id_produto
+LEFT JOIN funcionario f ON m.funcionario_id = f.id_funcionario
+LEFT JOIN usuario u ON f.id_funcionario = u.funcionario_id
+LEFT JOIN fornecedor fo ON m.fornecedor_id = fo.id_fornecedor
+WHERE 1=1
 ";
 
 // Se o usuário não for Admin (1) nem Estoquista (2), limita ao próprio histórico
@@ -61,7 +63,7 @@ if ($filtroDataIni !== '' && $filtroDataFim !== '') {
 }
 
 // Ordena mais recentes primeiro
-$sql .= " ORDER BY m.data_movimentacao ascw";
+$sql .= " ORDER BY m.data_movimentacao asc";
 
 try {
     $stmt = $pdo->prepare($sql);

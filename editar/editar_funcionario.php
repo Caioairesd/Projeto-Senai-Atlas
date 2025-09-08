@@ -23,9 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome_funcionario'];
     $email = $_POST['email_funcionario'];
     $telefone = $_POST['telefone_funcionario'];
-    $cargo = $_POST['cargo_funcionario'];
     $cpf = $_POST['cpf_funcionario'];
+
     $salario = $_POST['salario_funcionario'];
+    // Converte "R$ 2.500,00" para "2500.00" retira as máscaras para poder salvar no banco
+    $salario = str_replace(['R$', '.', ','], ['', '', '.'], $salario);
+    $salario = trim($salario);
+    $salario = (float) $salario;
+
     $endereco = $_POST['endereco_funcionario'];
     $nascimento = $_POST['nascimento_funcionario'];
     $admissao = $_POST['data_admissao'];
@@ -34,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 nome_funcionario = :nome, 
                 email_funcionario = :email, 
                 telefone_funcionario = :telefone, 
-                cargo_funcionario = :cargo,
                 cpf_funcionario = :cpf,
                 salario_funcionario = :salario,
                 endereco_funcionario = :endereco,
@@ -46,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':nome', $nome);
     $stmt->bindParam(':email', $email);
     $stmt->bindParam(':telefone', $telefone);
-    $stmt->bindParam(':cargo', $cargo);
     $stmt->bindParam(':cpf', $cpf);
     $stmt->bindParam(':salario', $salario);
     $stmt->bindParam(':endereco', $endereco);
@@ -101,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-group">
                 <label>Salário:</label>
-                <input type="number" step="0.01" name="salario_funcionario"
-                    value="<?= htmlspecialchars($funcionario['salario_funcionario']) ?>" required>
+                <input type="text"  name="salario_funcionario"
+                    value="<?= htmlspecialchars($funcionario['salario_funcionario']) ?>"  placeholder="R$ 0,00" required>
             </div>
 
             <div class="input-group">
@@ -124,11 +127,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn btn-edit">Salvar</button>
+                <button type="submit" class="btn btn-edit">Salvar alterações</button>
                 <a href="../visualizar/visualizar_funcionario.php" class="btn btn-delete">Cancelar</a>
             </div>
         </form>
     </div>
+
+    <script src="../assets/validacoes.js"></script>
 </body>
 
 </html>

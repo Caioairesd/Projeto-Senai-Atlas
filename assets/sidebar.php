@@ -93,7 +93,7 @@
 
                     <li><a href="../estoque/estoque_saida.php">
                             <i class="fas fa-id-badge"></i>
-                            <span>Sáida de estoque</span>
+                            <span>Saída de estoque</span>
                         </a></li>
 
                     <li><a href="../estoque/estoque_geral.php">

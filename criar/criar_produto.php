@@ -9,7 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $descricao_produto = $_POST['descricao_produto'] ?? '';
     $plataforma_produto = $_POST['plataforma_produto'] ?? '';
     $tipo_produto = $_POST['tipo_produto'] ?? '';
+    
     $preco_produto = $_POST['preco_produto'] ?? '';
+    // Converte "R$ 59,90" para "59.90" retirando as máscaras para salvar no banco
+    $preco_produto = str_replace(['R$', '.', ','], ['', '', '.'], $preco_produto);
+    $preco_produto = trim($preco_produto);
+    $preco_produto = (float) $preco_produto;
+
     $fornecedor_id = $_POST['fornecedor_id'] ?? '';
 
     $imagem_blob = null;
@@ -77,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form method="post" enctype="multipart/form-data">
             <div class="input-group">
                 <label for="nome_produto">Nome do Produto</label>
-                <input type="text" id="nome_produto" name="nome_produto" required />
+                <input type="text" id="nome_produto" name="nome_produto"  placeholder="Ex: Elden Ring " required />
             </div>
 
             <div class="input-group">
@@ -114,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <option value="Luta">Luta</option>
                     <option value="Terror">Terror</option>
                     <option value="Plataforma">Plataforma</option>
-                    <option value="Puzzle">Puzzle / Quebra-cabeça</option>
+                    <option value="Puzzle">Puzzle / Quebra-cabeça</option>          
                     <option value="Casual">Casual</option>
                     <option value="Battle Royale">Battle Royale</option>
                     <option value="MOBA">MOBA</option>
@@ -136,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="input-group">
                 <label for="preco_produto">Preço</label>
-                <input type="text" id="preco_produto" name="preco_produto" required />
+                <input type="text" id="preco_produto" name="preco_produto"  placeholder="R$ 0,00" required />
             </div>
 
             <div class="input-group">
