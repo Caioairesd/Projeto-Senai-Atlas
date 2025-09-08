@@ -24,7 +24,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt->bindParam(":id", $id_cliente, PDO::PARAM_INT);
 
     if ($stmt->execute()) {
-        echo "<script> alert('Cliente excluído com sucesso!'); window.location.href='excluir_cliente.php'; </script>";
+        echo "<script> alert('Cliente excluído com sucesso!'); window.location.href='../visualizar/visualizar_cliente.php'; </script>";
     } else {
         echo "<script> alert('Erro ao excluir cliente!'); </script>";
     }

@@ -13,10 +13,33 @@ include '../assets/sidebar.php';
 
 <body>
     <div class="form-wrapper">
-        <div class="historico-header">
             <h2>Histórico de Movimentações</h2>
             <p>Veja todas as entradas e saídas registradas no sistema de estoque</p>
-        </div>
+        <!-- Filtros -->
+        <form method="GET" action="" class="search-form">
+            <select name="tipo" class="input">
+                <option value="">Todos os Tipos</option>
+                <?php
+                $tiposMov = ['Entrada', 'Saída'];
+                foreach ($tiposMov as $tipo) {
+                    $sel = ($filtroTipo === $tipo) ? 'selected' : '';
+                    echo "<option value=\"$tipo\" $sel>$tipo</option>";
+                }
+                ?>
+            </select>
+
+            <input type="text" name="produto" class="input" placeholder="Buscar Produto..." value="<?= htmlspecialchars($filtroProduto) ?>">
+
+            <label for="data_ini">De:</label>
+            <input type="date" name="data_ini" class="input" value="<?= htmlspecialchars($filtroDataIni) ?>">
+
+            <label for="data_fim">Até:</label>
+            <input type="date" name="data_fim" class="input" value="<?= htmlspecialchars($filtroDataFim) ?>">
+
+            <button type="submit" class="btn">Filtrar</button>
+            <a href="estoque_historico.php" class="btn">Limpar Filtros</a>
+        </form>
+
 
         <?php if (empty($historico)): ?>
             <div class="no-records">

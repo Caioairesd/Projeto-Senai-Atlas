@@ -49,7 +49,7 @@ function aplicarMascaras() {
 
   // Nomes e textos (bloqueia números)
   const nomeInputs = document.querySelectorAll(
-    "#nome_cliente, #nome_fornecedor, [name='nome_funcionario'], [name='nome_usuario'], #nome_produto, #descricao_produto, #plataforma_produto, #tipo_produto"
+    "#nome_cliente, #nome_fornecedor, [name='nome_funcionario'], [name='nome_usuario'], #nome_produto, #tipo_produto"
   );
   nomeInputs.forEach((input) => {
     input.addEventListener("input", () => {

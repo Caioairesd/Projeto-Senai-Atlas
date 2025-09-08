@@ -265,6 +265,12 @@ html {
   margin-bottom: 10px;
 }
 
+.perfil-info {
+  text-align: left;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
 .logo {
   display: flex;
   align-items: center;

@@ -63,7 +63,7 @@ if ($filtroDataIni !== '' && $filtroDataFim !== '') {
 }
 
 // Ordena mais recentes primeiro
-$sql .= " ORDER BY m.data_movimentacao asc";
+$sql .= " ORDER BY id_movimentacao desc";
 
 try {
     $stmt = $pdo->prepare($sql);

@@ -34,9 +34,9 @@ if ($token) {
                 $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-                    echo "<p style='color:green'>Senha alterada com sucesso!</p>";
+                    echo "<script>alert('Senha alterada com sucesso! Feche a aba');</script>";
                 } else {
-                    echo "<p style='color:red'>Não foi possível alterar a senha. Tente novamente.</p>";
+                    echo "<script>alert('Erro ao alterar senha. Tente novamente mais tarde.');</script>";
                 }
                 exit;
             }

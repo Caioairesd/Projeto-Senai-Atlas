@@ -1,5 +1,6 @@
 <?php
 require_once('../config/conexao.php');
+require_once('../assets/sidebar.php');
 
 $id = $_GET['id'] ?? null;
 

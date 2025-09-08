@@ -43,18 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->addAddress($email);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Recuperação de senha';
+            $mail->Subject = 'Redefinir Senha';
             $mail->Body    = "Clique no link para redefinir sua senha: 
-                <a href='http://localhost/htdocs/php/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
-            $mail->AltBody = "Copie e cole no navegador: http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
+                <a href='http://localhost/SA-ATLAS/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
+            $mail->AltBody = "Copie e cole no navegador: http://localhost/SA-ATLAS/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
 
             $mail->send();
-            echo "E-mail de recuperação enviado!";
+            echo "<script>alert('E-mail de recuperação enviado!'); window.location.href='../login/login.php';</script>";
         } catch (Exception $e) {
             echo "Erro ao enviar e-mail: {$mail->ErrorInfo}";
         }
     } else {
-        echo "E-mail não encontrado.";
+        echo "<script>alert('E-mail não encontrado.');</script>";
     }
 }
 ?>

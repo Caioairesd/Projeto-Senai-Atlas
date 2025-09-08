@@ -96,9 +96,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <select id="plataforma_produto" name="plataforma_produto" class="select2" required>
                     <option value="">Selecione a plataforma</option>
                     <option value="PC">PC</option>
-                    <option value="PlayStation 5">PlayStation 5</option>
+                    <option value="PlayStation">PlayStation</option>
+                    <option value="PlayStation 2">PlayStation 2</option>
+                    <option value="PlayStation 3">PlayStation 3</option>
                     <option value="PlayStation 4">PlayStation 4</option>
+                    <option value="PlayStation 5">PlayStation 5</option>
+                    <option value="Xbox 360">Xbox 360</option>
+                    <option value="Xbox One">Xbox One</option>
                     <option value="Xbox Series X/S">Xbox Series X/S</option>
+                    <option value="Nintendo DS">Nintendo DS</option>
+                    <option value="Nintendo 3DS">Nintendo 3DS</option>
+                    <option value="Nintendo Wii">Nintendo Wii</option>
                     <option value="Nintendo Switch">Nintendo Switch</option>
                     <option value="Mobile">Mobile</option>
                 </select>

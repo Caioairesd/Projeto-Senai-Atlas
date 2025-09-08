@@ -32,7 +32,7 @@ if ($filtroDataIni !== '' && $filtroDataFim !== '') {
     $params[] = $filtroDataFim;
 }
 
-$sql .= " ORDER BY data_pedido DESC";
+$sql .= " ORDER BY id_pedido DESC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);

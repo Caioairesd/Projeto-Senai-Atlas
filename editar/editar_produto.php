@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->execute()) {
         echo "<script>
             alert('Produto atualizado com sucesso!');
-            window.parent.fecharModal();
+            window.location.href='../visualizar/visualizar_produto.php';
         </script>";
         exit;
     } else {

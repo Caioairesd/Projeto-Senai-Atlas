@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $id_funcionario);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Funcionário atualizado com sucesso!'); window.location.href='../visualizar/visualizar_funcionarios.php';</script>";
+        echo "<script>alert('Funcionário atualizado com sucesso!'); window.location.href='../visualizar/visualizar_funcionario.php';</script>";
     } else {
         echo "<script>alert('Erro ao atualizar funcionário.');</script>";
     }

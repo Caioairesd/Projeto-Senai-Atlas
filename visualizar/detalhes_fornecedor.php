@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once '../config/conexao.php';
+require_once '../assets/sidebar.php';
 
 // VERIFICA SE O ID FOI PASSADO
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
