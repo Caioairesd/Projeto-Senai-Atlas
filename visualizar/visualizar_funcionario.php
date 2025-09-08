@@ -32,9 +32,9 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Campo de busca -->
     <form method="get" class="search-form">
-  <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>" class="input">
-  <button type="submit" class="btn">Buscar</button>
-</form>
+      <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>" class="input">
+      <button type="submit" class="btn">Buscar</button>
+    </form>
 
 
     <?php if (count($funcionarios) > 0): ?>
@@ -58,9 +58,8 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td><?= htmlspecialchars($f['id_funcionario']) ?></td>
               <td>
                 <div class="btn-group">
-                  <a class="btn" href="detalhes_funcionario.php?id=<?= $f['id_funcionario'] ?>">Ver</a>
+                  <a class="btn" href="detalhes_funcionario.php?id=<?= $f['id_funcionario'] ?>">Ver detalhes</a>
                   <a class="btn btn-edit" href="../editar/editar_funcionario.php?id=<?= $f['id_funcionario'] ?>">Editar</a>
-                  <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id=<?= $f['id_funcionario'] ?>" onclick="return confirm('Excluir este funcionário?')">Excluir</a>
                 </div>
               </td>
             </tr>

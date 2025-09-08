@@ -25,11 +25,13 @@ if (!$fornecedor) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Fornecedor</title>
     <link rel="stylesheet" href="../assets/style.css">
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Fornecedor</h2>
@@ -56,11 +58,11 @@ if (!$fornecedor) {
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-edit" href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
             <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
-               onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
+                onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
             <a class="btn" href="../visualizar/visualizar_fornecedor.php">Voltar</a>
         </div>
     </div>
 </body>
+
 </html>

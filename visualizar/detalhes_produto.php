@@ -20,19 +20,24 @@ if (!$produto) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8" />
     <title>Detalhes do Produto</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Produto</h2>
         <p>Confira as informações completas do produto selecionado.</p>
-
+        <!--
+        <div class="imagem-detalhe">
+            <img src="exibir_imagem.php?tipo=produto&id=<?= $produto['id_produto'] ?>" alt="Imagem do Produto">
+        </div>
+        -->
         <div class="input-group">
             <label>Nome:</label>
             <input type="text" value="<?= htmlspecialchars($produto['nome_produto']) ?>" disabled>
@@ -64,10 +69,10 @@ if (!$produto) {
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-edit" href="../editar/editar_produto.php?id=<?= $produto['id_produto'] ?>">Editar</a>
             <a class="btn btn-delete" href="../excluir/excluir_produto.php?id=<?= $produto['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
             <a class="btn" href="visualizar_produtos.php">Voltar</a>
         </div>
     </div>
 </body>
+
 </html>

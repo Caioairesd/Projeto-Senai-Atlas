@@ -17,7 +17,6 @@ $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -37,7 +36,6 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button type="submit" class="btn">Buscar</button>
         </form>
 
-
         <?php if (count($fornecedores) > 0): ?>
             <table class="table">
                 <thead>
@@ -53,16 +51,9 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
                             <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
                             <td class="actions">
-                                <div class="btn-group">
-                                    <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver</a>
-                                    <a class="btn btn-edit"
-                                        href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
-                                    <a class="btn btn-delete"
-                                        href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
-                                        onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
-                                </div>
+                                <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver detalhes</a>
+                                <a class="btn btn-edit" href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
                             </td>
-
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -51,7 +51,7 @@ if (!$cliente) {
             <input type="text" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" disabled>
         </div>
 
-        <div class="btn-group" style="display: flex; gap: 10px; margin-top: 20px;">
+        <div class="btn-group" >
             <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>"
                onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
             <a class="btn" href="../visualizar/visualizar_cliente.php">Voltar</a>

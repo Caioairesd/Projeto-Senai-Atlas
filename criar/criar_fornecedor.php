@@ -20,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $stmt->bindParam(':cnpj_fornecedor', $cnpj_fornecedor);
 
   if ($stmt->execute()) {
-    $msg = '<div class="sucesso">Cliente cadastrado com sucesso!</div>';
+    $msg = '<div class="sucesso">Fornecedor cadastrado com sucesso!</div>';
   } else {
-    $msg = '<div class="erro">Erro ao cadastrar cliente!</div>';
+    $msg = '<div class="erro">Erro ao cadastrar fornecedor!</div>';
   }
 }
 ?>
@@ -50,23 +50,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div class="erros-validacao"></div>
 
       <div class="input-group">
-        <label for="nome_cliente">Nome</label>
-        <input type="text" id="nome_cliente" name="nome_cliente" placeholder="Ex: Empresa XYZ Ltda." required />
+        <label for="nome_fornecedor">Nome</label>
+        <input type="text" id="nome_fornecedor" name="nome_fornecedor" placeholder="Ex: Empresa XYZ Ltda." required />
       </div>
 
       <div class="input-group">
-        <label for="email_cliente">Email</label>
-        <input type="email" id="email_cliente" name="email_cliente" placeholder="contato@empresa.com.br" required />
+        <label for="email_fornecedor">Email</label>
+        <input type="email" id="email_fornecedor" name="email_fornecedor" placeholder="contato@empresa.com.br" required />
       </div>
 
       <div class="input-group">
-        <label for="telefone_cliente">Telefone</label>
-        <input type="text" id="telefone_cliente" name="telefone_cliente" placeholder="(XX) XXXXX-XXXX" required />
+        <label for="contato_fornecedor">Telefone</label>
+        <input type="text" id="contato_fornecedor" name="contato_fornecedor" placeholder="(XX) XXXXX-XXXX" required />
       </div>
 
       <div class="input-group">
-        <label for="cnpj_cliente">CNPJ</label>
-        <input type="text" id="cnpj_cliente" name="cnpj_cliente" placeholder="00.000.000/0000-00" required />
+        <label for="cnpj_fornecedor">CNPJ</label>
+        <input type="text" id="cnpj_fornecedor" name="cnpj_fornecedor" placeholder="00.000.000/0000-00" required />
       </div>
 
       <button type="submit" class="btn">Cadastrar</button>

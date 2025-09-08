@@ -1,16 +1,14 @@
 <?php
 require_once '../config/conexao.php';
 
-// Verifica parâmetros obrigatórios
 if (!isset($_GET['tipo']) || !isset($_GET['id'])) {
     http_response_code(400);
     exit('Parâmetros inválidos.');
 }
 
-$tipo = $_GET['tipo']; // funcionario ou produto
+$tipo = $_GET['tipo'];
 $id   = (int) $_GET['id'];
 
-// Define configurações conforme o tipo
 switch ($tipo) {
     case 'funcionario':
         $tabela = 'funcionario';
@@ -27,19 +25,21 @@ switch ($tipo) {
         exit('Tipo inválido.');
 }
 
-// Busca a imagem no banco
 $sql = "SELECT $campoImagem FROM $tabela WHERE $campoId = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
-
 $imagem = $stmt->fetchColumn();
 
 if ($imagem) {
-    header("Content-Type: image/jpeg"); // ajuste se for PNG/GIF
+    // Detecta tipo da imagem (simples, baseado no conteúdo)
+    $finfo = finfo_open();
+    $mimeType = finfo_buffer($finfo, $imagem, FILEINFO_MIME_TYPE);
+    finfo_close($finfo);
+
+    header("Content-Type: $mimeType");
     echo $imagem;
 } else {
-    // Imagem padrão caso não exista
     header("Content-Type: image/png");
     readfile("../assets/sem_foto.png");
 }

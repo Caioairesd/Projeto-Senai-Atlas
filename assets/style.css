@@ -195,25 +195,6 @@ html {
   background-color: var(--bg-light);
 }
 
-.table .actions,
-.acoes {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.acoes a {
-  text-decoration: none;
-  color: var(--primary);
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.acoes a:hover {
-  text-decoration: underline;
-  color: var(--primary-dark);
-}
-
 /* ===================== SISTEMA DE MENSAGENS ===================== */
 .sucesso,
 .erro,
@@ -460,9 +441,9 @@ html {
 .logout-btn {
   width: 100%;
   padding: 16px 15px;
-  background: rgba(221, 13, 13, 0.2); 
-  color: #ef4444; 
-  border: 1px solid rgba(239, 68, 68, 0.4); 
+  background: rgba(221, 13, 13, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.4);
   text-align: left;
   font-size: 14px;
   font-weight: 500;
@@ -476,8 +457,8 @@ html {
 }
 
 .logout-btn:hover {
-  background: #dc2626; 
-  color: #ffffff; 
+  background: #dc2626;
+  color: #ffffff;
   transform: translateX(5px);
 }
 
@@ -731,7 +712,7 @@ html {
 
 /* Histórico*/
 
-/* 🔷 Cabeçalho do histórico */
+/* Cabeçalho do histórico */
 .historico-header {
   margin-bottom: 30px;
   text-align: center;
@@ -756,7 +737,7 @@ html {
   background-color: var(--bg-white);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .historico-table thead {
@@ -847,7 +828,7 @@ html {
   font-size: 18px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-form {

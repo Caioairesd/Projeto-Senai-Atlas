@@ -62,14 +62,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($produto['plataforma_produto']) ?></td>
                             <td><?= htmlspecialchars($produto['tipo_produto']) ?></td>
                             <td>R$ <?= number_format($produto['preco_produto'], 2, ',', '.') ?></td>
-                            <td class="actions">
-                                <a class="btn" href="detalhes_produto.php?id=<?= $produto['id_produto'] ?>">Ver</a>
-                                <a class="btn btn-edit"
-                                    href="../editar/editar_produto.php?id=<?= $produto['id_produto'] ?>">Editar</a>
-                                <a class="btn btn-delete"
-                                    href="../excluir/excluir_produto.php?id_produto=<?= $produto['id_produto'] ?>"
-                                    onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                            <td>
+                                <div class="btn-group">
 
+                                    <a class="btn" href="detalhes_produto.php?id=<?= $produto['id_produto'] ?>">Ver detalhes</a>
+                                    <a class="btn btn-edit"
+                                        href="../editar/editar_produto.php?id=<?= $produto['id_produto'] ?>">Editar</a>
+                                </div>
                             </td>
 
                         </tr>
