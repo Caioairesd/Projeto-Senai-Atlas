@@ -3,8 +3,8 @@ session_start();
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
-// Busca produtos para o select
-$sql = 'SELECT id_produto, nome_produto FROM produto ORDER BY nome_produto ASC';
+// Busca apenas produtos ativos para o select
+$sql = 'SELECT id_produto, nome_produto FROM produto WHERE ativo = 1 ORDER BY nome_produto ASC';
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -17,25 +17,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Entrada de Estoque</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/style.css">
-    <style>
-        .alert {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-align: center;
-        }
 
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-    </style>
 </head>
 
 <body>

@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="btn-group">
-                    <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id=<?= $funcionario['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
+                    <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id_funcionario=<?= $funcionario['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
                     <a class="btn" href="visualizar_funcionario.php">Voltar</a>
                 </div>
             </div>

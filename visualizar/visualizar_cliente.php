@@ -7,12 +7,14 @@ $busca = $_GET['busca'] ?? '';
 // Consulta com filtro de busca e clientes ativos
 $sql = 'SELECT * FROM cliente 
         WHERE ativo = 1 AND (
+            id_cliente LIKE :busca OR 
             nome_cliente LIKE :busca OR 
             email_cliente LIKE :busca OR 
             telefone_cliente LIKE :busca OR 
             cnpj_cliente LIKE :busca
         )
         ORDER BY nome_cliente ASC';
+
 
 $stmt = $pdo->prepare($sql);
 $termoBusca = '%' . $busca . '%';
@@ -37,6 +39,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <form method="get" class="search-form">
             <input type="text" name="busca" placeholder="Buscar Cliente..." value="<?= htmlspecialchars($busca) ?>" class="input">
             <button type="submit" class="btn">Buscar</button>
+            <a href="visualizar_cliente.php" class="btn">Limpar Filtros</a>
         </form>
 
         <?php if (count($clientes) > 0): ?>

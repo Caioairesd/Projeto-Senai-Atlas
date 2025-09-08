@@ -37,6 +37,7 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <form method="get" class="search-form">
       <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>" class="input">
       <button type="submit" class="btn">Buscar</button>
+      <a href="visualizar_funcionario.php" class="btn">Limpar Filtros</a>
     </form>
 
     <?php if (count($funcionarios) > 0): ?>

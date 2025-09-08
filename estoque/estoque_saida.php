@@ -3,14 +3,14 @@ session_start();
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
-// Busca produtos para o select
-$sql = 'SELECT id_produto, nome_produto FROM produto ORDER BY nome_produto ASC';
+// Busca produtos ativos para o select
+$sql = 'SELECT id_produto, nome_produto FROM produto WHERE ativo = 1 ORDER BY nome_produto ASC';
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Busca clientes para o select
-$sqlClientes = 'SELECT id_cliente, nome_cliente FROM cliente ORDER BY nome_cliente ASC';
+// Busca clientes ativos para o select
+$sqlClientes = 'SELECT id_cliente, nome_cliente FROM cliente WHERE ativo = 1 ORDER BY nome_cliente ASC';
 $stmtClientes = $pdo->prepare($sqlClientes);
 $stmtClientes->execute();
 $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);

@@ -42,7 +42,7 @@ try {
     $pdo->beginTransaction();
 
     // 3) Verifica produto e preço
-    $stmt = $pdo->prepare("SELECT preco_produto FROM produto WHERE id_produto = ?");
+    $stmt = $pdo->prepare("SELECT preco_produto FROM produto WHERE id_produto = ? AND ativo = 1");
     $stmt->execute([$produto_id]);
     $preco_unitario = $stmt->fetchColumn();
     if ($preco_unitario === false) {

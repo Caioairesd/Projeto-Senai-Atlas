@@ -8,16 +8,13 @@ if (!$id_produto || !is_numeric($id_produto)) {
     exit;
 }
 
-// Comando de exclusão
-$sql = 'DELETE FROM produto WHERE id_produto = :id_produto';
+$sql = 'UPDATE produto SET ativo = FALSE WHERE id_produto = :id_produto';
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id_produto', $id_produto, PDO::PARAM_INT);
 
 if ($stmt->execute()) {
-    // Redireciona para a lista com sucesso
-    header('Location: ../visualizar/visualizar_produto.php?msg=excluido');
+    header('Location: ../visualizar/visualizar_produto.php?msg=Produto Excluido com sucesso&type=success');
     exit;
 } else {
-    echo '<div class="alert alert-error">Erro ao excluir o produto.</div>';
+    echo '<div class="alert alert-error">Erro ao Excluir o produto.</div>';
 }
-?>

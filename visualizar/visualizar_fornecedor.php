@@ -6,6 +6,7 @@ $busca = $_GET['busca'] ?? '';
 // Consulta com filtro
 $sql = 'SELECT * FROM fornecedor 
         WHERE ativo = 1 AND (
+            id_fornecedor = :busca OR 
             nome_fornecedor LIKE :busca OR 
             email_fornecedor LIKE :busca OR 
             contato_fornecedor LIKE :busca OR 
@@ -37,6 +38,7 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <form method="get" class="search-form">
             <input type="text" name="busca" placeholder="Buscar Fornecedor..." value="<?= htmlspecialchars($busca) ?>" class="input">
             <button type="submit" class="btn">Buscar</button>
+            <a href="visualizar_fornecedor.php" class="btn">Limpar Filtros</a>
         </form>
 
         <?php if (count($fornecedores) > 0): ?>

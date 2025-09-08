@@ -5,10 +5,12 @@ $busca = $_GET['busca'] ?? '';
 
 // Consulta com filtro
 $sql = 'SELECT * FROM produto WHERE 
-        nome_produto LIKE :busca OR 
-        descricao_produto LIKE :busca OR 
-        plataforma_produto LIKE :busca OR 
-        tipo_produto LIKE :busca 
+        ativo = 1 AND (
+            nome_produto LIKE :busca OR 
+            descricao_produto LIKE :busca OR 
+            plataforma_produto LIKE :busca OR 
+            tipo_produto LIKE :busca
+        )
         ORDER BY nome_produto ASC';
 
 $stmt = $pdo->prepare($sql);
@@ -36,6 +38,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <form method="get" class="search-form">
             <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($busca) ?>" class="input">
             <button type="submit" class="btn">Buscar</button>
+            <a href="visualizar_produto.php" class="btn">Limpar Filtros</a>
         </form>
 
         <?php if (count($produtos) > 0): ?>
