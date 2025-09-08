@@ -21,9 +21,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <div class="form-wrapper">
-        <h2>Registrar Entrada de Estoque</h2>
-        <p>Selecione o produto e informe os detalhes da entrada.</p>
-
+            <h2>Registrar Entrada de Estoque</h2>
+            <p>Selecione o produto e informe os detalhes da entrada.</p>
         <form action="processar_entrada.php" method="post">
             <!-- Produto -->
             <div class="input-group">

@@ -51,10 +51,8 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <div class="form-wrapper">
-        <div class="historico-header">
-            <h2>Estoque Geral</h2>
-            <p>Visão consolidada de todos os produtos e seus níveis de estoque</p>
-        </div>
+        <h2>Estoque Geral</h2>
+        <p>Visão consolidada de todos os produtos e seus níveis de estoque</p>
         <!-- Campo de busca -->
         <form method="get" class="search-form">
             <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($filtro) ?>" class="input">
@@ -66,12 +64,14 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endforeach; ?>
             </select>
 
-            <select name="tipo" class="input">
-                <option value="">Todos os Tipos</option>
+            <!-- Select com busca -->
+            <select name="tipo"  class="input" >
+                <option value="">Todas as categorias</option>
                 <?php foreach ($tipos as $t): ?>
                     <option value="<?= $t ?>" <?= $tipo === $t ? 'selected' : '' ?>><?= $t ?></option>
                 <?php endforeach; ?>
             </select>
+
 
             <select name="status" class="input">
                 <option value="">Todos os Status</option>
@@ -119,6 +119,19 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
         <?php endif; ?>
     </div>
+    <!-- jQuery + Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <script>
+        $(document).ready(function() {
+            $('#tipo').select2({
+                placeholder: "Todas as categorias",
+                allowClear: true
+            });
+        });
+    </script>
 </body>
 
 </html>

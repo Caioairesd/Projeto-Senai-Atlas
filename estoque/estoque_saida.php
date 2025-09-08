@@ -17,22 +17,25 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Saída de Estoque</title>
     <link rel="stylesheet" href="../assets/style.css">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Registrar Saída de Estoque</h2>
         <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.</p>
-
         <form action="processar_saida.php" method="post">
-            
+
             <!-- Cliente -->
             <div class="input-group">
                 <label for="cliente_id">Cliente:</label>
-                <select id="cliente_id" name="cliente_id" required>
+                <select id="cliente_id" name="cliente_id" required style="width: 100%;">
                     <option value="">Selecione...</option>
                     <?php foreach ($clientes as $c): ?>
                         <option value="<?= $c['id_cliente'] ?>">
@@ -45,7 +48,7 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             <!-- Produto -->
             <div class="input-group">
                 <label for="produto_id">Produto:</label>
-                <select id="produto_id" name="produto_id" required>
+                <select id="produto_id" name="produto_id" required style="width: 100%;">
                     <option value="">Selecione...</option>
                     <?php foreach ($produtos as $p): ?>
                         <option value="<?= $p['id_produto'] ?>">
@@ -74,5 +77,23 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </form>
     </div>
+
+    <!-- jQuery + Select2 JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#cliente_id').select2({
+                placeholder: "Selecione um cliente",
+                allowClear: true
+            });
+
+            $('#produto_id').select2({
+                placeholder: "Selecione um produto",
+                allowClear: true
+            });
+        });
+    </script>
 </body>
+
 </html>
