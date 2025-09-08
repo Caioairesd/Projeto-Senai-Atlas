@@ -4,10 +4,13 @@ include '../assets/sidebar.php';
 
 $busca = $_GET['busca'] ?? '';
 
-// Consulta com filtro
+// Consulta com filtro de busca + apenas funcionários ativos
 $sql = "SELECT id_funcionario, nome_funcionario, email_funcionario, imagem_url_funcionario 
         FROM funcionario 
-        WHERE nome_funcionario LIKE :busca OR id_funcionario LIKE :busca
+        WHERE ativo = 1 AND (
+            nome_funcionario LIKE :busca OR 
+            id_funcionario LIKE :busca
+        )
         ORDER BY nome_funcionario ASC";
 
 $stmt = $pdo->prepare($sql);
@@ -35,7 +38,6 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>" class="input">
       <button type="submit" class="btn">Buscar</button>
     </form>
-
 
     <?php if (count($funcionarios) > 0): ?>
       <table class="table">
@@ -67,7 +69,7 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
       </table>
     <?php else: ?>
-      <div class="alert alert-warning">Nenhum funcionário encontrado com esse termo.</div>
+      <div class="alert alert-warning">Nenhum funcionário ativo encontrado com esse termo.</div>
     <?php endif; ?>
   </div>
 </body>
