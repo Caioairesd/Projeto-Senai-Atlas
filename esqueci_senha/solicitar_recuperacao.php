@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $mail->AltBody = "Copie e cole no navegador: http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
 
       $mail->send();
-      echo "<script>alert('E-mail de recuperação enviado!'); window.location.href='../login/login.php';</script>";
+      echo "<script>alert('E-mail de recuperação enviado!'); window.location.href='../login/index.php';</script>";
     } catch (Exception $e) {
       echo "Erro ao enviar e-mail: {$mail->ErrorInfo}";
     }
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn">Recuperar senha</button>
 
         <p class="no-account">
-          Lembrou sua senha? <a href="../login/login.php">Voltar ao login</a>
+          Lembrou sua senha? <a href="../login/index.php">Voltar ao login</a>
         </p>
       </form>
     </div>
