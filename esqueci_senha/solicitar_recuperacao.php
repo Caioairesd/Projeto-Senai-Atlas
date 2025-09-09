@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $mail->isHTML(true);
       $mail->Subject = 'Redefinir Senha';
       $mail->Body    = "Clique no link para redefinir sua senha: 
-                <a href='http://localhost/SA-ATLAS/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
-      $mail->AltBody = "Copie e cole no navegador: http://localhost/SA-ATLAS/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
+                <a href='http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token'>Redefinir Senha</a>";
+      $mail->AltBody = "Copie e cole no navegador: http://localhost/Projeto-Senai-Atlas/esqueci_senha/redefinir_senha.php?token=$token";
 
       $mail->send();
       echo "<script>alert('E-mail de recuperação enviado!'); window.location.href='../login/login.php';</script>";
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="card-container">
     <div class="container">
       <div class="visual-side">
-        <img src="../assets/images/atlas.jpg" alt="Logo Atlas" />
+        <img src="../assets/images/atlas.png" alt="Logo Atlas" />
         <h1 class="slogan">Recupere o acesso à sua conta</h1>
       </div>
 

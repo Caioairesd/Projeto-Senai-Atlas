@@ -7,14 +7,12 @@
     <title>Login - Sistema Atlas</title>
     <link rel="stylesheet" href="../assets/style.css"/>
     <label class="switch">
-        <!-- ... ícones omitidos para brevidade ... -->
-        <input type="checkbox" class="input">
-        <span class="slider"></span>
+      
     <!--dividida -->
     <div class="card-container">
         <div class="container">
             <div class="visual-side">
-                <img src="../assets/images/atlas.jpg">
+                <img src="../assets/images/atlas.png">
                 <h1 class="slogan">Controle inteligente para estoques eficientes</h1>
             </div>
 

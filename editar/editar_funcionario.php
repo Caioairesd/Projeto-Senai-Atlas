@@ -57,6 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $id_funcionario);
 
     if ($stmt->execute()) {
+        // Atualiza também o email do usuário vinculado
+        $sqlUsuario = "UPDATE usuario SET email_usuario = :email WHERE funcionario_id = :id_funcionario";
+        $stmtUsuario = $pdo->prepare($sqlUsuario);
+        $stmtUsuario->bindParam(':email', $email);
+        $stmtUsuario->bindParam(':id_funcionario', $id_funcionario, PDO::PARAM_INT);
+        $stmtUsuario->execute();
+
         header("Location: ../visualizar/visualizar_funcionario.php?msg=atualizado");
         exit();
     } else {
