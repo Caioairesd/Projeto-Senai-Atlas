@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../assets/sidebar.php';
 require_once '../config/conexao.php';
 
 $usuarioId = (int) $_SESSION['usuario_id'];

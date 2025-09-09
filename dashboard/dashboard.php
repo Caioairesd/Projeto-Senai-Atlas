@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 

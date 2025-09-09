@@ -1,6 +1,5 @@
 <?php
 require_once '../config/conexao.php';
-include '../assets/sidebar.php';
 
 $msg = '';
 
@@ -9,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $descricao_produto = $_POST['descricao_produto'] ?? '';
     $plataforma_produto = $_POST['plataforma_produto'] ?? '';
     $tipo_produto = $_POST['tipo_produto'] ?? '';
-    
+
     $preco_produto = $_POST['preco_produto'] ?? '';
     // Converte "R$ 59,90" para "59.90" retirando as máscaras para salvar no banco
     $preco_produto = str_replace(['R$', '.', ','], ['', '', '.'], $preco_produto);
@@ -21,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $imagem_blob = null;
 
     if (!empty($_FILES['imagem_url_produto']['tmp_name']) && $_FILES['imagem_url_produto']['error'] === UPLOAD_ERR_OK) {
-        $tmpFile  = $_FILES['imagem_url_produto']['tmp_name'];
+        $tmpFile = $_FILES['imagem_url_produto']['tmp_name'];
         $fileSize = $_FILES['imagem_url_produto']['size'];
         $maxSize = 2 * 1024 * 1024;
 
@@ -54,11 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
 
     if ($stmt->execute()) {
-        $msg = '<div class="sucesso">Produto cadastrado com sucesso!</div>';
+        header("Location: criar_produto.php?msg=Operação realizada com sucesso.&type=success");
+        exit();
     } else {
-        $msg = '<div class="erro">Erro ao cadastrar produto!</div>';
+        header("Location: criar_produto.php?msg=Erro ao realizar operação.&type=error");
+        exit();
     }
 }
+include '../assets/sidebar.php';
 ?>
 
 <!DOCTYPE html>
@@ -78,17 +80,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h2>Cadastrar Produto</h2>
         <p>Preencha os dados abaixo para adicionar um novo produto ao sistema.</p>
 
-        <?= $msg ?? '' ?>
+        <?php if (isset($_GET['msg']) && isset($_GET['type'])): ?>
+            <div class="alert alert-<?= htmlspecialchars($_GET['type']) ?>">
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
 
-        <form method="post" enctype="multipart/form-data">
+
+        <form method="post" action="criar_produto.php" enctype="multipart/form-data">
             <div class="input-group">
                 <label for="nome_produto">Nome do Produto</label>
-                <input type="text" id="nome_produto" name="nome_produto"  placeholder="Ex: Elden Ring " required />
+                <input type="text" id="nome_produto" name="nome_produto" placeholder="Ex: Elden Ring " required />
             </div>
 
             <div class="input-group">
                 <label for="descricao_produto">Descrição</label>
-                <input type="text" id="descricao_produto" name="descricao_produto" placeholder="Breve descrição do produto" required />
+                <input type="text" id="descricao_produto" name="descricao_produto"
+                    placeholder="Breve descrição do produto" required />
             </div>
 
             <div class="input-group">
@@ -105,9 +113,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <option value="Nintendo 3DS">Nintendo 3DS</option>
                     <option value="Nintendo Wii">Nintendo Wii</option>
                     <option value="Nintendo Switch">Nintendo Switch</option>
-                    
-                    
-                    
+
+
+
                 </select>
             </div>
 
@@ -127,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <option value="Luta">Luta</option>
                     <option value="Terror">Terror</option>
                     <option value="Plataforma">Plataforma</option>
-                    <option value="Puzzle">Puzzle / Quebra-cabeça</option>          
+                    <option value="Puzzle">Puzzle / Quebra-cabeça</option>
                     <option value="Casual">Casual</option>
                     <option value="Battle Royale">Battle Royale</option>
                     <option value="MOBA">MOBA</option>
@@ -149,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="input-group">
                 <label for="preco_produto">Preço</label>
-                <input type="text" id="preco_produto" name="preco_produto"  placeholder="R$ 0,00" required />
+                <input type="text" id="preco_produto" name="preco_produto" placeholder="R$ 0,00" required />
             </div>
 
             <div class="input-group">
@@ -180,12 +188,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.select2').select2({
                 placeholder: "Digite ou selecione",
                 width: '100%'
             });
         });
+
+        // Remove automaticamente a mensagem após 4 segundos
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) alert.style.display = 'none';
+        }, 4000);
     </script>
 </body>
 

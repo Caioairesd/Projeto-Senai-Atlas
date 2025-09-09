@@ -1,6 +1,5 @@
 <?php
 include 'processar_historico.php';
-include '../assets/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

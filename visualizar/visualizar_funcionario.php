@@ -20,14 +20,6 @@ $stmt->execute();
 $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-if (isset($_GET['msg'])) {
-    if ($_GET['msg'] === 'atualizado') {
-        echo "<div class='alert alert-success'>Funcionário atualizado com sucesso!</div>";
-    } elseif ($_GET['msg'] === 'erro') {
-        echo "<div class='alert alert-error'>Erro ao atualizar funcionário.</div>";
-    }
-}
-
 
 ?>
 
@@ -43,10 +35,19 @@ if (isset($_GET['msg'])) {
 <body>
   <div class="table-wrapper">
     <h2>Funcionários</h2>
-
+    <?php
+    if (isset($_GET['msg'])) {
+      if ($_GET['msg'] === 'atualizado') {
+        echo "<div class='alert alert-success'>Funcionário atualizado com sucesso!</div>";
+      } elseif ($_GET['msg'] === 'erro') {
+        echo "<div class='alert alert-error'>Erro ao atualizar funcionário.</div>";
+      }
+    }
+    ?>
     <!-- Campo de busca -->
     <form method="get" class="search-form">
-      <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>" class="input">
+      <input type="text" name="busca" placeholder="Buscar Funcionário..." value="<?= htmlspecialchars($busca) ?>"
+        class="input">
       <button type="submit" class="btn">Buscar</button>
       <a href="visualizar_funcionario.php" class="btn">Limpar Filtros</a>
     </form>
@@ -73,7 +74,9 @@ if (isset($_GET['msg'])) {
               <td>
                 <div class="btn-group">
                   <a class="btn" href="detalhes_funcionario.php?id=<?= $f['id_funcionario'] ?>">Ver detalhes</a>
-                  <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id_funcionario=<?= $f['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
+                  <a class="btn btn-delete"
+                    href="../excluir/excluir_funcionario.php?id_funcionario=<?= $f['id_funcionario'] ?>"
+                    onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
 
                 </div>
               </td>
@@ -86,5 +89,15 @@ if (isset($_GET['msg'])) {
     <?php endif; ?>
   </div>
 </body>
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      alert.style.transition = 'opacity 0.5s ease';
+      alert.style.opacity = '0';
+      setTimeout(() => alert.remove(), 500); // remove do DOM após o fade
+    }
+  }, 3000); // tempo antes de começar a desaparecer
+</script>
 
 </html>

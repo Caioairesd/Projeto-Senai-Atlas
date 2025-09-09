@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-include '../assets/sidebar.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -21,5 +21,5 @@ if ($usuario && password_verify($password, $usuario['senha_usuario'])) {
     header("Location: ../dashboard/dashboard.php");
     exit();
 } else {
-    echo "<script>alert('Usuário ou senha inválidos'); window.location.href='login.php';</script>";
+    echo "<script>alert('Usuário ou senha inválidos'); window.location.href='../login.php';</script>";
 }

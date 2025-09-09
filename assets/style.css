@@ -231,10 +231,8 @@ html {
 .alert-success,
 .alert-funcionario {
   background-color: #e6f4ff; /* Cor de fundo azul muito claro */
-  color: var(--primary); /* Cor do texto definida pela variável CSS --primary */
-  border-color: var(
-    --primary
-  ); /* Cor da borda definida pela variável CSS --primary */
+  color:#155724; /* Cor do texto definida pela variável CSS  */
+  border-color: #21b142; /* Cor da borda definida pela variável CSS  */
 }
 
 /* Estilos específicos para alertas de erro */

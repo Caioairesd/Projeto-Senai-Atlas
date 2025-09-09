@@ -1,7 +1,76 @@
 <?php
-// Este arquivo deve ser incluído após qualquer lógica que envolva header()
-// Ele contém apenas HTML da sidebar
+session_start();
+require_once '../config/conexao.php';
+
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['perfil'])) {
+    header('Location: ../Login/login.php');
+    exit();
+}
+
+$id_perfil = (int) $_SESSION['perfil'];
+
+// Busca nome do perfil
+$sqlPerfil = "SELECT nome_perfil FROM perfil WHERE id_perfil = :id_perfil";
+$stmtPerfil = $pdo->prepare($sqlPerfil);
+$stmtPerfil->bindParam(':id_perfil', $id_perfil, PDO::PARAM_INT);
+$stmtPerfil->execute();
+$perfil = $stmtPerfil->fetch(PDO::FETCH_ASSOC);
+
+$nome_perfil = $perfil['nome_perfil'] ?? 'Perfil não encontrado';
+
+// Permissões por perfil (com pasta definida)
+$permissoes = [
+    1 => [
+        "Cadastrar" => [
+            ["pasta" => "criar", "arquivo" => "criar_cliente.php", "icone" => "fas fa-user-plus", "texto" => "Cadastrar Cliente"],
+            ["pasta" => "criar", "arquivo" => "criar_fornecedor.php", "icone" => "fas fa-truck", "texto" => "Cadastrar Fornecedor"],
+            ["pasta" => "criar", "arquivo" => "criar_funcionario.php", "icone" => "fas fa-user-tie", "texto" => "Cadastrar Funcionário"],
+            ["pasta" => "criar", "arquivo" => "criar_produto.php", "icone" => "fas fa-box", "texto" => "Cadastrar Produto"]
+        ],
+        "Visualizar" => [
+            ["pasta" => "visualizar", "arquivo" => "visualizar_cliente.php", "icone" => "fas fa-users", "texto" => "Visualizar Cliente"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_fornecedor.php", "icone" => "fas fa-industry", "texto" => "Visualizar Fornecedor"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_funcionario.php", "icone" => "fas fa-id-badge", "texto" => "Visualizar Funcionário"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_produto.php", "icone" => "fas fa-box", "texto" => "Visualizar Produto"],
+            ["pasta" => "estoque", "arquivo" => "estoque_geral.php", "icone" => "fas fa-warehouse", "texto" => "Visualizar Estoque"],
+            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-warehouse", "texto" => "Lista de Pedidos"]
+        ],
+        "Estoque" => [
+            ["pasta" => "estoque", "arquivo" => "estoque_entrada.php", "icone" => "fas fa-plus-square", "texto" => "Entrada de Estoque"],
+            ["pasta" => "estoque", "arquivo" => "estoque_saida.php", "icone" => "fas fa-minus-square", "texto" => "Saída de Estoque"],
+            ["pasta" => "estoque", "arquivo" => "estoque_historico.php", "icone" => "fas fa-history", "texto" => "Histórico de Movimentações"]
+        ]
+    ],
+    2 => [
+        "Visualizar" => [
+            ["pasta" => "visualizar", "arquivo" => "visualizar_cliente.php", "icone" => "fas fa-users", "texto" => "Visualizar Cliente"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_fornecedor.php", "icone" => "fas fa-industry", "texto" => "Visualizar Fornecedor"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_produto.php", "icone" => "fas fa-inventory", "texto" => "Visualizar Produto"],
+            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-warehouse", "texto" => "Lista de Pedidos"]
+        ],
+        "Estoque" => [
+            ["pasta" => "estoque", "arquivo" => "estoque_saida.php", "icone" => "fas fa-minus-square", "texto" => "Saída de Estoque"],
+            ["pasta" => "estoque", "arquivo" => "estoque_historico.php", "icone" => "fas fa-history", "texto" => "Histórico de Movimentações"]
+        ]
+    ],
+    3 => [
+        "Visualizar" => [
+            ["pasta" => "visualizar", "arquivo" => "visualizar_fornecedor.php", "icone" => "fas fa-industry", "texto" => "Visualizar Fornecedor"],
+            ["pasta" => "visualizar", "arquivo" => "visualizar_produto.php", "icone" => "fas fa-inventory", "texto" => "Visualizar Produto"],
+            ["pasta" => "estoque", "arquivo" => "estoque_geral.php", "icone" => "fas fa-warehouse", "texto" => "Visualizar Estoque"]
+        ],
+        "Estoque" => [
+            ["pasta" => "estoque", "arquivo" => "estoque_entrada.php", "icone" => "fas fa-plus-square", "texto" => "Entrada de Estoque"],
+            ["pasta" => "estoque", "arquivo" => "estoque_saida.php", "icone" => "fas fa-minus-square", "texto" => "Saída de Estoque"],
+            ["pasta" => "estoque", "arquivo" => "estoque_historico.php", "icone" => "fas fa-history", "texto" => "Histórico de Movimentações"]
+        ]
+    ]
+];
+
+$opcoes_menu = $permissoes[$id_perfil] ?? [];
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 
@@ -15,7 +84,7 @@
 </head>
 
 <body>
-  
+
 
     <nav class="sidebar">
         <div class="sidebar-header">
@@ -23,94 +92,51 @@
                 <i class="fas fa-cube"></i>
                 <span class="logo-text">Atlas</span>
             </div>
+            <div class="perfil-info">
+                <small><?= htmlspecialchars($nome_perfil) ?></small>
+            </div>
         </div>
 
         <ul class="menu">
-            <!-- Cadastrar -->
-            <li class="dropdown">
-                <a href="#" class="menu-item">
-                    <i class="menu-icon fas fa-user-plus"></i>
-                    <span class="menu-text">Cadastrar</span>
-                    <i class="dropdown-arrow fas fa-chevron-right"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="../criar/criar_cliente.php">
-                            <i class="fas fa-user-circle"></i>
-                            <span>Cadastrar Cliente</span>
-                        </a></li>
-                    <li><a href="../criar/criar_fornecedor.php">
-                            <i class="fas fa-truck-loading"></i>
-                            <span>Cadastrar Fornecedor</span>
-                        </a></li>
-                    <li><a href="../criar/criar_funcionario.php">
-                            <i class="fas fa-user-tie"></i>
-                            <span>Cadastrar Funcionário</span>
-                        </a></li>
-                    <li><a href="../criar/criar_produto.php">
-                            <i class="fas fa-box-open"></i>
-                            <span>Cadastrar Produto</span>
-                        </a></li>
-                </ul>
-            </li>
+            <?php foreach ($opcoes_menu as $categoria => $links): ?>
+                <?php if (!empty($links)): ?>
+                    <li class="dropdown">
+                        <a href="#" class="menu-item">
+                            <i class="menu-icon 
+                                <?= ($categoria === 'Cadastrar') ? 'fas fa-plus-circle' :
+                                    (($categoria === 'Visualizar') ? 'fas fa-search' :
+                                    (($categoria === 'Estoque') ? 'fas fa-warehouse' : 'fas fa-eye')) ?>">
+                            </i>
 
-            <!-- Visualizar -->
-            <li class="dropdown">
-                <a href="#" class="menu-item">
-                    <i class="menu-icon fas fa-search"></i>
-                    <span class="menu-text">Visualizar</span>
-                    <i class="dropdown-arrow fas fa-chevron-right"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="../visualizar/visualizar_cliente.php">
-                            <i class="fas fa-users"></i>
-                            <span>Visualizar Cliente</span>
-                        </a></li>
-                    <li><a href="../visualizar/visualizar_fornecedor.php">
-                            <i class="fas fa-industry"></i>
-                            <span>Visualizar Fornecedor</span>
-                        </a></li>
-                    <li><a href="../visualizar/visualizar_funcionario.php">
-                            <i class="fas fa-id-badge"></i>
-                            <span>Visualizar Funcionário</span>
-                        </a></li>
-                    <li><a href="../visualizar/visualizar_produto.php">
-                            <i class="fas fa-boxes"></i>
-                            <span>Visualizar Produto</span>
-                        </a></li>
-                </ul>
-            </li>
-
-            <!-- Estoque -->
-            <li class="dropdown">
-                <a href="#" class="menu-item">
-                    <i class="menu-icon fas fa-warehouse"></i>
-                    <span class="menu-text">Estoque</span>
-                    <i class="dropdown-arrow fas fa-chevron-right"></i>
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="../estoque/estoque_entrada.php">
-                            <i class="fas fa-arrow-down"></i>
-                            <span>Entrada de Estoque</span>
-                        </a></li>
-                    <li><a href="../estoque/estoque_historico.php">
-                            <i class="fas fa-history"></i>
-                            <span>Histórico</span>
-                        </a></li>
-                    <li><a href="../estoque/estoque_saida.php">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>Saída de Estoque</span>
-                        </a></li>
-                    <li><a href="../estoque/estoque_geral.php">
-                            <i class="fas fa-clipboard-list"></i>
-                            <span>Estoque Geral</span>
-                        </a></li>
-                    <li><a href="../estoque/pedidos_lista.php">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Lista de Pedidos</span>
-                        </a></li>
-                </ul>
-            </li>
-
+                            <span class="menu-text"><?= htmlspecialchars($categoria) ?></span>
+                            <i class="dropdown-arrow fas fa-chevron-right"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($links as $link): ?>
+                                <li>
+                                    <a href="../<?= htmlspecialchars($link['pasta']) ?>/<?= htmlspecialchars($link['arquivo']) ?>">
+                                        <i class="<?= htmlspecialchars($link['icone']) ?>"></i>
+                                        <span><?= htmlspecialchars($link['texto']) ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            
+            <div class="sidebar-footer">
+                <div class="logout-item">
+                    <form action="../Login/logout.php" method="post">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="menu-text">Sair</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            
             <!-- Dashboard -->
             <li>
                 <a href="../dashboard/dashboard.php" class="menu-item">
@@ -119,22 +145,13 @@
                 </a>
                 
             </li>
+            
+            
+        </ul>
 
-      
 
- 
 
-        <!-- Footer da sidebar -->
-        <div class="sidebar-footer">
-            <div class="logout-item">
-                <form action="../Login/logout.php" method="post">
-                    <button type="submit" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span class="menu-text">Sair</span>
-                    </button>
-                </form>
-            </div>
-        </div>
+        
     </nav>
 
     <script>
@@ -156,7 +173,7 @@
         }
 
         // Carregar tema salvo
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const savedTheme = localStorage.getItem('theme') || 'light';
             const html = document.documentElement;
             const themeIcon = document.getElementById('theme-icon');
@@ -166,9 +183,9 @@
         });
 
         // Adicionar animação de fade-in aos elementos
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const elements = document.querySelectorAll('.content-wrapper, .form-wrapper, .table-wrapper, .details-wrapper');
-            elements.forEach(el => el.classList.add('fade-in'));    
+            elements.forEach(el => el.classList.add('fade-in'));
         });
     </script>
 </body>

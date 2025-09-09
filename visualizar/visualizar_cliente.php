@@ -23,13 +23,6 @@ $stmt->execute();
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-if (isset($_GET['msg'])) {
-    if ($_GET['msg'] === 'atualizado') {
-        echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
-    } elseif ($_GET['msg'] === 'erro') {
-        echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
-    }
-}
 
 
 ?>
@@ -43,17 +36,19 @@ if (isset($_GET['msg'])) {
 </head>
 
 <body>
-    <?php
-    if (isset($_GET['msg'])) {
-        if ($_GET['msg'] === 'atualizado') {
-            echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
-        } elseif ($_GET['msg'] === 'erro') {
-            echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
-        }
-    }
-    ?>
     <div class="table-wrapper">
         <h2>Lista de Clientes Ativos</h2>
+        <?php if (isset($_GET['msg'])): ?>
+            <?php
+            $tipo = $_GET['msg'] === 'atualizado' ? 'success' : ($_GET['msg'] === 'erro' ? 'error' : 'warning');
+            $texto = match ($_GET['msg']) {
+                'atualizado' => 'Cliente atualizado com sucesso!',
+                'erro' => 'Erro ao atualizar cliente.',
+                default => htmlspecialchars($_GET['msg']),
+            };
+            ?>
+            <div class="alert alert-<?= $tipo ?>"><?= $texto ?></div>
+        <?php endif; ?>
 
         <!-- Campo de busca -->
         <form method="get" class="search-form">
@@ -80,8 +75,8 @@ if (isset($_GET['msg'])) {
                             <td class="actions">
                                 <a class="btn" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>">Ver detalhes</a>
                                 <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>"
-               onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
-                                
+                                    onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -92,5 +87,15 @@ if (isset($_GET['msg'])) {
         <?php endif; ?>
     </div>
 </body>
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500); // remove do DOM após o fade
+        }
+    }, 3000); // tempo antes de começar a desaparecer
+</script>
 
 </html>

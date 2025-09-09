@@ -21,15 +21,6 @@ $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_GET['msg'])) {
-    if ($_GET['msg'] === 'atualizado') {
-        echo "<div class='alert alert-success'>Fornecedor atualizado com sucesso!</div>";
-    } elseif ($_GET['msg'] === 'erro') {
-        echo "<div class='alert alert-error'>Erro ao atualizar fornecedor.</div>";
-    }
-}
-
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -43,10 +34,20 @@ if (isset($_GET['msg'])) {
 <body>
     <div class="table-wrapper">
         <h2>Lista de Fornecedores</h2>
+        <?php
+        if (isset($_GET['msg'])) {
+            if ($_GET['msg'] === 'atualizado') {
+                echo "<div class='alert alert-success'>Fornecedor atualizado com sucesso!</div>";
+            } elseif ($_GET['msg'] === 'erro') {
+                echo "<div class='alert alert-error'>Erro ao atualizar fornecedor.</div>";
+            }
+        }
 
+        ?>
         <!-- Campo de busca -->
         <form method="get" class="search-form">
-            <input type="text" name="busca" placeholder="Buscar Fornecedor..." value="<?= htmlspecialchars($busca) ?>" class="input">
+            <input type="text" name="busca" placeholder="Buscar Fornecedor..." value="<?= htmlspecialchars($busca) ?>"
+                class="input">
             <button type="submit" class="btn">Buscar</button>
             <a href="visualizar_fornecedor.php" class="btn">Limpar Filtros</a>
         </form>
@@ -66,9 +67,11 @@ if (isset($_GET['msg'])) {
                             <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
                             <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
                             <td class="btn-group">
-                                <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver detalhes</a>
-                                <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
-                                    onclick="return confirm('Tem certeza que deseja desativar este fornecedor?')">Excluir</a>
+                                <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver
+                                    detalhes</a>
+                                <a class="btn btn-delete"
+                                    href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
+                                    onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -79,5 +82,15 @@ if (isset($_GET['msg'])) {
         <?php endif; ?>
     </div>
 </body>
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500); // remove do DOM após o fade
+        }
+    }, 3000); // tempo antes de começar a desaparecer
+</script>
 
 </html>

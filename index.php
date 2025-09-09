@@ -5,18 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Sistema Atlas</title>
-    <link rel="stylesheet" href="../assets/style.css"/>
+    <link rel="stylesheet" href="assets/style.css"/>
     <label class="switch">
       
     <!--dividida -->
     <div class="card-container">
         <div class="container">
             <div class="visual-side">
-                <img src="../assets/images/atlas.png">
+                <img src="assets/images/logo_dark.png">
                 <h1 class="slogan">Controle inteligente para estoques eficientes</h1>
             </div>
 
-            <form action="processar_login.php" method="post" class="log-card" aria-label="formulário de login">
+            <form action="login/processar_login.php" method="post" class="log-card" aria-label="formulário de login">
                 <p class="para">Faça login para continuar gerenciando o estoque da empresa</p>
 
                 <div class="input-group">
@@ -32,7 +32,7 @@
                         <input type="checkbox" id="remember" name="remember" />
                         <label for="remember" class="label">Lembrar de mim</label>
                     </div>
-                    <a href="../esqueci_senha/solicitar_recuperacao.php">Esqueci minha senha</a>
+                    <a href="esqueci_senha/solicitar_recuperacao.php">Esqueci minha senha</a>
                 </div>
 
                 <button type="submit" class="btn">Login</button>

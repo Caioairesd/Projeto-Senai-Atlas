@@ -9,6 +9,7 @@ include '../assets/sidebar.php';
     <meta charset="UTF-8">
     <title>Detalhe do Pedido</title>
     <link rel="stylesheet" href="../assets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -16,19 +17,21 @@ include '../assets/sidebar.php';
         <h2>Pedido #<?= $pedido['id_pedido'] ?> - <?= htmlspecialchars($pedido['nome_cliente']) ?></h2>
         <p>Status atual: <?= htmlspecialchars($pedido['status_pedido']) ?></p>
 
-
         <!-- Formulário para alterar status -->
         <form method="POST">
-            <select name="status">
-                <?php
-                $statusList = ['Pendente', 'Processando', 'Enviado', 'Entregue', 'Cancelado'];
-                foreach ($statusList as $status) {
-                    $sel = $pedido['status_pedido'] === $status ? 'selected' : '';
-                    echo "<option value=\"$status\" $sel>$status</option>";
-                }
-                ?>
-            </select>
-            <button type="submit">Alterar Status</button>
+            <div class="input-group">
+                <label for="status">Alterar Status</label>
+                <select name="status" id="status" class="select2" required>
+                    <?php
+                    $statusList = ['Pendente', 'Processando', 'Enviado', 'Entregue', 'Cancelado'];
+                    foreach ($statusList as $status) {
+                        $sel = $pedido['status_pedido'] === $status ? 'selected' : '';
+                        echo "<option value=\"$status\" $sel>$status</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <button type="submit" class="btn">Alterar Status</button>
         </form>
 
         <h3>Itens do Pedido</h3>
@@ -57,6 +60,18 @@ include '../assets/sidebar.php';
             </table>
         <?php endif; ?>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Inicializa o Select2 para o campo de status
+        $(document).ready(function () {
+            $('#status').select2({
+                placeholder: "Selecione o status",
+                width: '100%'
+            });
+        });
+    </script>
 </body>
 
 </html>
