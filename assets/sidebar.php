@@ -167,7 +167,7 @@
         // Adicionar animação de fade-in aos elementos
         document.addEventListener('DOMContentLoaded', function() {
             const elements = document.querySelectorAll('.content-wrapper, .form-wrapper, .table-wrapper, .details-wrapper');
-            elements.forEach(el => el.classList.add('fade-in'));
+            elements.forEach(el => el.classList.add('fade-in'));    
         });
     </script>
 </body>

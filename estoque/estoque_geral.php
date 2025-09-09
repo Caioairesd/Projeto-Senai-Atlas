@@ -9,7 +9,7 @@ $tipo = $_GET['tipo'] ?? '';
 $status = $_GET['status'] ?? '';
 
 // Monta SQL com todos os filtros
-$sql = "SELECT * FROM vw_estoque_geral WHERE 1=1";
+$sql = "SELECT * FROM vw_estoque_geral WHERE ativo = 1";
 $params = [];
 
 if ($filtro !== '') {
