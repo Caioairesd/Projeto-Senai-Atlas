@@ -21,11 +21,13 @@ if (!$cliente) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalhes do Cliente</title>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
     <div class="form-wrapper">
         <h2>Detalhes do Cliente</h2>
@@ -51,11 +53,13 @@ if (!$cliente) {
             <input type="text" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" disabled>
         </div>
 
-        <div class="btn-group" >
-            <a class="btn btn-delete" href="../excluir/excluir_cliente.php?id=<?= $cliente['id_cliente'] ?>"
-               onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+        <div class="btn-group">
+
             <a class="btn" href="../visualizar/visualizar_cliente.php">Voltar</a>
+            <a class="btn btn-edit"
+                href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
         </div>
     </div>
 </body>
+
 </html>

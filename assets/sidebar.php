@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 
@@ -11,10 +12,7 @@
 </head>
 
 <body>
-    <!-- Botão de alternância do tema -->
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
-        <i class="fas fa-moon" id="theme-icon"></i>
-    </button>
+  
 
     <nav class="sidebar">
         <div class="sidebar-header">
