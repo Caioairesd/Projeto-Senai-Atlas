@@ -1,4 +1,7 @@
-
+<?php
+// Este arquivo deve ser incluído após qualquer lógica que envolva header()
+// Ele contém apenas HTML da sidebar
+?>
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 
