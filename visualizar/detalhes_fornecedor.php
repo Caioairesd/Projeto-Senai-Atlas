@@ -58,9 +58,9 @@ if (!$fornecedor) {
         </div>
 
         <div class="btn-group">
-            <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
-                onclick="return confirm('Tem certeza que deseja desativar este fornecedor?')">Excluir</a>
+          
             <a class="btn" href="../visualizar/visualizar_fornecedor.php">Voltar</a>
+            <a class="btn btn-edit" href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
         </div>
     </div>
 </body>

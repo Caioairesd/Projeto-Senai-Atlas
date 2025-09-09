@@ -57,7 +57,8 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
                             <td class="actions">
                                 <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver detalhes</a>
-                                <a class="btn btn-edit" href="../editar/editar_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Editar</a>
+                                <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
+                                    onclick="return confirm('Tem certeza que deseja desativar este fornecedor?')">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

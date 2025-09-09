@@ -50,7 +50,7 @@ if ($stmt->execute()) {
 }
 }
 ?>
-include '../assets/sidebar.php';
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
