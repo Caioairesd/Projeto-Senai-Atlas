@@ -1,19 +1,19 @@
 <?php
-session_start();
-require_once '../config/conexao.php';
-include '../assets/sidebar.php';
+session_start(); // Inicia a sessão para manter estado do usuário
+require_once '../config/conexao.php'; // Inclui arquivo de configuração de conexão com o banco de dados
+include '../assets/sidebar.php'; // Inclui arquivo de configuração de conexão com o banco de dados
 
 // Busca produtos ativos para o select
 $sql = 'SELECT id_produto, nome_produto FROM produto WHERE ativo = 1 ORDER BY nome_produto ASC';
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare($sql); // Prepara a consulta SQL
+$stmt->execute(); // Executa a consulta
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC); // Obtém todos os produtos ativos
 
 // Busca clientes ativos para o select
 $sqlClientes = 'SELECT id_cliente, nome_cliente FROM cliente WHERE ativo = 1 ORDER BY nome_cliente ASC';
-$stmtClientes = $pdo->prepare($sqlClientes);
-$stmtClientes->execute();
-$clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
+$stmtClientes = $pdo->prepare($sqlClientes); // Prepara a consulta SQL
+$stmtClientes->execute(); // Executa a consulta
+$clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC); // Obtém todos os clientes ativos
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,8 +21,8 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Saída de Estoque</title>
-    <link rel="stylesheet" href="../assets/style.css">
-    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="../assets/style.css"> <!-- CSS personalizado -->
+    <!-- Select2 CSS para selects estilizados -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
@@ -30,9 +30,11 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
     <div class="form-wrapper">
         <h2>Registrar Saída de Estoque</h2>
         <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.</p>
+        
+        <!-- Formulário de saída de estoque -->
         <form action="processar_saida.php" method="post">
 
-            <!-- Cliente -->
+            <!-- Seleção de cliente -->
             <div class="input-group">
                 <label for="cliente_id">Cliente:</label>
                 <select id="cliente_id" name="cliente_id" required style="width: 100%;">
@@ -45,7 +47,7 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
                 </select>
             </div>
 
-            <!-- Produto -->
+            <!-- Seleção de produto -->
             <div class="input-group">
                 <label for="produto_id">Produto:</label>
                 <select id="produto_id" name="produto_id" required style="width: 100%;">
@@ -58,19 +60,19 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
                 </select>
             </div>
 
-            <!-- Quantidade -->
+            <!-- Campo de quantidade -->
             <div class="input-group">
                 <label for="qtde_estoque">Quantidade:</label>
                 <input type="number" id="qtde_estoque" name="qtde_estoque" min="1" required>
             </div>
 
-            <!-- Observação -->
+            <!-- Campo de observação -->
             <div class="input-group">
                 <label for="observacao_estoque">Observação:</label>
                 <textarea id="observacao_estoque" name="observacao_estoque" rows="3"></textarea>
             </div>
 
-            <!-- Botões -->
+            <!-- Botões de ação -->
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Registrar Saída</button>
                 <a href="estoque_saida" class="btn">Cancelar</a>
@@ -79,18 +81,20 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- jQuery + Select2 JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Biblioteca jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> <!-- Select2 para selects estilizados -->
     <script>
         $(document).ready(function() {
+            // Inicializa Select2 para o campo de cliente
             $('#cliente_id').select2({
-                placeholder: "Selecione um cliente",
-                allowClear: true
+                placeholder: "Selecione um cliente", // Texto placeholder
+                allowClear: true // Permite limpar seleção
             });
 
+            // Inicializa Select2 para o campo de produto
             $('#produto_id').select2({
-                placeholder: "Selecione um produto",
-                allowClear: true
+                placeholder: "Selecione um produto", // Texto placeholder
+                allowClear: true // Permite limpar seleção
             });
         });
     </script>
