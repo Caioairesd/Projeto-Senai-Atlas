@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <div class="input-group">
                 <label>Nome:</label>
-                <input type="text" name="nome_funcionario"
+                <input type="text" name="nome_funcionario" 
                     value="<?= htmlspecialchars($funcionario['nome_funcionario']) ?>" required>
             </div>
 
@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-group">
                 <label>Salário:</label>
-                <input type="text"  name="salario_funcionario"
-                    value="<?= htmlspecialchars($funcionario['salario_funcionario']) ?>"  placeholder="R$ 0,00" required>
+                <input type="text" name="salario_funcionario"
+                    value="<?= htmlspecialchars($funcionario['salario_funcionario']) ?>" placeholder="R$ 0,00" required>
             </div>
 
             <div class="input-group">

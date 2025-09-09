@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../config/conexao.php';
-include '../assets/sidebar.php';
 
 // Verifica se o ID foi passado
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email_fornecedor'];
     $telefone = $_POST['contato_fornecedor'];
     $cnpj = $_POST['cnpj_fornecedor'];
-
+    
     $sql = "UPDATE fornecedor SET 
                 nome_fornecedor = :nome, 
                 email_fornecedor = :email, 
@@ -37,25 +36,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 cnpj_fornecedor = :cnpj 
             WHERE id_fornecedor = :id";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nome', $nome);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':telefone', $telefone);
-    $stmt->bindParam(':cnpj', $cnpj);
-    $stmt->bindParam(':id', $id_fornecedor);
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':nome', $nome);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':telefone', $telefone);
+$stmt->bindParam(':cnpj', $cnpj);
+$stmt->bindParam(':id', $id_fornecedor);
 
-    if ($stmt->execute()) {
-        echo "<div class='sucesso'>Fornecedor atualizado com sucesso.</div>";
-    } else {
-        echo "<div class='erro'>Erro ao atualizar fornecedor.</div>";
-    }
+if ($stmt->execute()) {
+    echo "<div class='sucesso'>Fornecedor atualizado com sucesso.</div>";
+} else {
+    echo "<div class='erro'>Erro ao atualizar fornecedor.</div>";
+}
 }
 ?>
+include '../assets/sidebar.php';
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Fornecedor</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Editar Fornecedor</title>
     <link rel="stylesheet" href="../assets/style.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>

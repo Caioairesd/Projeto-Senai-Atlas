@@ -82,7 +82,7 @@ if (!$produto) {
 
         <div class="btn-group">
             <a class="btn btn-delete" href="../excluir/excluir_produto.php?id_produto=<?= $produto['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
-            <a class="btn" href="visualizar_produtos.php">Voltar</a>
+            <a class="btn" href="visualizar_produto.php">Voltar</a>
         </div>
     </div>
 </body>

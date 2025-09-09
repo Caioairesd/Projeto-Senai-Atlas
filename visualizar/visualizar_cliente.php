@@ -32,12 +32,22 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
+    <?php
+    if (isset($_GET['msg'])) {
+        if ($_GET['msg'] === 'atualizado') {
+            echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
+        } elseif ($_GET['msg'] === 'erro') {
+            echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
+        }
+    }
+    ?>
     <div class="table-wrapper">
         <h2>Lista de Clientes Ativos</h2>
 
         <!-- Campo de busca -->
         <form method="get" class="search-form">
-            <input type="text" name="busca" placeholder="Buscar Cliente..." value="<?= htmlspecialchars($busca) ?>" class="input">
+            <input type="text" name="busca" placeholder="Buscar Cliente..." value="<?= htmlspecialchars($busca) ?>"
+                class="input">
             <button type="submit" class="btn">Buscar</button>
             <a href="visualizar_cliente.php" class="btn">Limpar Filtros</a>
         </form>
@@ -58,7 +68,8 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($cliente['id_cliente']) ?></td>
                             <td class="actions">
                                 <a class="btn" href="detalhes_cliente.php?id=<?= $cliente['id_cliente'] ?>">Ver detalhes</a>
-                                <a class="btn btn-edit" href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
+                                <a class="btn btn-edit"
+                                    href="../editar/editar_cliente.php?id=<?= $cliente['id_cliente'] ?>">Editar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

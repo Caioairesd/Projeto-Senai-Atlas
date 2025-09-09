@@ -3,10 +3,10 @@ require_once '../config/conexao.php';
 include '../assets/sidebar.php';
 
 // Filtros
-$filtro     = isset($_GET['busca']) ? trim($_GET['busca']) : '';
+$filtro = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 $plataforma = $_GET['plataforma'] ?? '';
-$tipo       = $_GET['tipo'] ?? '';
-$status     = $_GET['status'] ?? '';
+$tipo = $_GET['tipo'] ?? '';
+$status = $_GET['status'] ?? '';
 
 // Monta SQL com todos os filtros
 $sql = "SELECT * FROM vw_estoque_geral WHERE 1=1";
@@ -31,8 +31,8 @@ if ($status !== '') {
 
 // Dados para os selects
 $plataformas = $pdo->query("SELECT DISTINCT plataforma_produto FROM vw_estoque_geral WHERE plataforma_produto IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
-$tipos       = $pdo->query("SELECT DISTINCT tipo_produto FROM vw_estoque_geral WHERE tipo_produto IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
-$statuses    = $pdo->query("SELECT DISTINCT status_estoque FROM vw_estoque_geral WHERE status_estoque IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+$tipos = $pdo->query("SELECT DISTINCT tipo_produto FROM vw_estoque_geral WHERE tipo_produto IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
+$statuses = $pdo->query("SELECT DISTINCT status_estoque FROM vw_estoque_geral WHERE status_estoque IS NOT NULL")->fetchAll(PDO::FETCH_COLUMN);
 
 // Executa consulta
 $stmt = $pdo->prepare($sql);
@@ -55,7 +55,8 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Visão consolidada de todos os produtos e seus níveis de estoque</p>
         <!-- Campo de busca -->
         <form method="get" class="search-form">
-            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($filtro) ?>" class="input">
+            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($filtro) ?>"
+                class="input">
 
             <select name="plataforma" class="input">
                 <option value="">Todas as Plataformas</option>
@@ -65,7 +66,7 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
 
             <!-- Select com busca -->
-            <select name="tipo"  class="input" >
+            <select name="tipo" class="input">
                 <option value="">Todas as categorias</option>
                 <?php foreach ($tipos as $t): ?>
                     <option value="<?= $t ?>" <?= $tipo === $t ? 'selected' : '' ?>><?= $t ?></option>
@@ -73,12 +74,6 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
 
 
-            <select name="status" class="input">
-                <option value="">Todos os Status</option>
-                <?php foreach ($statuses as $s): ?>
-                    <option value="<?= $s ?>" <?= $status === $s ? 'selected' : '' ?>><?= $s ?></option>
-                <?php endforeach; ?>
-            </select>
 
             <button type="submit" class="btn">Filtrar</button>
             <a href="estoque_geral.php" class="btn">Limpar Filtros</a>
@@ -125,7 +120,7 @@ $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#tipo').select2({
                 placeholder: "Todas as categorias",
                 allowClear: true

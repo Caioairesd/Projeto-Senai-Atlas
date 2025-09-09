@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../config/conexao.php';
-include '../assets/sidebar.php';
 
 // Verifica se o ID foi passado
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email_cliente'];
     $telefone = $_POST['telefone_cliente'];
     $cnpj = $_POST['cnpj_cliente'];
-
+    
     $sql = "UPDATE cliente SET 
                 nome_cliente = :nome, 
                 email_cliente = :email, 
@@ -37,23 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 cnpj_cliente = :cnpj
             WHERE id_cliente = :id";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nome', $nome);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':telefone', $telefone);
-    $stmt->bindParam(':cnpj', $cnpj);
-    $stmt->bindParam(':id', $id_cliente);
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':nome', $nome);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':telefone', $telefone);
+$stmt->bindParam(':cnpj', $cnpj);
+$stmt->bindParam(':id', $id_cliente);
 
-    if ($stmt->execute()) {
-        echo "<div class='sucesso'>Cliente atualizado com sucesso!</div>";
-    } else {
-        echo "<div class='erro'>Erro ao atualizar cliente.</div>";
-    }
+if ($stmt->execute()) {
+    header('Location: ../visualizar/visualizar_cliente.php?msg=atualizado');
+    exit;
+} else {
+    header('Location: ../visualizar/visualizar_cliente.php?msg=erro');
+    exit;
 }
+
+}
+include '../assets/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
+    
 <head>
     <meta charset="UTF-8">
     <title>Editar Cliente</title>
@@ -61,6 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <?php
+    if (isset($_GET['msg'])) {
+        if ($_GET['msg'] === 'atualizado') {
+            echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
+        } elseif ($_GET['msg'] === 'erro') {
+            echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
+        }
+    }
+    ?>
     <div class="form-wrapper">
         <h2>Editar Cliente</h2>
         <p>Atualize as informações do cliente abaixo.</p>
@@ -71,28 +83,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="input-group">
                 <label>Nome:</label>
-                <input type="text" id="nome_cliente" name="nome_cliente" value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
+                <input type="text" id="nome_cliente" name="nome_cliente"
+                    value="<?= htmlspecialchars($cliente['nome_cliente']) ?>" required>
             </div>
 
             <div class="input-group">
                 <label>Email:</label>
-                <input type="email" name="email_cliente" value="<?= htmlspecialchars($cliente['email_cliente']) ?>" required>
+                <input type="email" name="email_cliente" value="<?= htmlspecialchars($cliente['email_cliente']) ?>"
+                    required>
             </div>
 
             <div class="input-group">
                 <label>Telefone:</label>
-                <input type="text" id="telefone_cliente" name="telefone_cliente" value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
+                <input type="text" id="telefone_cliente" name="telefone_cliente"
+                    value="<?= htmlspecialchars($cliente['telefone_cliente']) ?>" required>
             </div>
 
             <div class="input-group">
                 <label>CNPJ:</label>
-                <input type="text" id="cnpj_cliente" name="cnpj_cliente" value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
+                <input type="text" id="cnpj_cliente" name="cnpj_cliente"
+                    value="<?= htmlspecialchars($cliente['cnpj_cliente']) ?>" required>
             </div>
 
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Salvar Alterações</button>
                 <a href="../visualizar/visualizar_cliente.php" class="btn">Voltar</a>
             </div>
+
         </form>
     </div>
     <script src="../assets/validacoes.js"></script>
