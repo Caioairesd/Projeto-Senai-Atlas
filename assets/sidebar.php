@@ -92,6 +92,7 @@ $opcoes_menu = $permissoes[$id_perfil] ?? [];
                         <a href="#" class="menu-item">
                             <i class="menu-icon 
                                 <?= $categoria === 'Cadastrar' ? 'fas fa-plus-circle' : 
+                                    $categoria === 'Visualizar' ? 'fas fa-search':
                                    ($categoria === 'Estoque' ? 'fas fa-warehouse' : 'fas fa-eye') ?>">
                             </i>
                             <span class="menu-text"><?= htmlspecialchars($categoria) ?></span>
