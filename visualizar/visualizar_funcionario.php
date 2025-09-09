@@ -18,6 +18,17 @@ $termoBusca = '%' . $busca . '%';
 $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'atualizado') {
+        echo "<div class='alert alert-success'>Funcionário atualizado com sucesso!</div>";
+    } elseif ($_GET['msg'] === 'erro') {
+        echo "<div class='alert alert-error'>Erro ao atualizar funcionário.</div>";
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +73,8 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <td>
                 <div class="btn-group">
                   <a class="btn" href="detalhes_funcionario.php?id=<?= $f['id_funcionario'] ?>">Ver detalhes</a>
-                  <a class="btn btn-edit" href="../editar/editar_funcionario.php?id=<?= $f['id_funcionario'] ?>">Editar</a>
+                  <a class="btn btn-delete" href="../excluir/excluir_funcionario.php?id_funcionario=<?= $f['id_funcionario'] ?>" onclick="return confirm('Tem certeza que deseja excluir este funcionário?')">Excluir</a>
+
                 </div>
               </td>
             </tr>

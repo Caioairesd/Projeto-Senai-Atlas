@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once '../config/conexao.php';
-include '../assets/sidebar.php';
 
 // VERIFICA SE O ID FOI PASSADO
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -58,9 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':id', $id_funcionario);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Funcionário atualizado com sucesso!'); window.location.href='../visualizar/visualizar_funcionarios.php';</script>";
+        header("Location: ../visualizar/visualizar_funcionario.php?msg=atualizado");
+        exit();
     } else {
-        echo "<script>alert('Erro ao atualizar funcionário.');</script>";
+        header("Location: ../visualizar/visualizar_funcionario.php?msg=erro");
+        exit();
     }
 }
 ?>
@@ -79,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <div class="input-group">
                 <label>Nome:</label>
-                <input type="text" name="nome_funcionario" 
+                <input type="text" name="nome_funcionario"
                     value="<?= htmlspecialchars($funcionario['nome_funcionario']) ?>" required>
             </div>
 
@@ -129,6 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Salvar alterações</button>
                 <a href="../visualizar/visualizar_funcionario.php" class="btn btn-delete">Cancelar</a>
+
             </div>
         </form>
     </div>

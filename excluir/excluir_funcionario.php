@@ -2,8 +2,8 @@
 session_start();
 require_once '../config/conexao.php';
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id_funcionario = $_GET['id'];
+if (isset($_GET['id_funcionario']) && is_numeric($_GET['id_funcionario'])) {
+    $id_funcionario = $_GET['id_funcionario'];
 
     try {
         // Desativa o usuário vinculado ao funcionário, se existir
@@ -34,4 +34,4 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 } else {
     header("Location: ../visualizar/visualizar_funcionario.php?msg=ID inválido.&type=error");
 }
-exit;
+exit();

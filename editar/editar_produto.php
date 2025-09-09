@@ -1,6 +1,5 @@
 <?php
 require_once '../config/conexao.php';
-include '../assets/sidebar.php';
 
 $id = $_GET['id'] ?? null;
 
@@ -75,15 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindParam(':fornecedor_id', $fornecedor_id);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-    if ($stmt->execute()) {
-        echo "<script>
-            alert('Produto atualizado com sucesso!');
-            window.parent.fecharModal();
-        </script>";
-        exit;
-    } else {
-        echo "<script>alert('Erro ao atualizar produto.');</script>";
-    }
+ if ($stmt->execute()) {
+    echo "<script>
+        window.parent.location.href = '../visualizar/visualizar_produto.php?msg=atualizado';
+    </script>";
+    exit;
+}
 }
 ?>
 
@@ -119,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <select id="plataforma_produto" name="plataforma_produto" class="select2" required>
                     <option value="">Selecione a plataforma</option>
                     <?php
-                    $plataformas = ["PC", "PlayStation 5", "PlayStation 4", "Xbox Series X/S", "Nintendo Switch", "Mobile"];
+                    $plataformas = ["PC", "PlayStation 5", "PlayStation 4",  "Nintendo Switch", "Mobile","Xbox 360","Xbox One","Xbox Series X/S","Nintendo DS","Nintendo 3DS","Nintendo Wii",""];
                     foreach ($plataformas as $p) {
                         $selected = $p === $produto['plataforma_produto'] ? 'selected' : '';
                         echo "<option value=\"$p\" $selected>$p</option>";
@@ -197,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <div class="btn-group">
                     <button type="submit" class="btn btn-edit">Salvar alterações</button>
-                    <a href="../visualizar/visualizar_produto.php" class="btn">Cancelar</a>
+                    <a href="../visualizar/visualizar_produto.php" class="btn btn-delete">Cancelar</a>
                 </div>
         </form>
     </div>

@@ -22,6 +22,7 @@ if (!$fornecedor) {
     header("Location: ../visualizar/visualizar_fornecedor.php?msg=Fornecedor não encontrado ou inativo.&type=error");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

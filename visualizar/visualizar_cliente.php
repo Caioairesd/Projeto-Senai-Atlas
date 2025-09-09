@@ -13,7 +13,7 @@ $sql = 'SELECT * FROM cliente
             telefone_cliente LIKE :busca OR 
             cnpj_cliente LIKE :busca
         )
-        ORDER BY nome_cliente ASC';
+        ORDER BY id_cliente ASC';
 
 
 $stmt = $pdo->prepare($sql);
@@ -21,6 +21,17 @@ $termoBusca = '%' . $busca . '%';
 $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'atualizado') {
+        echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
+    } elseif ($_GET['msg'] === 'erro') {
+        echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

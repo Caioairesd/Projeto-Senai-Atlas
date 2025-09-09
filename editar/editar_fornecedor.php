@@ -44,10 +44,13 @@ $stmt->bindParam(':cnpj', $cnpj);
 $stmt->bindParam(':id', $id_fornecedor);
 
 if ($stmt->execute()) {
-    echo "<div class='sucesso'>Fornecedor atualizado com sucesso.</div>";
+    header("Location: ../visualizar/visualizar_fornecedor.php?msg=atualizado");
+    exit();
 } else {
-    echo "<div class='erro'>Erro ao atualizar fornecedor.</div>";
+    header("Location: ../visualizar/visualizar_fornecedor.php?msg=erro");
+    exit();
 }
+
 }
 ?>
 
@@ -89,7 +92,7 @@ if ($stmt->execute()) {
 
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Salvar Alterações</button>
-                <a href="../visualizar/visualizar_fornecedor.php" class="btn">Voltar</a>
+                <a href="../visualizar/visualizar_fornecedor.php" class="btn btn-delete">Cancelar</a>
             </div>
         </form>
     </div>

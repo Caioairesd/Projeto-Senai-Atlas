@@ -18,6 +18,15 @@ $termoBusca = '%' . $busca . '%';
 $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'atualizado') {
+        echo "<div class='alert alert-success'>Produto atualizado com sucesso!</div>";
+    } elseif ($_GET['msg'] === 'erro') {
+        echo "<div class='alert alert-error'>Erro ao atualizar produto.</div>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -67,10 +76,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td>R$ <?= number_format($produto['preco_produto'], 2, ',', '.') ?></td>
                             <td>
                                 <div class="btn-group">
-
                                     <a class="btn" href="detalhes_produto.php?id=<?= $produto['id_produto'] ?>">Ver detalhes</a>
-                                    <a class="btn btn-edit"
-                                        href="../editar/editar_produto.php?id=<?= $produto['id_produto'] ?>">Editar</a>
+                                    <a class="btn btn-delete" href="../excluir/excluir_produto.php?id_produto=<?= $produto['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                                    
                                 </div>
                             </td>
 

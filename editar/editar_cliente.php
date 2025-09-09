@@ -2,6 +2,7 @@
 session_start();
 require_once '../config/conexao.php';
 
+
 // Verifica se o ID foi passado
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo "<div class='alert alert-error'>ID inválido.</div>";
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email_cliente'];
     $telefone = $_POST['telefone_cliente'];
     $cnpj = $_POST['cnpj_cliente'];
-    
+
     $sql = "UPDATE cliente SET 
                 nome_cliente = :nome, 
                 email_cliente = :email, 
@@ -36,27 +37,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 cnpj_cliente = :cnpj
             WHERE id_cliente = :id";
 
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':nome', $nome);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':telefone', $telefone);
-$stmt->bindParam(':cnpj', $cnpj);
-$stmt->bindParam(':id', $id_cliente);
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':telefone', $telefone);
+    $stmt->bindParam(':cnpj', $cnpj);
+    $stmt->bindParam(':id', $id_cliente);
 
-if ($stmt->execute()) {
-    header('Location: ../visualizar/visualizar_cliente.php?msg=atualizado');
-    exit;
-} else {
-    header('Location: ../visualizar/visualizar_cliente.php?msg=erro');
-    exit;
-}
-
+    if ($stmt->execute()) {
+        header('Location: ../visualizar/visualizar_cliente.php?msg=atualizado');
+        exit;
+    } else {
+        header('Location: ../visualizar/visualizar_cliente.php?msg=erro');
+        exit;
+    }
 }
 include '../assets/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-    
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Cliente</title>
@@ -64,15 +64,7 @@ include '../assets/sidebar.php';
 </head>
 
 <body>
-    <?php
-    if (isset($_GET['msg'])) {
-        if ($_GET['msg'] === 'atualizado') {
-            echo "<div class='alert alert-success'>Cliente atualizado com sucesso!</div>";
-        } elseif ($_GET['msg'] === 'erro') {
-            echo "<div class='alert alert-error'>Erro ao atualizar cliente.</div>";
-        }
-    }
-    ?>
+   
     <div class="form-wrapper">
         <h2>Editar Cliente</h2>
         <p>Atualize as informações do cliente abaixo.</p>
@@ -107,7 +99,7 @@ include '../assets/sidebar.php';
 
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Salvar Alterações</button>
-                <a href="../visualizar/visualizar_cliente.php" class="btn">Voltar</a>
+                <a href="../visualizar/visualizar_cliente.php" class="btn btn-delete">Cancelar</a>
             </div>
 
         </form>

@@ -12,7 +12,7 @@ $sql = 'SELECT * FROM fornecedor
             contato_fornecedor LIKE :busca OR 
             cnpj_fornecedor LIKE :busca
         )
-        ORDER BY nome_fornecedor ASC';
+        ORDER BY id_fornecedor ASC';
 
 
 $stmt = $pdo->prepare($sql);
@@ -20,6 +20,16 @@ $termoBusca = '%' . $busca . '%';
 $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_GET['msg'])) {
+    if ($_GET['msg'] === 'atualizado') {
+        echo "<div class='alert alert-success'>Fornecedor atualizado com sucesso!</div>";
+    } elseif ($_GET['msg'] === 'erro') {
+        echo "<div class='alert alert-error'>Erro ao atualizar fornecedor.</div>";
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -55,7 +65,7 @@ $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <tr>
                             <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
                             <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
-                            <td class="actions">
+                            <td class="btn-group">
                                 <a class="btn" href="detalhes_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>">Ver detalhes</a>
                                 <a class="btn btn-delete" href="../excluir/excluir_fornecedor.php?id=<?= $fornecedor['id_fornecedor'] ?>"
                                     onclick="return confirm('Tem certeza que deseja desativar este fornecedor?')">Excluir</a>
