@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="card-container">
     <div class="container">
       <div class="visual-side">
-        <img src="../assets/images/logo_dark'.png" alt="Logo Atlas" />
+        <img src="../assets/images/logo_dark.png" alt="Logo Atlas" />
         <h1 class="slogan">Recupere o acesso à sua conta</h1>
       </div>
 
