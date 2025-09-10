@@ -320,3 +320,17 @@ ALTER TABLE produto
 ALTER TABLE usuario
   ADD CONSTRAINT usuario_ibfk_1 FOREIGN KEY (perfil_id) REFERENCES perfil (id_perfil),
   ADD CONSTRAINT usuario_ibfk_2 FOREIGN KEY (funcionario_id) REFERENCES funcionario (id_funcionario);
+CREATE OR REPLACE VIEW vw_estoque_geral AS
+SELECT 
+    p.id_produto AS id_produto,
+    p.nome_produto AS nome_produto,
+    p.plataforma_produto AS plataforma_produto,
+    p.tipo_produto AS tipo_produto,
+    p.preco_produto AS preco_produto,
+    p.qtde_estoque_produto AS qtde_estoque_produto,
+    p.ativo AS ativo, -- campo necessário para o filtro
+    CASE 
+        WHEN p.qtde_estoque_produto < 5 THEN 'Baixo' 
+        ELSE 'OK' 
+    END AS status_estoque
+FROM produto AS p;

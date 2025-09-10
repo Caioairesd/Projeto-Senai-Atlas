@@ -28,8 +28,10 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <div class="form-wrapper">
         <h2>Registrar Saída de Estoque</h2>
-        <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.</p>
+        <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.
+        </p>
         <form action="processar_saida.php" method="post">
+           
 
             <!-- Cliente -->
             <div class="input-group">
@@ -81,7 +83,7 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#cliente_id').select2({
                 placeholder: "Selecione um cliente",
                 allowClear: true

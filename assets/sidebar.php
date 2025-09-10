@@ -34,7 +34,7 @@ $permissoes = [
             ["pasta" => "visualizar", "arquivo" => "visualizar_funcionario.php", "icone" => "fas fa-id-badge", "texto" => "Visualizar Funcionário"],
             ["pasta" => "visualizar", "arquivo" => "visualizar_produto.php", "icone" => "fas fa-box", "texto" => "Visualizar Produto"],
             ["pasta" => "estoque", "arquivo" => "estoque_geral.php", "icone" => "fas fa-warehouse", "texto" => "Visualizar Estoque"],
-            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-warehouse", "texto" => "Lista de Pedidos"]
+            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-shopping-cart", "texto" => "Lista de Pedidos"]
         ],
         "Estoque" => [
             ["pasta" => "estoque", "arquivo" => "estoque_entrada.php", "icone" => "fas fa-plus-square", "texto" => "Entrada de Estoque"],
@@ -47,7 +47,7 @@ $permissoes = [
             ["pasta" => "visualizar", "arquivo" => "visualizar_cliente.php", "icone" => "fas fa-users", "texto" => "Visualizar Cliente"],
             ["pasta" => "visualizar", "arquivo" => "visualizar_fornecedor.php", "icone" => "fas fa-industry", "texto" => "Visualizar Fornecedor"],
             ["pasta" => "visualizar", "arquivo" => "visualizar_produto.php", "icone" => "fas fa-inventory", "texto" => "Visualizar Produto"],
-            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-warehouse", "texto" => "Lista de Pedidos"]
+            ["pasta" => "estoque", "arquivo" => "pedidos_lista.php", "icone" => "fas fa-shopping-cart", "texto" => "Lista de Pedidos"]
         ],
         "Estoque" => [
             ["pasta" => "estoque", "arquivo" => "estoque_saida.php", "icone" => "fas fa-minus-square", "texto" => "Saída de Estoque"],
@@ -92,9 +92,7 @@ $opcoes_menu = $permissoes[$id_perfil] ?? [];
                 <i class="fas fa-cube"></i>
                 <span class="logo-text">Atlas</span>
             </div>
-            <div class="perfil-info">
-                <small><?= htmlspecialchars($nome_perfil) ?></small>
-            </div>
+          
         </div>
 
         <ul class="menu">

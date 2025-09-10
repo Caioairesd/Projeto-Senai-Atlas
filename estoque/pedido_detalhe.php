@@ -14,9 +14,14 @@ include '../assets/sidebar.php';
 
 <body>
     <div class="form-wrapper">
+    <?php if (isset($_GET['msg']) && isset($_GET['type'])): ?>
+            <div class="alert alert-<?= htmlspecialchars($_GET['type']) ?>">
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
         <h2>Pedido #<?= $pedido['id_pedido'] ?> - <?= htmlspecialchars($pedido['nome_cliente']) ?></h2>
         <p>Status atual: <?= htmlspecialchars($pedido['status_pedido']) ?></p>
-
+      
         <!-- Formulário para alterar status -->
         <form method="POST">
             <div class="input-group">
@@ -73,5 +78,14 @@ include '../assets/sidebar.php';
         });
     </script>
 </body>
-
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500); // remove do DOM após o fade
+        }
+    }, 3000); // tempo antes de começar a desaparecer
+</script>
 </html>

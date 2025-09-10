@@ -6,19 +6,7 @@ if (isset($_GET['id_funcionario']) && is_numeric($_GET['id_funcionario'])) {
     $id_funcionario = $_GET['id_funcionario'];
 
     try {
-        // Desativa o usuário vinculado ao funcionário, se existir
-        $sqlBuscaUsuario = "SELECT id_usuario FROM usuario WHERE funcionario_id = :funcionario_id";
-        $stmtBusca = $pdo->prepare($sqlBuscaUsuario);
-        $stmtBusca->bindParam(':funcionario_id', $id_funcionario, PDO::PARAM_INT);
-        $stmtBusca->execute();
-        $usuario = $stmtBusca->fetch(PDO::FETCH_ASSOC);
-
-        if ($usuario) {
-            $sqlDesativaUsuario = "UPDATE usuario SET ativo = FALSE WHERE id_usuario = :id_usuario";
-            $stmtDesativa = $pdo->prepare($sqlDesativaUsuario);
-            $stmtDesativa->bindParam(':id_usuario', $usuario['id_usuario'], PDO::PARAM_INT);
-            $stmtDesativa->execute();
-        }
+     
 
         // Desativa o funcionário
         $sqlDesativaFuncionario = "UPDATE funcionario SET ativo = FALSE WHERE id_funcionario = :id_funcionario";

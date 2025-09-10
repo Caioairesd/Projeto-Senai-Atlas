@@ -19,13 +19,7 @@ $stmt->bindParam(':busca', $termoBusca, PDO::PARAM_STR);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_GET['msg'])) {
-    if ($_GET['msg'] === 'atualizado') {
-        echo "<div class='alert alert-success'>Produto atualizado com sucesso!</div>";
-    } elseif ($_GET['msg'] === 'erro') {
-        echo "<div class='alert alert-error'>Erro ao atualizar produto.</div>";
-    }
-}
+
 
 ?>
 
@@ -41,11 +35,19 @@ if (isset($_GET['msg'])) {
 <body>
     <div class="table-wrapper">
         <h2>Lista de Produtos</h2>
-
-
+        <?php
+        if (isset($_GET['msg'])) {
+            if ($_GET['msg'] === 'atualizado') {
+                echo "<div class='alert alert-success'>Produto atualizado com sucesso!</div>";
+            } elseif ($_GET['msg'] === 'erro') {
+                echo "<div class='alert alert-error'>Erro ao atualizar produto.</div>";
+            }
+        }
+        ?>
         <!-- Campo de busca -->
         <form method="get" class="search-form">
-            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($busca) ?>" class="input">
+            <input type="text" name="busca" placeholder="Buscar Produto..." value="<?= htmlspecialchars($busca) ?>"
+                class="input">
             <button type="submit" class="btn">Buscar</button>
             <a href="visualizar_produto.php" class="btn">Limpar Filtros</a>
         </form>
@@ -77,8 +79,10 @@ if (isset($_GET['msg'])) {
                             <td>
                                 <div class="btn-group">
                                     <a class="btn" href="detalhes_produto.php?id=<?= $produto['id_produto'] ?>">Ver detalhes</a>
-                                    <a class="btn btn-delete" href="../excluir/excluir_produto.php?id_produto=<?= $produto['id_produto'] ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
-                                    
+                                    <a class="btn btn-delete"
+                                        href="../excluir/excluir_produto.php?id_produto=<?= $produto['id_produto'] ?>"
+                                        onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+
                                 </div>
                             </td>
 
@@ -91,5 +95,15 @@ if (isset($_GET['msg'])) {
         <?php endif; ?>
     </div>
 </body>
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500); // remove do DOM após o fade
+        }
+    }, 3000); // tempo antes de começar a desaparecer
+</script>
 
 </html>
