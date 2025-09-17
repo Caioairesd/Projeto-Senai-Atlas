@@ -85,19 +85,35 @@ html {
 
 /* ===================== SISTEMA DE BOTÕES ===================== */
 .btn {
-  display: inline-block; /* Botão em linha */
-  padding: 10px 16px; /* Espaçamento interno */
-  border: none; /* Sem borda */
-  border-radius: 8px; /* Bordas arredondadas */
-  font-weight: 600; /* Seminegrito */
-  cursor: pointer; /* Muda cursor para mãozinha */
-  background-color: var(--primary); /* Fundo azul */
+  display: inline-block;
+  width: 130px; /* Largura fixa para ambos */
+  padding: 10px 0; /* Padding vertical, horizontal controlado pela largura */
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+  text-wrap: nowrap;
   color: white; /* Texto branco */
-  text-align: center; /* Centraliza texto */
-  text-decoration: none; /* Remove sublinhado */
-  transition: all 0.3s ease; /* Animação suave */
-  font-family: inherit; /* Usa a mesma fonte do container */
+  background-color: var(--primary); /* Fundo azul */
 }
+
+/* Botão "Ver detalhes" */
+.btn-detail {
+  background-color: var(--primary, #007bff); /* Azul padrão se variável não existir */
+  color: white;
+}
+
+/* Botão "Excluir" */
+.btn-delete {
+  background-color: #dc3545; /* Vermelho padrão do Bootstrap */
+  color: white;
+}
+
 
 .btn:hover {
   background-color: var(--primary-dark); /* Azul mais escuro */
