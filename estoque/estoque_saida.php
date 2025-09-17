@@ -21,18 +21,22 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Saída de Estoque</title>
     <link rel="stylesheet" href="../assets/style.css">
-    <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="form-wrapper">
         <h2>Registrar Saída de Estoque</h2>
-        <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.
-        </p>
-        <form action="processar_saida.php" method="post">
-           
+        <p>Informe os dados abaixo para registrar a retirada de produtos do estoque e gerar o pedido automaticamente.</p>
 
+        <!-- ✅ Bloco de mensagem -->
+        <?php if (isset($_GET['msg']) && isset($_GET['type'])): ?>
+            <div class="alert alert-<?= htmlspecialchars($_GET['type']) ?>">
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
+
+        <form action="processar_saida.php" method="post">
             <!-- Cliente -->
             <div class="input-group">
                 <label for="cliente_id">Cliente:</label>
@@ -74,7 +78,7 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             <!-- Botões -->
             <div class="btn-group">
                 <button type="submit" class="btn btn-edit">Registrar Saída</button>
-                <a href="estoque_saida" class="btn">Cancelar</a>
+                <a href="estoque_saida.php" class="btn">Cancelar</a>
             </div>
         </form>
     </div>
@@ -94,6 +98,16 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
                 allowClear: true
             });
         });
+
+        //  Fade-out da mensagem
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translate(-50%, -60%)';
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 3000);
     </script>
 </body>
 

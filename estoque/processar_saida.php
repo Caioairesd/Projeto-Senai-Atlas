@@ -51,7 +51,7 @@ try {
     $saldo_estoque = (int) $stmt->fetchColumn();
 
     if ($saldo_estoque < (int) $qtde_item) {
-        throw new Exception('Estoque insuficiente para realizar a saída.');
+        throw new Exception('Estoque insuficiente para o produto selecionado.');
     }
 
     $stmt = $pdo->prepare("INSERT INTO pedidos (cliente_id, data_pedido, status_pedido) VALUES (?, ?, 'Pendente')");
@@ -70,7 +70,7 @@ try {
 
     header("Location: pedido_detalhe.php?id={$pedido_id}&msg=Saída e pedido gerados com sucesso!&type=success");
     exit;
-} catch (PDOException $e) {
+} catch (Exception $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
@@ -79,14 +79,6 @@ try {
         ? 'Erro: Estoque insuficiente para o produto selecionado.'
         : 'Erro ao registrar saída: ' . htmlspecialchars($e->getMessage());
 
-    header("Location: estoque_saida.php?msg={$mensagem}&type=error");
-    exit;
-} catch (Exception $e) {
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-
-    $mensagem = 'Erro: ' . htmlspecialchars($e->getMessage());
     header("Location: estoque_saida.php?msg={$mensagem}&type=error");
     exit;
 }
