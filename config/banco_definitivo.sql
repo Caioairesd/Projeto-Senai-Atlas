@@ -160,18 +160,6 @@ CREATE TRIGGER trg_pedido_estorno AFTER UPDATE ON pedidos FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER trg_pedido_saida AFTER UPDATE ON pedidos FOR EACH ROW BEGIN
-    IF NEW.status_pedido IN ('Processando','Enviado') 
-       AND OLD.status_pedido NOT IN ('Processando','Enviado') THEN
-        INSERT INTO movimentacao (tipo_movimentacao, quantidade, data_movimentacao, produto_id, pedido_id, observacao)
-        SELECT 'Saída', qtde_item, CURDATE(), produto_id, NEW.id_pedido, CONCAT('Saída automática do pedido #', NEW.id_pedido)
-        FROM item_pedido
-        WHERE pedido_id = NEW.id_pedido;
-    END IF;
-END
-$$
-DELIMITER ;
 CREATE TABLE perfil (
   id_perfil int(11) NOT NULL,
   nome_perfil varchar(30) NOT NULL
