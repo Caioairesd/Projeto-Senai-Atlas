@@ -4,7 +4,7 @@ require_once '../config/conexao.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['perfil'])) {
-    header('Location: ../Login/login.php');
+    header('Location: ../index.php');
     exit();
 }
 
