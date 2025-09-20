@@ -83,8 +83,9 @@ O sistema permite visualizar movimentações de entrada e saída de estoque com 
 ---
 
 ## 📄 Licença
+Este projeto está licenciado sob a Licença MIT. Isso significa que você pode usar, modificar e distribuir este software livremente, desde que mantenha os créditos aos autores.
 
-Este projeto é de uso interno da equipe de desenvolvimento e não possui licença pública definida. Para uso externo ou comercial, entre em contato com os autores.
+O texto completo da licença está disponível na pasta `/LICENSE` do repositório.
 
 ---
 
